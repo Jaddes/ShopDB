@@ -1,42 +1,42 @@
-# 📌 Dokumentacija baze podataka - Prodavnica
+# 📌 Database Documentation - Store
 
-## 📖 O projektu
-Ovaj projekat predstavlja bazu podataka dizajniranu za upravljanje prodavnicom. Baza omogućava efikasno upravljanje proizvodima, kupcima, narudžbinama i korisnicima sistema. Cilj projekta je da se ova baza podataka kasnije integriše sa aplikacijom kako bi se formirao kompletan prodajni sistem.
+## 📖 About the Project
+This project represents a database designed for store management. The database enables efficient management of products, customers, orders, and system users. The goal of the project is to later integrate this database with an application to form a complete sales system.
 
-## 📂 Struktura baze podataka
-Baza se sastoji iz sledećih glavnih tabela:
+## 📂 Database Structure
+The database consists of the following main tables:
 
-- **KATEGORIJE** - Kategorije proizvoda.
-- **PODKATEGORIJE** - Podkategorije povezane sa kategorijama.
-- **BOJE** - Dostupne boje proizvoda.
-- **OZNAKE** - Oznake koje proizvodi mogu imati (npr. premium, ekološki).
-- **PROIZVODI** - Glavna tabela sa svim proizvodima, njihovim cenama i količinama.
-- **KORISNICI** - Podaci o korisnicima sistema.
-- **KUPCI** - Dodatne informacije o kupcima.
-- **GLAVNA_NARUDZBINA** - Beleži podatke o narudžbinama.
-- **PORUDŽBINE** - Stavke koje čine pojedinačnu narudžbinu.
+- **CATEGORIES** - Product categories.
+- **SUBCATEGORIES** - Subcategories linked to categories.
+- **COLORS** - Available product colors.
+- **TAGS** - Tags that products can have (e.g., premium, eco-friendly).
+- **PRODUCTS** - The main table containing all products, their prices, and quantities.
+- **USERS** - System user information.
+- **CUSTOMERS** - Additional customer information.
+- **MAIN_ORDERS** - Records details about customer orders.
+- **ORDERS** - Items that make up individual orders.
 
-## ⚙️ Ključne funkcionalnosti
-✔ Relaciona baza podataka sa jasno definisanim primarnim i stranim ključevima.  
-✔ **ON DELETE CASCADE** i **ON DELETE SET NULL** pravila za održavanje integriteta podataka.  
-✔ Trigeri i sekvence za automatsko generisanje ID vrednosti narudžbina.  
-✔ Automatsko računanje ukupne cene porudžbina pomoću virtualnih kolona.  
-✔ CHECK ograničenja za validaciju unetih podataka.
+## ⚙️ Key Features
+✔ Relational database with well-defined primary and foreign keys.  
+✔ **ON DELETE CASCADE** and **ON DELETE SET NULL** rules for maintaining data integrity.  
+✔ Triggers and sequences for automatic order ID generation.  
+✔ Automatic calculation of total order price using virtual columns.  
+✔ CHECK constraints for data validation.
 
-## 📥 Instalacija i korišćenje
-1️⃣ **Preuzmite SQL fajl sa šemom baze podataka.**  
-2️⃣ **Pokrenite ga u Oracle SQL bazi pomoću SQL Developer-a ili komandne linije.**  
-3️⃣ **Unesite početne podatke korišćenjem INSERT komandi.**  
-4️⃣ **Testirajte upite i relacije pomoću SELECT i JOIN upita.**
+## 📥 Installation and Usage
+1️⃣ **Download the SQL file containing the database schema.**  
+2️⃣ **Run it in an Oracle SQL database using SQL Developer or the command line.**  
+3️⃣ **Insert initial data using INSERT commands.**  
+4️⃣ **Test queries and relationships using SELECT and JOIN queries.**
 
-## 📌 Plan daljeg razvoja
-🔹 Integracija baze sa aplikacijom (web ili mobilna verzija).  
-🔹 Razvoj API servisa za povezivanje baze sa korisničkim interfejsom.  
-🔹 Dodavanje naprednih funkcionalnosti, kao što su preporučeni proizvodi i analiza kupovine.
+## 📌 Future Development Plan
+🔹 Integration of the database with an application (web or mobile version).  
+🔹 Development of an API service to connect the database with the user interface.  
+🔹 Adding advanced features such as recommended products and purchase analysis.
 
-## 📝 Autori
-📌 **Autor:** Boris Lahoš, Anja Stamenović 
-📌 **Kontakt:** borkolahos@gmail, github.com/Jaddes
+## 📝 Authors
+📌 **Author:** Boris Lahoš and Anja Stamenović
+📌 **Contact:** borkolahos@gmail.com, github.com/Jaddes  
 
-📌 **Napomena:** Ovaj projekat je otvoren za doprinose i može se dalje unapređivati!
+📌 **Note:** This project is open to contributions and can be further improved!
 
