@@ -1,7 +1,7 @@
 # 📌 Database Documentation - Store
 
 ## 📖 About the Project
-This project represents a database designed for store management. The database enables efficient management of products, customers, orders, and system users. The goal of the project is to later integrate this database with an application to form a complete sales system.
+This project is a database designed for efficient store management, enabling seamless handling of products, customers, orders, and system users. The long-term goal is to integrate this database with an application to create a fully functional sales system. I would like to let you know that the development of this project initially began in Serbian and will primarily continue in that language. However, an English version of the documentation is provided, as English is the de facto language for technical documentation and code on GitHub.
 
 ## 📂 Database Structure
 The database consists of the following main tables:
