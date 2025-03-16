@@ -35,8 +35,8 @@ Baza se sastoji iz sledećih glavnih tabela:
 🔹 Dodavanje naprednih funkcionalnosti, kao što su preporučeni proizvodi i analiza kupovine.
 
 ## 📝 Autori
-📌 **Autor:** [Tvoje ime ili timski naziv]  
-📌 **Kontakt:** [Tvoja e-mail adresa ili GitHub profil]  
+📌 **Autor:** Boris Lahoš, Anja Stamenović 
+📌 **Kontakt:** borkolahos@gmail, github.com/Jaddes
 
 📌 **Napomena:** Ovaj projekat je otvoren za doprinose i može se dalje unapređivati!
 
