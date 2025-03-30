@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Supports all the signs -->
+    <meta charset="UTF-8">
+    <!-- adaptive screen telefone and desktop -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Screen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet"> 
+    <!-- connection to css file -->
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <header>
+        <!-- Putting the link in sections -->
+        <nav>
+            <!-- displays site / brand / logo later we can put a picuture -->
+            <div class="logo">Floyd01 Shop</div>
+            <!-- Numeric  -->
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Collections</a></li>
+                <li><a href="#">New</a></li>
+            </ul>
+            <div class="icons">
+                <button>🛒</button>
+                <button>👤</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="login-box">
+            <h2>Login</h2>
+            <!-- # znaci da ne vodi nigde ali to je anchor znaci da bi trebalo kasnije da se doda -->
+            <p>Don't have an account? <a href="#">Create a new one.</a></p>
+
+            <div class="input-group">
+                <label for="email">Enter Your Email Or Phone</label>
+                <!-- placeholder je onaj tekst sto se zameni i tu pre pisanja email -->
+                <input type="text" id="email" placeholder="michael.joe@email.com">
+            </div>
+
+            <div class="input-group">
+                <label for="password">Enter Your Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="******">
+                    <span id="togglePassword">👁️</span>
+                </div>
+            </div>
+
+            <button onclick="login()">Login</button>
+            <a href="#" class="forgot">Forgot Your Password?</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-left">
+            <p>Contact Us</p>
+            <p>📞 WhatsApp: +1 202-918-2132</p>
+            <p>📞 Call Us: +1 202-918-2132</p>
+        </div>
+        <div class="footer-center">
+            <h3>Floyd01 Shop</h3>
+            <p>© 2025 All rights reserved.</p>
+        </div>
+        <div class="footer-right">
+            <p>Customer Services</p>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </footer>  
+    
+    <script src="script.js"></script>
+</body>
+
+</html>
