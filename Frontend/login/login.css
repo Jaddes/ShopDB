@@ -7,7 +7,7 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -17,9 +17,8 @@ body {
 }
 
 header {
-    background:  #fff;
-    padding: 0.1px 30px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    background:  #C1E899;
+    padding: 0.1px 30px; 
     position: fixed;
     top: 0;
     left: 0;
@@ -27,34 +26,103 @@ header {
     z-index: 1000;
 }
 
-nav {
+/* Narandzasta navigaciona traka */
+.navbar {
+    background-color: #EB9C35;
+    padding: 15px 50px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
-nav ul {
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-style: Irish Grover; 
+}
+
+.navbar .search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+
+.search-bar input {
+    width: 60%;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+}
+
+.navbar ul {
     list-style: none;
     display: flex;
     gap: 20px;
 }
 
-nav .icons button {
-    background: none;
-    border: none;
-    font-size: 18px;
-    margin-left: 10px;
-    cursor: pointer;
-}
 
-nav a {
+.navbar a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
 }
 
+
+.navbar a:hover {
+    background: #EB9C35;
+    border-radius: 5px;
+}
+
+.navbar .left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+/* Stilizacija ikonica */
+.navbar .icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.navbar .icons i {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+
 main {
-    margin-top: 200px;
+    margin-top: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,7 +207,12 @@ footer {
     justify-content: space-around;
     background: #55883B;
     padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     font-size: 14px;
+    
 }
 
 .footer-section {
@@ -153,8 +226,8 @@ footer {
 
 .footer-center h1 {
     font-family: 'Irish Grover', cursive;
-    color: #FF8900;
-    stroke: #744713;
+    color: #EB9C35;
+    stroke: #55883B;
     font-size: 64px;
 }
 
