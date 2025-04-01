@@ -153,7 +153,7 @@ button:hover {
     width: 450px;
     text-align: center;
     margin-top: 200px;
-    margin-bottom: 200px;
+    margin-bottom: 100px;
 }
 
 .signup-box h2 {
@@ -209,12 +209,14 @@ footer {
     justify-content: space-around;
     background: #55883B;
     padding: 20px;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;
     font-size: 14px;
     margin-top: auto;
+    transform: translateY(100%); /* Pocetno sakriven */
+    transition: transform 0.3s ease-in-out;
 }
 
 .footer-section {

@@ -1,3 +1,16 @@
+
+document.addEventListener("scroll", function() {
+    const footer = document.querySelector("footer");
+
+    // Proverava da li je korisnik skrolovao do dna stranice
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        footer.style.transform = "translateY(0)"; // Footer se prikazuje
+    } else {
+        footer.style.transform = "translateY(100%)"; // Footer ostaje sakriven
+    }
+});
+
+
 document.getElementById('togglePassword').addEventListener('click', function() {
     const passwordInput = document.getElementById('password');
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -15,3 +28,4 @@ function login() {
         alert('Login Successful (fake)');
     }
 }
+
