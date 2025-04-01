@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sing Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="signup.css">
+</head>
+
+<body>
+    <header>
+        <!-- Navigaciona traka -->
+        <div class="navbar">
+            <div class="left-section">
+                <div class="logo">Floyd01 Shop</div> <!-- Ovaj tekst koristi 'Irish Grover' font -->
+                <nav class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Collections</a>
+                    <a href="#">New</a>
+                </nav>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="icons">
+                <button>🛒</button>
+                <button>👤</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Glavni sadrzaj stranice - prazna sekcija koja moze biti koriscena za razlicite stranice -->
+    <main>
+        <div class="signup-box">
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="street">Street</label>
+                        <input type="text" id="street" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="number">Number</label>
+                        <input type="text" id="number" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="zip">Postal Code</label>
+                        <input type="text" id="zip" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" required>
+                            <span id="togglePassword">👁️</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="confirmPassword" required>
+                            <span id="toggleConfirmPassword">👁️</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-left">
+            <p>Contact Us</p>
+            <p>📞 WhatsApp: +381 653364750</p>
+            <p>📞 Viber: +381 653364750</p>
+            <p>📞 Call Us: +381 653364750</p>
+            <p>Mail: stamenovicvladan71@gmail.com</p>
+        </div>
+        <div class="footer-center">
+            <h3>Floyd01 Shop</h3>
+            <p>© 2025 All rights reserved.</p>
+        </div>
+        <div class="footer-right">
+            <p>Customer Services</p>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </footer>  
+    
+    <script src="script.js"></script>
+</body>
+
+</html>
