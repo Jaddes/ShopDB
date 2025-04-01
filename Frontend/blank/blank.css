@@ -1,9 +1,11 @@
+/* Reset osnovnih stilova */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Osnovni stil za ceo dokument */
 body {
     margin: 0;
     padding: 0;
@@ -16,9 +18,11 @@ body {
     font-family: Arial, sans-serif;
 }
 
+
+/* Header stilovi */
 header {
-    background:  #C1E899;
-    padding: 0.1px 30px; 
+    background: #C1E899;
+    padding: 0.1px 30px;
     position: fixed;
     top: 0;
     left: 0;
@@ -26,7 +30,7 @@ header {
     z-index: 1000;
 }
 
-/* Narandzasta navigaciona traka */
+/* Navigaciona traka */
 .navbar {
     background-color: #EB9C35;
     padding: 15px 50px;
@@ -43,6 +47,7 @@ header {
     z-index: 1000;
 }
 
+/* Logo stilovi - koristi Irish Grover font */
 .navbar .logo {
     font-size: 24px;
     font-weight: bold;
@@ -50,13 +55,28 @@ header {
     color: #55883B;
 }
 
-.navbar .search-bar {
+/* Navigacioni linkovi */
+.navbar .nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+/* Pretraga */
+.search-bar {
     flex: 1;
     display: flex;
     justify-content: center;
     padding: 0 20px;
 }
-
 
 .search-bar input {
     width: 60%;
@@ -66,6 +86,15 @@ header {
     outline: none;
     font-size: 16px;
 }
+
+/* Ikonice */
+.navbar .icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    cursor: pointer;
+}
+
 
 .navbar ul {
     list-style: none;
@@ -92,88 +121,9 @@ header {
     gap: 20px;
 }
 
-.navbar .nav-links {
-    display: flex;
-    gap: 15px;
-}
-
-.navbar .nav-links a {
-    text-decoration: none;
-    color: #17411D;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 8px 12px;
-    transition: background 0.3s;
-}
-
-/* Stilizacija ikonica */
-.navbar .icons {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    cursor: pointer;
-}
-
 .navbar .icons i {
     font-size: 20px;
     color: white;
-    cursor: pointer;
-}
-
-
-main {
-    margin-top: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    flex: 1;
-}
-
-.login-box {
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
-}
-
-.login-box h2 {
-    margin-bottom: 10px;
-}
-
-.login-box p {
-    margin-bottom: 20px;
-}
-
-.input-group {
-    text-align: left;
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-.password-wrapper {
-    position: relative;
-}
-
-.password-wrapper span {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
     cursor: pointer;
 }
 
@@ -193,12 +143,6 @@ button:hover {
     background: #333;
 }
 
-.forgot {
-    display: block;
-    margin-top: 15px;
-    font-size: 13px;
-    color: #555;
-}
 
 
 /* Footer stilovi */
@@ -254,3 +198,6 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+
+
