@@ -46,7 +46,9 @@ header {
 .navbar .logo {
     font-size: 24px;
     font-weight: bold;
-    font-style: Irish Grover; 
+    font-family: 'Irish Grover', cursive;
+    color: #55883B;
+    stroke: #744713;
 }
 
 .navbar .search-bar {
@@ -98,7 +100,7 @@ header {
 
 .navbar .nav-links a {
     text-decoration: none;
-    color: white;
+    color: #17411D;
     font-size: 14px;
     font-weight: bold;
     padding: 8px 12px;
@@ -180,7 +182,7 @@ main {
 button {
     width: 100%;
     padding: 12px;
-    background: #000;
+    background: #17411D;
     color: #fff;
     border: none;
     border-radius: 25px;
