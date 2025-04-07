@@ -204,7 +204,7 @@ button:hover {
 
 /* Footer stilovi */
 footer {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: space-around;
     background: #55883B;
