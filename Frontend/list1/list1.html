@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Page</title>
     <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="blank.css">
+    <link rel="stylesheet" href="list1.css">
 </head>
 
 <body>
@@ -58,6 +58,14 @@
         <section class="product-section">
             <h2>Our Collection Of Products</h2>
             <p>Showing X of X products</p>
+            <div class="sort-bar">
+                <select id="sort-options">
+                    <option value="price-asc">Sort by Price: Low to High</option>
+                    <option value="price-desc">Sort by Price: High to Low</option>
+                    <option value="name">Sort by Name</option>
+                    <option value="best-sellers">Sort by Best Sellers</option>
+                </select>
+            </div>
             <div class="product-grid">
                 <!-- Primer proizvoda -->
                 <div class="product-card">
