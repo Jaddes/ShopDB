@@ -1,0 +1,269 @@
+/* Reset osnovnih stilova */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #C1E899;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+header {
+    background: #C1E899;
+    padding: 0.1px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    background-color: #EB9C35;
+    padding: 15px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Irish Grover', cursive;
+    color: #55883B;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+.nav-links a:hover {
+    background: #C1E899;
+    border-radius: 5px;
+}
+
+.search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.search-bar input {
+    width: 60%;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+}
+
+.icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.icons button {
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Main Layout */
+.main-content {
+    display: flex;
+    padding: 150px 50px 50px;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-size: 14px;
+}
+
+.sidebar h4 {
+    margin-bottom: 10px;
+    color: #17411D;
+    border-bottom: 2px solid #EB9C35;
+    display: inline-block;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+/* Product Section */
+.product-section {
+    flex: 1;
+}
+
+.product-section h2 {
+    font-size: 22px;
+    color: #17411D;
+    margin-bottom: 10px;
+}
+
+.product-section p {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 100%;
+    height: 150px;
+    background: #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.product-price {
+    font-size: 14px;
+    color: #EB9C35;
+    margin-top: 5px;
+}
+
+.load-more {
+    margin: 30px auto 0;
+    display: block;
+    background: #17411D;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.load-more:hover {
+    background: #333;
+}
+
+/* Footer */
+footer {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    background: #55883B;
+    padding: 20px;
+    position: relative;
+    font-size: 14px;
+    margin-top: auto;
+    flex-wrap: wrap;
+}
+
+.footer-left, .footer-center, .footer-right {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+}
+
+.footer-center {
+    text-align: center;
+}
+
+.footer-center h3 {
+    font-family: 'Irish Grover', cursive;
+    color: #EB9C35;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.footer-right ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-right li {
+    margin-bottom: 5px;
+}
+
+footer a {
+    text-decoration: none;
+    color: #222;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
