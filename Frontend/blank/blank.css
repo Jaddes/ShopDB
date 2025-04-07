@@ -147,7 +147,7 @@ button:hover {
 
 /* Footer stilovi */
 footer {
-    width: 100%;
+    width: 100vw;
     display: flex;
     justify-content: space-around;
     background: #55883B;
@@ -162,7 +162,7 @@ footer {
     transition: transform 0.3s ease-in-out;
 }
 .footer-section {
-    
+    flex: 1;
     max-width: 300px;
 }
 
@@ -198,20 +198,6 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
-}
-
-.menu-icon {
-    font-size: 24px;
-    margin-right: 10px;
-    cursor: pointer;
-    color: #17411D;
-    padding: 5px;
-    border-radius: 50%;
-    transition: background 0.3s;
-}
-
-.menu-icon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
 }
 
 
