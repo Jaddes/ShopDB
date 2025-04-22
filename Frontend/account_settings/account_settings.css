@@ -1,0 +1,264 @@
+/* Reset osnovnih stilova */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Osnovni stil za ceo dokument */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #C1E899;
+    font-family: Arial, sans-serif;
+}
+
+/* Header stilovi */
+header {
+    background: #C1E899;
+    padding: 0.1px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Navigaciona traka */
+.navbar {
+    background-color: #EB9C35;
+    padding: 15px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Irish Grover', cursive;
+    color: #55883B;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+.search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.search-bar input {
+    width: 60%;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+}
+
+.navbar .icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    background: #EB9C35;
+    border-radius: 5px;
+}
+
+.navbar .left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar .icons i {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #17411D;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #333;
+}
+
+/* Footer stilovi */
+footer {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    background: #55883B;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    margin-top: auto;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.footer-section {
+    flex: 1;
+    max-width: 300px;
+}
+
+.footer-center {
+    text-align: center;
+}
+
+.footer-center h3 {
+    font-family: 'Irish Grover', cursive;
+    color: #EB9C35;
+    font-size: 54px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    border-bottom: 2px solid #fff;
+    display: inline-block;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    margin: 5px 0;
+}
+
+footer a {
+    text-decoration: none;
+    color: #222;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Account Settings */
+main {
+    padding-top: 160px;
+    width: 100%;
+}
+
+.account-container {
+    max-width: 1000px;
+    margin: 0 auto 50px;
+    padding: 0 20px;
+    text-align: center;
+    color: #17411D;
+}
+
+.account-container h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #17411D;
+    font-family: 'Irish Grover', cursive;
+}
+
+.account-info {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item span {
+    font-weight: bold;
+    color: #333;
+    flex: 0 0 200px;
+    text-align: left;
+}
+
+.info-item p {
+    flex: 1;
+    text-align: center;
+    color: #17411D;
+}
+
+.edit-btn {
+    padding: 6px 14px;
+    background: #17411D;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: auto;
+    min-width: 70px;
+    text-align: center;
+}
+
+.edit-btn:hover {
+    background: #333;
+}
+
