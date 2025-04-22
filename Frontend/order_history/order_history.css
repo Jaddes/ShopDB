@@ -1,0 +1,279 @@
+/* Reset osnovnih stilova */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Osnovni stil za ceo dokument */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #C1E899;
+    font-family: Arial, sans-serif;
+}
+
+
+/* Header stilovi */
+header {
+    background: #C1E899;
+    padding: 0.1px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Navigaciona traka */
+.navbar {
+    background-color: #EB9C35;
+    padding: 15px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Logo stilovi - koristi Irish Grover font */
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Irish Grover', cursive;
+    color: #55883B;
+}
+
+/* Navigacioni linkovi */
+.navbar .nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+/* Pretraga */
+.search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.search-bar input {
+    width: 60%;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+}
+
+/* Ikonice */
+.navbar .icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+
+.navbar a:hover {
+    background: #EB9C35;
+    border-radius: 5px;
+}
+
+.navbar .left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar .icons i {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #17411D;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #333;
+}
+
+
+
+/* Footer stilovi */
+footer {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    background: #55883B;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    margin-top: auto;
+    transform: translateY(100%); /* Pocetno sakriven */
+    transition: transform 0.3s ease-in-out;
+}
+.footer-section {
+    flex: 1;
+    max-width: 300px;
+}
+
+.footer-center {
+    text-align: center;
+}
+
+.footer-center h3 {
+    font-family: 'Irish Grover', cursive;
+    color: #EB9C35;
+    font-size: 54px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    border-bottom: 2px solid #fff;
+    display: inline-block;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    margin: 5px 0;
+}
+
+footer a {
+    text-decoration: none;
+    color: #222;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Order History sekcija */
+.order-history {
+    padding: 120px 30px 50px;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    color: #17411D;
+}
+
+.order-history h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #17411D;
+    font-family: 'Irish Grover', cursive;
+}
+
+.order-history p {
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #333;
+}
+
+.order-history table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.order-history th,
+.order-history td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.order-history th {
+    background: #55883B;
+    color: #fff;
+    font-weight: bold;
+}
+
+.order-history td a {
+    color: #EB9C35;
+    text-decoration: none;
+}
+
+.order-history td a:hover {
+    text-decoration: underline;
+}
+
+.status {
+    padding: 6px 14px;
+    background: #EB9C35;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.reorder-btn {
+    padding: 8px 16px;
+    background: #17411D;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.reorder-btn:hover {
+    background: #333;
+}
+
