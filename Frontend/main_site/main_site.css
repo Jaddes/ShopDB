@@ -286,3 +286,57 @@ footer a:hover {
     left: 100%;
     top: 0;
 }
+
+.category-wrapper {
+    width: 100%;
+    background-color: #E6E6E6; /* or whatever matches your site */
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    position: fixed;
+    top: 90px; /* adjusts below your navbar */
+    left: 0;
+    z-index: 998;
+    padding: 10px 0;
+}
+
+.category-bar {
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Linkovi unutar kategorija da izgledaju kao običan tekst */
+.dropdown a, 
+.sub-dropdown a, 
+.sub-sub-dropdown a {
+    text-decoration: none;
+    color: #17411D; /* prilagodljivo */
+    font-weight: bold;
+    padding: 8px 12px;
+    display: block; /* da cijela površina linka bude klikabilna */
+    transition: all 0.3s ease;
+    border-radius: 8px; /* zaobljene ivice */
+}
+
+/* Hover efekat za linkove */
+.dropdown a:hover, 
+.sub-dropdown a:hover, 
+.sub-sub-dropdown a:hover {
+    background-color: #EB9C35;
+    color: white;
+}
+
+.category-btn span {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Kada je otvoreno (hover ili klik) */
+.category.open .category-btn span {
+    transform: rotate(180deg);
+}
+
