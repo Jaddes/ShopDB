@@ -214,7 +214,7 @@ footer a:hover {
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;             /* ako je premalo mesta, ide u drugi red */
-    position: relative;
+    position: fixed;
     left: 50%;
     transform: translateX(-50%);
     z-index: 999;
@@ -238,4 +238,51 @@ footer a:hover {
 .category-btn:hover {
     background-color: #EB9C35;
     color: white;
+}
+
+.category {
+    position: relative;
+}
+
+.dropdown, .sub-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 10px 0;
+    list-style: none;
+    margin-top: 5px;
+    border-radius: 10px;
+    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+}
+
+.category:hover .dropdown {
+    display: block;
+}
+
+.dropdown {
+    top: 100%;
+    margin-top: 0;
+}
+
+.dropdown li {
+    padding: 8px 15px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dropdown li:hover {
+    background-color: #EB9C35;
+    color: white;
+}
+
+.has-submenu {
+    position: relative;
+}
+
+.has-submenu:hover .sub-dropdown {
+    display: block;
+    left: 100%;
+    top: 0;
 }
