@@ -41,7 +41,7 @@ header {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 90%;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -139,6 +139,10 @@ button {
     transition: background 0.3s;
 }
 
+.category-bar .category-btn {
+    width: auto; /* Ovo poništava width: 100% za ova dugmad */
+}
+
 button:hover {
     background: #333;
 }
@@ -147,7 +151,7 @@ button:hover {
 
 /* Footer stilovi */
 footer {
-    width: 100%;
+    width: 100vw;
     display: flex;
     justify-content: space-around;
     background: #55883B;
@@ -201,4 +205,37 @@ footer a:hover {
 }
 
 
+.category-bar {
+    margin-top: 110px;
+    width: auto;
+    display: flex;
+    flex-direction: row;         /* važno: vodoravno */
+    justify-content: center;     /* centrirano */
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;             /* ako je premalo mesta, ide u drugi red */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    padding: 10px 0;
+}
 
+.category-btn {
+    padding: 10px 24px;
+    background-color: #E6E6E6;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    color: #17411D;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.category-btn:hover {
+    background-color: #EB9C35;
+    color: white;
+}
