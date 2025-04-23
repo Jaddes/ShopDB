@@ -13,12 +13,22 @@
     <header>
         <div class="navbar">
             <div class="left-section">
-                <div class="logo">Floyd01 Shop</div>
-                <div class="menu-icon">☰</div>
+                <div class="logo">Floyd01 Shop</div> <!-- Ovaj tekst koristi 'Irish Grover' font -->
                 <nav class="nav-links">
-                    <a href="#">Home</a>
-                    <a href="#">Collections</a>
-                    <a href="#">New</a>
+                    <a href="#">Početna</a>
+                    <div class="category">
+                        <a href="#">Kategorije ▾</a>
+                        <!-- ✅ DROPDOWN mora biti unutar .category -->
+                        <ul class="dropdown">
+                          <li><a href="#">Odeća ▾</a></li>
+                          <li><a href="#">Kuća ▾</a></li>
+                          <li><a href="#">Sport ▾</a></li>
+                          <li><a href="#">Elektronika ▾</a></li>
+                          <li><a href="#">Lepota ▾</a></li>
+                          <li><a href="#">Aksesoari ▾</a></li>
+                        </ul>
+                    <a href="#">Novo</a>
+                    <a href="#">Akcija</a>
                 </nav>
             </div>
             <div class="search-bar">
@@ -34,36 +44,37 @@
 
     <main class="main-content">
         <aside class="sidebar">
-            <div class="categories">
+            <div class="KATEGORIJE">
                 <h4>Categories</h4>
                 <ul>
-                    <li><a href="#">kategorija 1</a></li>
-                    <li><a href="#">kategorija 2</a></li>
-                    <li><a href="#">kategorija 3</a></li>
-                    <li><a href="#">kategorija 4</a></li>
-                    <li><a href="#">kategorija 5</a></li>
+                    <li><a href="#">Odeća ▾</a></li>
+                    <li><a href="#">Kuća ▾</a></li>
+                    <li><a href="#">Sport ▾</a></li>
+                    <li><a href="#">Elektronika ▾</a></li>
+                    <li><a href="#">Lepota ▾</a></li>
+                    <li><a href="#">Aksesoari ▾</a></li>
                 </ul>
             </div>
-            <div class="price-range">
+            <div class="RASPON CENE">
                 <h4>Price Range</h4>
                 <ul>
-                    <li><label><input type="checkbox"> 0.00€ - 10.00€</label></li>
-                    <li><label><input type="checkbox"> 10.00€ - 50.00€</label></li>
-                    <li><label><input type="checkbox"> 50.00€ - 100.00€</label></li>
-                    <li><label><input type="checkbox"> 100.00€ - 200.00€</label></li>
+                    <li><label><input type="checkbox"> 0 - 1000 </label></li>
+                    <li><label><input type="checkbox"> 1000 - 2000</label></li>
+                    <li><label><input type="checkbox"> 2000 - 3000</label></li>
+                    <li><label><input type="checkbox"> 3000 - max</label></li>
                 </ul>
             </div>
         </aside>
 
         <section class="product-section">
-            <h2>Our Collection Of Products</h2>
+            <h2>SVI PROIZVODI</h2>
             <p>Showing X of X products</p>
             <div class="sort-bar">
                 <select id="sort-options">
-                    <option value="price-asc">Sort by Price: Low to High</option>
-                    <option value="price-desc">Sort by Price: High to Low</option>
-                    <option value="name">Sort by Name</option>
-                    <option value="best-sellers">Sort by Best Sellers</option>
+                    <option value="price-asc">po ceni: rastuće</option>
+                    <option value="price-desc">po ceni: opadajuče</option>
+                    <option value="name">po nazivu</option>
+                    <option value="best-sellers">po popularnosti</option>
                 </select>
             </div>
             <div class="product-grid">
@@ -75,7 +86,7 @@
                 </div>
                 <!-- Možeš klonirati više ovakvih kartica -->
             </div>
-            <button class="load-more">Load More</button>
+            <button class="load-more">Učitaj više</button>
         </section>
     </main>
 
@@ -101,7 +112,7 @@
         </div>
     </footer>  
 
-    <script src="script.js"></script>
+    <script src="list1.js"></script>
 </body>
 
 </html>
