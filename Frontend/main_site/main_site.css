@@ -430,5 +430,139 @@ footer a:hover {
     color: #000;
 }
 
+.top-categories-section {
+    width: 100%;
+    background-color: #C1E899;
+    padding: 60px 20px;
+}
+
+.top-header {
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.top-header h2 {
+    font-size: 28px;
+    color: #17411D;
+}
+
+.top-header p {
+    color: #2d492f;
+    font-size: 14px;
+}
+
+.top-category-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.top-card {
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.top-card:hover {
+    transform: scale(1.02);
+}
+
+.top-img {
+    height: 250px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.top-card h3 {
+    font-size: 16px;
+    color: #17411D;
+    margin-bottom: 5px;
+}
+
+.top-card p {
+    font-size: 14px;
+    color: #000;
+}
+
+.full-width-btn {
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #17411D;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.full-width-btn:hover {
+    background-color: #2a682e;
+}
+
+.view-all-btn {
+    background-color: #17411D;
+    color: white;
+    padding: 10px 25px;
+    font-size: 14px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.view-all-btn:hover {
+    background-color: #2a682e;
+}
+
+.top-header-text {
+    flex: 1;
+  }
+  
+  .top-header-button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .most-popular-section {
+    width: 100%;
+    background-color: #C1E899;
+    padding: 60px 20px;
+}
+
+.popular-header {
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.popular-header-text {
+    flex: 1;
+}
+
+.popular-header-button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
 
 
