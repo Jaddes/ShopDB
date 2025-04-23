@@ -59,6 +59,8 @@ header {
 .navbar .nav-links {
     display: flex;
     gap: 15px;
+    align-items: center;
+    height: 100%;      
 }
 
 .navbar .nav-links a {
@@ -69,6 +71,46 @@ header {
     padding: 8px 12px;
     transition: background 0.3s;
 }
+
+.navbar .category {
+    position: relative;
+}
+
+.navbar .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #F6F6F6;
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 999;
+    min-width: 150px;
+}
+
+.navbar .dropdown li {
+    list-style: none;
+    padding: 8px 20px;
+}
+
+.navbar .dropdown li a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    display: block;
+}
+
+.navbar .dropdown li a:hover {
+    background-color: #EB9C35;
+    color: white;
+    border-radius: 5px;
+}
+
+.navbar .category:hover .dropdown {
+    display: block;
+}
+
 
 /* Pretraga */
 .search-bar {
@@ -354,7 +396,7 @@ footer a:hover {
     margin: 0 auto 30px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
 }
 
@@ -407,7 +449,7 @@ footer a:hover {
 
 .product-card p {
     font-size: 14px;
-    color: #000;
+    color: #2d492f;
 }
 
 .discount-badge {
@@ -492,7 +534,7 @@ footer a:hover {
 
 .top-card p {
     font-size: 14px;
-    color: #000;
+    color: #17411D;
 }
 
 .full-width-btn {
@@ -563,6 +605,14 @@ footer a:hover {
     align-items: center;
 }
 
+.popular-header h2 {
+    font-size: 28px;
+    color: #17411D;
+}
 
+.popular-header p {
+    color: #2d492f;
+    font-size: 14px;
+}
 
 

@@ -16,11 +16,22 @@
             <div class="left-section">
                 <div class="logo">Floyd01 Shop</div> <!-- Ovaj tekst koristi 'Irish Grover' font -->
                 <nav class="nav-links">
-                    <a href="#">Home</a>
-                    <a href="#">Collections</a>
-                    <a href="#">New</a>
-                </nav>
-            </div>
+                  <a href="#">Početna</a>
+                  <div class="category">
+                      <a href="#">Kategorije ▾</a>
+                      <!-- ✅ DROPDOWN mora biti unutar .category -->
+                      <ul class="dropdown">
+                        <li><a href="#">Odeća ▾</a></li>
+                        <li><a href="#">Kuća ▾</a></li>
+                        <li><a href="#">Sport ▾</a></li>
+                        <li><a href="#">Elektronika ▾</a></li>
+                        <li><a href="#">Lepota ▾</a></li>
+                        <li><a href="#">Aksesoari ▾</a></li>
+                      </ul>
+                  <a href="#">Novo</a>
+                  <a href="#">Akcija</a>
+              </nav>
+          </div>
             <div class="search-bar">
                 <input type="text" placeholder="Search...">
             </div>
@@ -165,8 +176,8 @@
         
         <section class="featured-products">
             <div class="featured-header">
-              <h2>Featured Products</h2>
-              <p>Preporučeni proizvodi sa specijalnim popustima.</p>
+              <h2>Proizvodi na akciji</h2>
+              <p>Proizvodi na sniženju.</p>
             </div>
             <div class="product-grid">
               <!-- Primer 1 -->
@@ -197,7 +208,7 @@
               <div class="product-card">
                 <span class="discount-badge">-20%</span>
                 <div class="product-image" style="background-image: url('https://via.placeholder.com/200x250?text=Image+4');"></div>
-                <h3>Gaming Laptop</h3>
+                <h3>GOGO med</h3>
                 <p><s>$60.00</s> <strong>$48.00</strong></p>
                 <button class="add-btn">＋</button>
               </div>
@@ -215,8 +226,8 @@
           <section class="top-categories-section">
             <div class="top-header">
                 <div class="top-header-text">
-                  <h2>Najbolje iz kategorija</h2>
-                  <p>Izdvojeni najpopularniji proizvodi iz svake glavne kategorije.</p>
+                  <h2>Najpopularnije</h2>
+                  <p>Izdvojeni najpopularniji proizvodi iz svake kategorije.</p>
                 </div>
                 <div class="top-header-button">
                   <button class="view-all-btn">Pogledaj sve ➤</button>
@@ -256,8 +267,8 @@
           <section class="most-popular-section">
             <div class="popular-header">
               <div class="popular-header-text">
-                <h2>Najpopularniji proizvodi</h2>
-                <p>Pregled najviše prodavanih proizvoda u našoj prodavnici.</p>
+                <h2>Novi proizvodi</h2>
+                <p>Novi proizvodi u našoj prodavnici.</p>
               </div>
               <div class="popular-header-button">
                 <button class="view-all-btn">Pogledaj sve ➤</button>

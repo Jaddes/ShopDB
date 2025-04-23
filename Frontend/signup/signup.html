@@ -16,9 +16,20 @@
             <div class="left-section">
                 <div class="logo">Floyd01 Shop</div> <!-- Ovaj tekst koristi 'Irish Grover' font -->
                 <nav class="nav-links">
-                    <a href="#">Home</a>
-                    <a href="#">Collections</a>
-                    <a href="#">New</a>
+                    <a href="#">Početna</a>
+                    <div class="category">
+                        <a href="#">Kategorije ▾</a>
+                        <!-- ✅ DROPDOWN mora biti unutar .category -->
+                        <ul class="dropdown">
+                          <li><a href="#">Odeća ▾</a></li>
+                          <li><a href="#">Kuća ▾</a></li>
+                          <li><a href="#">Sport ▾</a></li>
+                          <li><a href="#">Elektronika ▾</a></li>
+                          <li><a href="#">Lepota ▾</a></li>
+                          <li><a href="#">Aksesoari ▾</a></li>
+                        </ul>
+                    <a href="#">Novo</a>
+                    <a href="#">Akcija</a>
                 </nav>
             </div>
             <div class="search-bar">
@@ -35,37 +46,38 @@
     <!-- Glavni sadrzaj stranice - prazna sekcija koja moze biti koriscena za razlicite stranice -->
     <main>
         <div class="signup-box">
-            <h2>Sign Up</h2>
+            <h2>Registruj se</h2>
+            <p>Imaš nalog? <a href="#">Uloguj se.</a></p>
             <form id="signupForm">
                 <div class="form-row">
                     <div class="input-group">
-                        <label for="firstName">First Name</label>
+                        <label for="firstName">Ime</label>
                         <input type="text" id="firstName" required>
                     </div>
                     <div class="input-group">
-                        <label for="lastName">Last Name</label>
+                        <label for="lastName">Prezime</label>
                         <input type="text" id="lastName" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="input-group">
-                        <label for="street">Street</label>
+                        <label for="street">Ulica</label>
                         <input type="text" id="street" required>
                     </div>
                     <div class="input-group">
-                        <label for="number">Number</label>
+                        <label for="number">Broj</label>
                         <input type="text" id="number" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="input-group">
-                        <label for="city">City</label>
+                        <label for="city">Grad</label>
                         <input type="text" id="city" required>
                     </div>
                     <div class="input-group">
-                        <label for="zip">Postal Code</label>
+                        <label for="zip">Poštanski broj</label>
                         <input type="text" id="zip" required>
                     </div>
                 </div>
@@ -76,21 +88,21 @@
                         <input type="email" id="email" required>
                     </div>
                     <div class="input-group">
-                        <label for="phone">Phone Number</label>
+                        <label for="phone">Broj telefona</label>
                         <input type="tel" id="phone" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="input-group">
-                        <label for="password">Password</label>
+                        <label for="password">Lozinka</label>
                         <div class="password-wrapper">
                             <input type="password" id="password" required>
                             <span id="togglePassword">👁️</span>
                         </div>
                     </div>
                     <div class="input-group">
-                        <label for="confirmPassword">Confirm Password</label>
+                        <label for="confirmPassword">Potvrdite lozinku</label>
                         <div class="password-wrapper">
                             <input type="password" id="confirmPassword" required>
                             <span id="toggleConfirmPassword">👁️</span>
@@ -98,7 +110,7 @@
                     </div>
                 </div>
 
-                <button type="submit">Sign Up</button>
+                <button type="submit">Registruj se</button>
             </form>
         </div>
     </main>
