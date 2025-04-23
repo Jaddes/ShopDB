@@ -17,11 +17,22 @@
         <!-- Putting the link in sections -->
         <div class="navbar">
             <div class="left-section">
-                <div class="logo">Floyd01 Shop</div>
+                <div class="logo">Floyd01 Shop</div> <!-- Ovaj tekst koristi 'Irish Grover' font -->
                 <nav class="nav-links">
-                    <a href="#">Home</a>
-                    <a href="#">Collections</a>
-                    <a href="#">New</a>
+                    <a href="#">Početna</a>
+                    <div class="category">
+                        <a href="#">Kategorije ▾</a>
+                        <!-- ✅ DROPDOWN mora biti unutar .category -->
+                        <ul class="dropdown">
+                          <li><a href="#">Odeća ▾</a></li>
+                          <li><a href="#">Kuća ▾</a></li>
+                          <li><a href="#">Sport ▾</a></li>
+                          <li><a href="#">Elektronika ▾</a></li>
+                          <li><a href="#">Lepota ▾</a></li>
+                          <li><a href="#">Aksesoari ▾</a></li>
+                        </ul>
+                    <a href="#">Novo</a>
+                    <a href="#">Akcija</a>
                 </nav>
             </div>
             <div class="search-bar">
@@ -39,26 +50,26 @@
 
     <main>
         <div class="login-box">
-            <h2>Login</h2>
+            <h2>Uloguj se</h2>
             <!-- # znaci da ne vodi nigde ali to je anchor znaci da bi trebalo kasnije da se doda -->
-            <p>Don't have an account? <a href="#">Create a new one.</a></p>
+            <p>Nemaš nalog? <a href="#">Registruj se.</a></p>
 
             <div class="input-group">
-                <label for="email">Enter Your Email Or Phone</label>
+                <label for="email">Unesite email ili broj telefona</label>
                 <!-- placeholder je onaj tekst sto se zameni i tu pre pisanja email -->
                 <input type="text" id="email" placeholder="michael.joe@email.com">
             </div>
 
             <div class="input-group">
-                <label for="password">Enter Your Password</label>
+                <label for="password">Unesite lozinku</label>
                 <div class="password-wrapper">
                     <input type="password" id="password" placeholder="******">
                     <span id="togglePassword">👁️</span>
                 </div>
             </div>
 
-            <button onclick="login()">Login</button>
-            <a href="#" class="forgot">Forgot Your Password?</a>
+            <button onclick="login()">Uloguj se</button>
+            <a href="#" class="forgot">Zaboravljena lozinka?</a>
         </div>
     </main>
 
@@ -84,7 +95,7 @@
         </div>
     </footer>  
     
-    <script src="script.js"></script>
+    <script src="login.js"></script>
 </body>
 
 </html>
