@@ -330,13 +330,15 @@ footer a:hover {
     color: white;
 }
 
-.category-btn span {
+/* Ikonica trougla span - rotacija kao ▶️ i ▼ */
+.category .category-btn span {
     display: inline-block;
     transition: transform 0.3s ease;
+    transform: rotate(-90deg); /* default: ▶️ */
 }
 
-/* Kada je otvoreno (hover ili klik) */
-.category.open .category-btn span {
-    transform: rotate(180deg);
+.category:hover .category-btn span {
+    transform: rotate(0deg); /* na hover: ▼ */
 }
+
 
