@@ -41,7 +41,7 @@ header {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 90%;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -55,10 +55,59 @@ header {
     color: #55883B;
 }
 
-/* Navigacioni linkovi */
 .navbar .nav-links {
     display: flex;
     gap: 15px;
+    align-items: center;
+    height: 100%;      
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+.navbar .category {
+    position: relative;
+}
+
+.navbar .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #F6F6F6;
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 999;
+    min-width: 150px;
+}
+
+.navbar .dropdown li {
+    list-style: none;
+    padding: 8px 20px;
+}
+
+.navbar .dropdown li a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    display: block;
+}
+
+.navbar .dropdown li a:hover {
+    background-color: #EB9C35;
+    color: white;
+    border-radius: 5px;
+}
+
+.navbar .category:hover .dropdown {
+    display: block;
 }
 
 .navbar .nav-links a {
@@ -146,7 +195,7 @@ button:hover {
 /*  main */
 
 .signup-box {
-    background: white;
+    background: #eb9c3565;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -157,8 +206,11 @@ button:hover {
 }
 
 .signup-box h2 {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #17411D;
+}
+.signup-box p {
+    margin-bottom: 20px;
 }
 
 /* Stil za input polja u dve kolone */
