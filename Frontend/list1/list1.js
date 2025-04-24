@@ -1,11 +1,12 @@
+document.querySelectorAll('.side-category .side-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+      btn.parentElement.classList.toggle('open');
+  });
+});
 
-document.addEventListener("scroll", function() {
-    const footer = document.querySelector("footer");
-
-    // Proverava da li je korisnik skrolovao do dna stranice
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        footer.style.transform = "translateY(0)"; // Footer se prikazuje
-    } else {
-        footer.style.transform = "translateY(100%)"; // Footer ostaje sakriven
-    }
+document.querySelectorAll('.sub-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    btn.parentElement.classList.toggle('open');
+  });
 });

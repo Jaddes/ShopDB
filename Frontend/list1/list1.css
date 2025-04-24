@@ -83,7 +83,7 @@ header {
     padding: 10px 0;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     z-index: 999;
-    min-width: 150px;
+    min-width: 200px;
 }
 
 .navbar .dropdown li {
@@ -104,10 +104,10 @@ header {
     border-radius: 5px;
 }
 
-.navbar .category:hover .dropdown {
-    display: block;
+.navbar .category > a:hover + .dropdown,
+.navbar .dropdown:hover {
+  display: block;
 }
-
 
 .search-bar {
     flex: 1;
@@ -360,3 +360,150 @@ footer a:hover {
 .load-more:hover {
     background-color: #d1882f;
 }
+
+.side-category {
+    margin-bottom: 15px;
+}
+
+.side-btn {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font-weight: bold;
+    color: #17411D;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.side-btn:hover {
+    background-color: #EB9C35;
+    color: white;
+}
+
+.side-btn span {
+    float: right;
+    transition: transform 0.3s ease;
+}
+
+.side-category.open .side-btn span {
+    transform: rotate(90deg);
+}
+
+.side-dropdown {
+    list-style: none;
+    padding-left: 15px;
+    margin-top: 10px;
+    display: none;
+}
+
+.side-category.open .side-dropdown {
+    display: block;
+}
+
+.side-dropdown li {
+    margin-bottom: 5px;
+}
+
+.side-dropdown a {
+    color: #17411D;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.side-dropdown a:hover {
+    text-decoration: underline;
+}
+
+/* Unutar sidebar navigacije */
+.side-dropdown li {
+    position: relative;
+    margin-bottom: 5px;
+    padding-left: 10px;
+  }
+  
+  .sub-btn {
+    background: none;
+    border: none;
+    font-weight: normal;
+    font-size: 14px;
+    color: #17411D;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 4px 0;
+  }
+  
+  .sub-btn:hover {
+    color: #EB9C35;
+  }
+  
+  .sub-btn span {
+    float: right;
+    transition: transform 0.3s ease;
+  }
+  
+  .sub-dropdown {
+    display: none;
+    list-style: none;
+    padding-left: 15px;
+    margin-top: 5px;
+  }
+  
+  .side-dropdown li.open .sub-dropdown {
+    display: block;
+  }
+  
+  .side-dropdown li.open .sub-btn span {
+    transform: rotate(90deg);
+  }
+  
+  /* Unutar glavne navigacije */
+.navbar .dropdown-submenu {
+    position: relative;
+  }
+  
+  .navbar .dropdown-submenu:hover > .sub-dropdown {
+    display: block;
+  }
+  
+  .navbar .sub-dropdown {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: #F6F6F6;
+    padding: 10px 0;
+    min-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 999;
+  }
+  
+  .navbar .sub-dropdown li {
+    padding: 8px 20px;
+  }
+  
+  .navbar .sub-dropdown li a {
+    color: #17411D;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .navbar .sub-dropdown li a:hover {
+    background-color: #EB9C35;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .dropdown-submenu > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+
+  
