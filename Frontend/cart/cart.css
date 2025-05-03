@@ -220,13 +220,16 @@ main.cart-container h2 {
     flex-wrap: wrap;
     gap: 20px;
     margin-bottom: 40px;
+    justify-content: space-between;
 }
 
 .cart-items {
-    flex: 2;
+    flex: 1;
+    max-width: calc(100% - 180px); /* Oduzmi širinu .cart-summary + margina */
     background: white;
     border-radius: 10px;
     padding: 20px;
+    overflow-x: auto;
 }
 
 .cart-items table {
@@ -250,14 +253,16 @@ main.cart-container h2 {
 
 
 .cart-summary {
-    position: sticky; 
-    top: 100px;
-    align-self: start;
+    position: fixed;
+    top: 260px; 
+    left: 60%;
+    transform: translateX(280px); /* Pomeri desno od centra stranice */
+    width: 280px;
     background-color: #f9f9f9;
-    padding: 10px 20px 20px 20px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10; /* Dodato za sigurnost da ne bude prekriven */
+    z-index: 10;
 }
 
 
@@ -295,6 +300,7 @@ main h3 {
     gap: 20px;
     margin-top: 20px;
     margin-bottom: 60px;
+    margin-right: 180px;
 }
 
 .recommended-item {
