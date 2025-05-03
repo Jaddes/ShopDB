@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Korpa - Floyd01 Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="cart.css" />
+</head>
+
+<body>
+    <header>
+        <!-- Navigaciona traka -->
+        <div class="navbar">
+            <div class="left-section">
+                <div class="logo">Floyd01 Shop</div>
+                <nav class="nav-links">
+                    <a href="#">Početna</a>
+                    <div class="category">
+                        <a href="#">Kategorije ▾</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Odeća ▾</a></li>
+                            <li><a href="#">Kuća ▾</a></li>
+                            <li><a href="#">Sport ▾</a></li>
+                            <li><a href="#">Elektronika ▾</a></li>
+                            <li><a href="#">Lepota ▾</a></li>
+                            <li><a href="#">Aksesoari ▾</a></li>
+                        </ul>
+                    </div>
+                    <a href="#">Novo</a>
+                    <a href="#">Akcija</a>
+                </nav>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search..." />
+            </div>
+            <div class="icons">
+                <button>🧡</button>
+                <button>🛒</button>
+                <button>👤</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="cart-container">
+        <h2>Vaša korpa</h2>
+        <div class="cart-content">
+            <div class="cart-items">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Proizvod</th>
+                            <th>Cena</th>
+                            <th>Količina</th>
+                            <th>Ukupno</th>
+                            <th>Ukloni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Double-Beds (Evening)</td>
+                            <td>9000RSD</td>
+                            <td><input type="number" value="1" min="1" /></td>
+                            <td>9000RSD</td>
+                            <td><button class="delete-btn">🗑</button></td>
+                        </tr>
+                        <tr>
+                            <td>Double-Beds (Evening)</td>
+                            <td>9000RSD</td>
+                            <td><input type="number" value="1" min="1" /></td>
+                            <td>9000RSD</td>
+                            <td><button class="delete-btn">🗑</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cart-summary">
+                <h3>Ukupno</h3>
+                <p>Međuzbir: 18000RSD</p>
+                <p>Dostava: 400RSD</p>
+                <p><strong>Ukupno: 18400RSD</strong></p>
+                <button>Nastavi na plaćanje</button>
+            </div>
+        </div>
+
+        <h3>Možda će vam se svideti</h3>
+        <div class="recommendations">
+            <a href="proizvod1.html" class="recommended-item">
+                <img src="slike/proizvod1.jpg" />
+                <p>Double Bed & Side Tables</p>
+                <span>1200RSD</span>
+            </a>
+            <a href="proizvod2.html" class="recommended-item">
+                <img src="slike/proizvod2.jpg"  />
+                <p>Modern Sofa Set</p>
+                <span>2000RSD</span>
+            </a>
+            <a href="proizvod3.html" class="recommended-item">
+                <img src="slike/proizvod3.jpg"  />
+                <p>Modern Sofa Set</p>
+                <span>1600RSD</span>
+            </a>
+            <a href="proizvod4.html" class="recommended-item">
+                <img src="slike/proizvod4.jpg"  />
+                <p>Boris's PP</p>
+                <span>FREE</span>
+            </a>
+        </div>
+        
+    </main>
+
+    <footer>
+        <div class="footer-left footer-section">
+            <p>Contact Us</p>
+            <p>📞 WhatsApp: +381 653364750</p>
+            <p>📞 Viber: +381 653364750</p>
+            <p>📞 Call Us: +381 653364750</p>
+            <p>Mail: stamenovicvladan71@gmail.com</p>
+        </div>
+        <div class="footer-center footer-section">
+            <h3>Floyd01 Shop</h3>
+            <p>© 2025 All rights reserved.</p>
+        </div>
+        <div class="footer-right footer-section">
+            <p>Customer Services</p>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
