@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proizvod</title>
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="product.css">
+</head>
+
+<body>
+    <header>
+        <!-- Navigaciona traka -->
+        <div class="navbar">
+            <div class="left-section">
+                <div class="logo">Floyd01 Shop</div> <!-- Ovaj tekst koristi 'Irish Grover' font -->
+                <nav class="nav-links">
+                    <a href="#">Početna</a>
+                    <div class="category">
+                        <a href="#">Kategorije ▾</a>
+                        <ul class="dropdown">
+                          <li class="dropdown-submenu">
+                            <a href="#">Odeća ▾</a>
+                            <ul class="dropdown sub-dropdown">
+                              <li><a href="#">Majice</a></li>
+                              <li><a href="#">Farmerke</a></li>
+                              <li><a href="#">Kape</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#">Kuća ▾</a>
+                            <ul class="dropdown sub-dropdown">
+                              <li><a href="#">Kuhinja</a></li>
+                              <li><a href="#">Dekoracije</a></li>
+                              <li><a href="#">Osvetljenje</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#">Sport ▾</a>
+                            <ul class="dropdown sub-dropdown">
+                              <li><a href="#">Teretana</a></li>
+                              <li><a href="#">Lopte</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#">Elektronika ▾</a>
+                            <ul class="dropdown sub-dropdown">
+                              <li class="dropdown-submenu">
+                                <a href="#">Telefoni ▾</a>
+                                <ul class="dropdown sub-dropdown right-align">
+                                  <li><a href="#">iPhone</a></li>
+                                  <li><a href="#">Samsung</a></li>
+                                  <li><a href="#">Xiaomi</a></li>
+                                </ul>
+                              </li>
+                              <li><a href="#">Televizori</a></li>
+                              <li><a href="#">Smart satovi</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#">Lepota ▾</a>
+                            <ul class="dropdown sub-dropdown">
+                              <li><a href="#">Parfemi</a></li>
+                              <li><a href="#">Šminka</a></li>
+                              <li><a href="#">Kreme za lice</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#">Aksesoari ▾</a>
+                            <ul class="dropdown sub-dropdown">
+                              <li><a href="#">Nakit</a></li>
+                              <li><a href="#">Torbe</a></li>
+                              <li><a href="#">Satovi</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>                      
+                    <a href="#">Novo</a>
+                    <a href="#">Akcija</a>
+                </nav>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="icons">
+                <button>🧡</button>
+                <button>🛒</button>
+                <button>👤</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Glavni sadrzaj stranice - prazna sekcija koja moze biti koriscena za razlicite stranice -->
+    <main>
+      <div class="product-wrapper">
+        <!-- Leva galerija -->
+        <div class="product-left">
+          <div class="gallery-column">
+            <img src="https://via.placeholder.com/60" class="thumb" alt="Thumb 1">
+            <img src="https://via.placeholder.com/60" class="thumb selected" alt="Thumb 2">
+            <img src="https://via.placeholder.com/60" class="thumb" alt="Thumb 3">
+          </div>
+      
+          <!-- Glavna slika -->
+          <div class="main-image">
+            <img src="https://via.placeholder.com/400" alt="Main Product Image">
+          </div>
+        </div>
+
+        <!-- Desni deo: informacije -->
+        <div class="product-right">
+            <div class="product-details">
+              <div class="title-bar">
+                <h2>Anja white socks (used for 2 weeks)</h2>
+                <button class="favorite">♡</button>
+              </div>
+              <p class="price">$30.99 <span class="reviews">| ★★★★★ (3254 review)</span></p>
+        
+              <p class="description">
+                High quality pics and taste tested. No virus or HIV. Its clear and perfect taste  
+              </p>
+        
+              <ul class="feature-list">
+                <li>A class taste</li>
+                <li>Edible</li>
+                <li>Great present for loved ones</li>
+              </ul>
+        
+              <!-- Opcije dizajna -->
+              <div class="design-section">
+                <img src="https://via.placeholder.com/100" alt="Design">
+                <div class="design-buttons">
+                  <button>Ime dizajna</button>
+                  <div class="nav-design">
+                    <button>&larr;</button>
+                    <button>Dizajn</button>
+                    <button>&rarr;</button>
+                  </div>
+                </div>
+              </div>
+      
+            <!-- Količina i kupovina -->
+            <div class="purchase-section">
+              <div class="quantity">
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+              </div>
+              <button class="add-cart">Add to Cart</button>
+              <button class="buy-now">Buy Now</button>
+            </div>
+      
+            <!-- Info ispod -->
+            <div class="shipping-info">
+              <p>🚚 Free worldwide shipping on all orders over $100</p>
+              <p>📦 Delivers in 3-7 Working Days <a href="#">Shipping & Return</a></p>
+            </div>
+          </div>
+        </div>        
+      </div>
+      
+      <section class="more-info-section">
+        <div class="info-header">
+          <h2>Opis proizvoda</h2>
+          <p class="rating">★★★★★ (3254 ocena)</p>
+        </div>
+      
+        <div class="info-columns">
+          <div class="info-left">
+            <ul>
+              <li><strong>Kategorija:</strong> Odeća</li>
+              <li><strong>Materijal:</strong> Pamuk 100%</li>
+              <li><strong>Stil:</strong> Casual</li>
+              <li><strong>Boja:</strong> Bela</li>
+              <li><strong>Veličine:</strong> S, M, L, XL</li>
+              <li><strong>Brend:</strong> Anja Wear</li>
+              <li><strong>Stanje:</strong> Korišćeno</li>
+            </ul>
+          </div>
+          <div class="info-right">
+            <h3>Detaljan opis</h3>
+            <p>Ove bele čarape su korišćene dve nedelje i imaju visoku ocenu zadovoljstva. Idealan poklon za posebne prilike, izrađene od najfinijeg pamuka, sa potvrdom o higijenskoj čistoći. Dostupne u više veličina.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <footer>
+        <div class="footer-left">
+            <p>Contact Us</p>
+            <p>📞 WhatsApp: +381 653364750</p>
+            <p>📞 Viber: +381 653364750</p>
+            <p>📞 Call Us: +381 653364750</p>
+            <p>Mail: stamenovicvladan71@gmail.com</p>
+        </div>
+        <div class="footer-center">
+            <h3>Floyd01 Shop</h3>
+            <p>© 2025 All rights reserved.</p>
+        </div>
+        <div class="footer-right">
+            <p>Customer Services</p>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </footer>  
+    
+    <script src="product.js"></script>
+</body>
+
+</html>
