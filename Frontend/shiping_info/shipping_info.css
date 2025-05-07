@@ -396,6 +396,7 @@
   .checkbox-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
     margin: 10px 0;
   }
