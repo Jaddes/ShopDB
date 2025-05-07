@@ -1,0 +1,428 @@
+/* Reset osnovnih stilova */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Osnovni stil za ceo dokument */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #C1E899;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Header stilovi */
+header {
+    background: #C1E899;
+    padding: 0.1px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Navigaciona traka */
+.navbar {
+    background-color: #EB9C35;
+    padding: 15px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Logo stilovi - koristi Irish Grover font */
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Irish Grover', cursive;
+    color: #55883B;
+}
+
+/* Navigacioni linkovi */
+.navbar .nav-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    height: 100%;      
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+.navbar .category {
+    position: relative;
+}
+
+/* Pretraga */
+.search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.search-bar input {
+    width: 60%;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+}
+
+/* Ikonice */
+.navbar .icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    background: #EB9C35;
+    border-radius: 5px;
+}
+
+.navbar .left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar .icons i {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #17411D;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #333;
+}
+
+
+
+
+
+/* Footer stilovi */
+footer {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    background: #55883B;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    margin-top: auto;
+    transform: translateY(100%); /* Pocetno sakriven */
+    transition: transform 0.3s ease-in-out;
+}
+.footer-section {
+    flex: 1;
+    max-width: 300px;
+}
+
+.footer-center {
+    text-align: center;
+}
+
+.footer-center h3 {
+    font-family: 'Irish Grover', cursive;
+    color: #EB9C35;
+    font-size: 54px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    border-bottom: 2px solid #fff;
+    display: inline-block;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    margin: 5px 0;
+}
+
+footer a {
+    text-decoration: none;
+    color: #222;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+main.cart-container {
+    width: 100%;
+    padding: 40px 5%;
+    box-sizing: border-box;
+}
+
+main.cart-container h2 {
+    margin-bottom: 20px;
+}
+
+.cart-content {
+    display: block;
+    flex-wrap: wrap;
+    flex-direction: column; 
+    gap: 20px;
+    margin-bottom: 40px;
+    justify-content: space-between;
+}
+
+.cart-items {
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.cart-items table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.cart-items thead tr {
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+.cart-items td, .cart-items th {
+    padding: 10px 5px;
+}
+
+.cart-items input[type="number"] {
+    width: 50px;
+    padding: 4px;
+}
+
+
+.cart-summary {
+    position: fixed;
+    top: 260px; 
+    left: 60%;
+    transform: translateX(280px); /* Pomeri desno od centra stranice */
+    width: 280px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+
+.cart-summary h3 {
+    margin-bottom: 30px; /* Veći razmak ispod naslova */
+    font-size: 1.4em;
+    margin-top: 10px; 
+}
+
+.cart-summary p {
+    margin-bottom: 12px; /* Razmak između redova */
+    font-size: 1em;
+}
+
+.cart-summary p strong {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+main h2 {
+    margin-top: 100px; /* Povećan razmak od gornjeg menija */
+    margin-bottom: 20px;
+    font-size: 1.6em;
+}
+
+main h3 {
+    margin-top: 60px; /* Veći razmak iznad sekcije sa preporukama */
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+.recommendations {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* fiksno 6 kolona */
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 0;
+}
+
+.recommended-item {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: inherit;
+    text-align: center;
+}
+
+.recommended-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.recommended-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.recommended-item p {
+    margin: 10px 0 5px;
+    font-weight: 600;
+}
+
+.recommended-item span {
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    color: #444;
+}
+
+.navbar .category {
+    position: relative;
+}
+
+.navbar .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #F6F6F6;
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 999;
+    min-width: 200px;
+}
+
+.navbar .dropdown li {
+    list-style: none;
+    padding: 8px 20px;
+}
+
+.navbar .dropdown li a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    display: block;
+}
+
+.navbar .dropdown li a:hover {
+    background-color: #EB9C35;
+    color: white;
+    border-radius: 5px;
+}
+
+.navbar .category > a:hover + .dropdown,
+.navbar .dropdown:hover {
+    display: block;
+}
+
+.navbar .dropdown-submenu {
+    position: relative;
+}
+
+.navbar .dropdown-submenu:hover > .sub-dropdown {
+    display: block;
+}
+
+.navbar .sub-dropdown {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: #F6F6F6;
+    padding: 10px 0;
+    min-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 999;
+}
+
+.navbar .sub-dropdown li {
+    padding: 8px 20px;
+}
+
+.navbar .sub-dropdown li a {
+    color: #17411D;
+    text-decoration: none;
+    display: block;
+}
+
+.navbar .sub-dropdown li a:hover {
+    background-color: #EB9C35;
+    color: white;
+    border-radius: 5px;
+}
+
+.dropdown-submenu > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+
+
+
+
+
