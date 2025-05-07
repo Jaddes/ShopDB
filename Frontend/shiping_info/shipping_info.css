@@ -288,6 +288,7 @@
   main.shipping-container {
     margin-top: 150px;
     padding: 20px;
+    padding-right: 370px;
     width: 90%;
     max-width: 1200px;
     margin-left: auto;
@@ -399,13 +400,19 @@
     margin: 10px 0;
   }
 
-  .new-address-form .checkbox-container {
-    margin-top: 10px;
-  }
+ 
   
-  .new-address-form .checkbox-container input {
-    margin-right: 5px;
+  .new-address-form .checkbox-container label{
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
   }
+
+  .new-address-form .select-button {
+    display: block;     /* već je block zbog width, ovo samo potvrđuje */
+    margin-left: auto;  /* guranje na desnu ivicu kontejnera */
+  }
+
   
   .select-button {
     width: 100px;
@@ -421,17 +428,22 @@
   .select-button:hover {
     background: #333;
   }
-S  
+
   /* Vasa korpa (desna strana) */
   .shipping-summary {
-    flex: 1;
-    background-color: #f9f9f9;
+    position: fixed;       /* CHANGED: fiksira box u viewport-u */
+    top: 170px;            /* CHANGED: isto pomeranje od vrha kao margin-top na main */
+    right: 200px;             /* CHANGED: poravnavanje sa desnom ivicom main kontejnera (5% margine) */
+    flex: none;            /* CHANGED: isključuje flex ponašanje */
+    margin-left: 0;        /* CHANGED: uklanja auto marginu */
+    z-index: 500;          /* CHANGED: da je iznad ostalih sadržaja ali ispod header-a (1000) */
+
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 350px;
     max-width: 100%;
-    margin-left: auto;
   }
   
   .shipping-summary h3 {
