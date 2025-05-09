@@ -331,9 +331,9 @@ footer a:hover {
 
 .category-wrapper {
     width: 100%;
-    background-color: #E6E6E6; /* or whatever matches your site */
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
+    /* background-color: #E6E6E6; /* or whatever matches your site */
+    /* border-top: 1px solid #cccccc; */
+    /* border-bottom: 1px solid #cccccc; */ 
     position: fixed;
     top: 90px; /* adjusts below your navbar */
     left: 0;
