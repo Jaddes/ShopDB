@@ -211,8 +211,32 @@ main.cart-container {
 }
 
 main.cart-container h2 {
+    margin-top: 140px;
     margin-bottom: 20px;
+    
 }
+
+
+.t1 , .t2{
+    text-align: right;
+}
+
+
+
+.add-to-cart-btn,
+.delete-btn {
+    width: 110px;         /* fiksna širina */
+    height: 30px;        /* fiksna visina */
+    padding: 0;          /* uklanja sve unutrašnje margine */
+    font-size: 16px;     /* dovoljno veliko za ikonu */
+    background-color: #55883B;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    float: right;
+}
+
+
 
 .cart-content {
     display: block;
