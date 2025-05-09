@@ -33,3 +33,10 @@ function updatePassword() {
     document.getElementById('newPassword').value = '';
     document.getElementById('confirmPassword').value = '';
 }
+
+function togglePasswordVisibility(inputId, iconElement) {
+    const input = document.getElementById(inputId);
+    const isPassword = input.type === "password";
+    input.type = isPassword ? "text" : "password";
+    iconElement.textContent = isPassword ? "🙈" : "👁️";
+}
