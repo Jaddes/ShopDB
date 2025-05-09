@@ -464,13 +464,13 @@ main {
   }
   
   .add-cart {
-    background: #17411D;
+    background:  #55883B;
     color: white;
   }
   
   .buy-now {
-    background: white;
-    border: 2px solid black;
+    background: #17411D;
+    color: white;
   }
   
   .shipping-info p {
@@ -723,3 +723,75 @@ main {
     color: #999;
   }
   
+
+  /* === Stil za sekciju ostavljanja komentara === */
+.leave-comment {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.leave-comment h2 {
+  margin-bottom: 15px;
+  color: #17411D;
+  font-size: 22px;
+}
+
+
+.leave-comment .star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+.leave-comment .star-rating input {
+  display: none;
+}
+.leave-comment .star-rating label {
+  font-size: 28px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.leave-comment .star-rating input:checked ~ label,
+.leave-comment .star-rating label:hover,
+.leave-comment .star-rating label:hover ~ label {
+  color: gold;
+}
+
+/* Textarea za komentar */
+.leave-comment textarea {
+  width: 100%;
+  min-height: 1.5em;      /* vidljivost jedne linije teksta */
+  height: auto;           /* automatsko podešavanje visine */
+  overflow: hidden;       /* sakrij skrol ako je prazan */
+  resize: none;           /* spreči ručno razvučenje */
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: height 0.2s ease;
+}
+
+/* Dugme Pošalji */
+.leave-comment .submit-comment {
+  display: block;
+  margin-left: auto;
+  padding: 10px 20px;
+  background: #17411D;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.leave-comment .submit-comment:hover {
+  background: #333;
+}
