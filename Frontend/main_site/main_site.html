@@ -16,7 +16,7 @@
             <div class="left-section">
                 <div class="logo">Floyd01 Shop</div> <!-- Ovaj tekst koristi 'Irish Grover' font -->
                 <nav class="nav-links">
-                  <a href="#">Početna</a>
+                  <a href="../main_site/main_site.html">Početna</a>
                   <div class="header-menu">
                     <a href="#">Kategorije ▾</a>
                     <ul class="header-dropdown">
@@ -76,17 +76,20 @@
                       </li>
                     </ul>
                   </div>                  
-                  <a href="#">Novo</a>
-                  <a href="#">Akcija</a>
-              </nav>
-          </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search...">
+                  <a href="../list_of_products/list1.html?filter=novo">Novo</a>
+                    <a href="../list_of_products/list1.html?filter=akcija">Akcija</a>
+                </nav>
             </div>
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button id="searchButton">🔍</button>
+          </div>
+
             <div class="icons">
-                <button>🧡</button>
-                <button>🛒</button>
-                <button>👤</button>
+                <div class="icons">
+                    <a href="../wishlist/wishlist.html" class="nav-icon">🧡</a>
+                    <a href="../cart/cart.html" class="nav-icon">🛒</a>
+                    <a href="../account_settings/account_settings.html" class="nav-icon">👤</a>
             </div>
         </div>
     </header>

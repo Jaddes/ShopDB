@@ -10,6 +10,23 @@ document.addEventListener("scroll", function() {
     }
 });
 
+// Pretraga proizvoda po nazivu
+document.getElementById('searchInput').addEventListener('input', function () {
+  const searchTerm = this.value.toLowerCase();
+  const productCards = document.querySelectorAll('.product-card');
+
+  productCards.forEach(card => {
+    const nameElement = card.querySelector('.product-name');
+    const productName = nameElement ? nameElement.textContent.toLowerCase() : '';
+
+    // Prikaži proizvod ako sadrži unos iz pretrage
+    if (productName.includes(searchTerm)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+});
 
 document.getElementById('togglePassword').addEventListener('click', function() {
     const passwordInput = document.getElementById('password');
