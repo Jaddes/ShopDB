@@ -16,6 +16,7 @@ body {
     align-items: center;
     background-color: #C1E899;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
 }
 
 /* Header stilovi */
@@ -32,7 +33,7 @@ header {
 /* Navigaciona traka */
 .navbar {
     background-color: #EB9C35;
-    padding: 15px 50px;
+    padding: 15px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
