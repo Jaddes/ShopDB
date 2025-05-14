@@ -7,7 +7,7 @@ document.querySelectorAll('.side-category .side-btn').forEach(btn => {
 
 document.querySelectorAll('.sub-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Sprečava zatvaranje roditeljskog menija
+    e.stopPropagation();
     btn.parentElement.classList.toggle('open');
   });
 });
@@ -19,6 +19,7 @@ let allProducts = Array.from(document.querySelectorAll('.product-card'));
 const loadMoreBtn = document.querySelector('.load-more');
 const countDisplay = document.querySelector('.product-section p');
 const searchInput = document.getElementById('searchInput');
+const sortSelect = document.getElementById('sort-options');
 
 // Funkcija za ažuriranje broja prikazanih proizvoda
 function updateProductCount() {
@@ -44,31 +45,38 @@ function showNextProducts() {
 
   if (visibleUnshown.length <= productsPerPage) {
     loadMoreBtn.style.display = 'none';
+  } else {
+    loadMoreBtn.style.display = 'block';
   }
 }
 
-// Centralna funkcija za primenu svih filtera
+// Glavna funkcija za filtriranje
 function applyFilters() {
   const searchTerm = searchInput.value.toLowerCase();
-  const selectedRanges = Array.from(document.querySelectorAll('.price-range:checked')).map(cb => ({
+
+  const selectedPriceRanges = Array.from(document.querySelectorAll('.price-range:checked')).map(cb => ({
     min: parseFloat(cb.getAttribute('data-min')),
     max: parseFloat(cb.getAttribute('data-max'))
   }));
 
+  const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked')).map(cb => cb.dataset.category);
+  const selectedSubcategories = Array.from(document.querySelectorAll('.subcategory-filter:checked')).map(cb => cb.dataset.subcategory);
+
   allProducts.forEach(card => {
     const name = card.querySelector('.product-name')?.textContent.toLowerCase() || '';
     const price = parseFloat(card.getAttribute('data-price'));
+    const category = card.getAttribute('data-category');
+    const subcategory = card.getAttribute('data-subcategory');
 
     const matchesSearch = name.includes(searchTerm);
-    const matchesPrice = selectedRanges.length === 0 || selectedRanges.some(range => price >= range.min && price <= range.max);
+    const matchesPrice = selectedPriceRanges.length === 0 || selectedPriceRanges.some(range => price >= range.min && price <= range.max);
+    const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(category);
+    const matchesSubcategory = selectedSubcategories.length === 0 || selectedSubcategories.includes(subcategory);
 
-    if (matchesSearch && matchesPrice) {
-      card.style.display = 'block';
-      card.style.visibility = 'hidden'; // reset prikaza
-    } else {
-      card.style.display = 'none';
-      card.style.visibility = 'hidden';
-    }
+    const show = matchesSearch && matchesPrice && matchesCategory && matchesSubcategory;
+
+    card.style.display = show ? 'block' : 'none';
+    card.style.visibility = 'hidden';
   });
 
   currentlyDisplayed = 0;
@@ -76,45 +84,40 @@ function applyFilters() {
   showNextProducts();
 }
 
-// Pretraga proizvoda po nazivu
-searchInput.addEventListener('input', applyFilters);
-
-// Filter po ceni
-document.querySelectorAll('.price-range').forEach(cb => {
-  cb.addEventListener('change', applyFilters);
-});
-
 // Sortiranje proizvoda
-document.getElementById('sort-options').addEventListener('change', function () {
+sortSelect.addEventListener('change', function () {
   const option = this.value;
   const productGrid = document.querySelector('.product-grid');
-  allProducts = Array.from(productGrid.querySelectorAll('.product-card')); // ažuriranje liste
+  allProducts = Array.from(productGrid.querySelectorAll('.product-card')); // osveži listu
 
-  let sortedCards = [];
+  let sortedCards = [...allProducts];
 
   if (option === 'price-asc') {
-    sortedCards = allProducts.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+    sortedCards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
   } else if (option === 'price-desc') {
-    sortedCards = allProducts.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+    sortedCards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
   } else if (option === 'name-asc') {
-    sortedCards = allProducts.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name, 'sr', { sensitivity: 'base' }));
+    sortedCards.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name, 'sr', { sensitivity: 'base' }));
   } else if (option === 'name-desc') {
-    sortedCards = allProducts.sort((a, b) => b.dataset.name.localeCompare(a.dataset.name, 'sr', { sensitivity: 'base' }));
-  } else {
-    return;
+    sortedCards.sort((a, b) => b.dataset.name.localeCompare(a.dataset.name, 'sr', { sensitivity: 'base' }));
   }
 
-  // Očisti i postavi sortirane proizvode
   productGrid.innerHTML = '';
   sortedCards.forEach(card => productGrid.appendChild(card));
-
-  // Ažuriraj referencu na sve proizvode
   allProducts = sortedCards;
 
-  applyFilters(); // primeni trenutne filtere i pretragu na novu listu
+  applyFilters();
 });
 
-// Filtriranje preko URL parametra (npr. ?filter=novo)
+// Pretraga
+searchInput.addEventListener('input', applyFilters);
+
+// Filteri
+document.querySelectorAll('.price-range, .category-filter, .subcategory-filter').forEach(cb =>
+  cb.addEventListener('change', applyFilters)
+);
+
+// URL filteri (?filter=novo ili ?filter=akcija)
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const filter = params.get('filter');
@@ -123,13 +126,15 @@ window.addEventListener('DOMContentLoaded', () => {
   if (filter === 'novo') {
     if (titleElement) titleElement.textContent = 'NOVI PROIZVODI';
     allProducts.forEach(card => {
-      card.style.display = card.classList.contains('novo') ? 'block' : 'none';
+      const show = card.classList.contains('novo');
+      card.style.display = show ? 'block' : 'none';
       card.style.visibility = 'hidden';
     });
   } else if (filter === 'akcija') {
     if (titleElement) titleElement.textContent = 'PROIZVODI NA AKCIJI';
     allProducts.forEach(card => {
-      card.style.display = card.classList.contains('akcija') ? 'block' : 'none';
+      const show = card.classList.contains('akcija');
+      card.style.display = show ? 'block' : 'none';
       card.style.visibility = 'hidden';
     });
   } else {
@@ -140,9 +145,35 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   currentlyDisplayed = 0;
-  loadMoreBtn.style.display = allProducts.filter(card => card.style.display !== 'none').length > productsPerPage ? 'block' : 'none';
   showNextProducts();
 });
 
 // Dugme "Učitaj više"
 loadMoreBtn.addEventListener('click', showNextProducts);
+
+
+// Otvaranje podkategorija
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Pronađi sve dugmadi za kategorije koje treba da otvore podkategorije
+    const categoryButtons = document.querySelectorAll('.side-btn');
+    
+    // Dodaj event listener za svako dugme
+    categoryButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const parentCategory = button.closest('.side-category');
+            const subDropdown = parentCategory.querySelector('.side-dropdown');
+            
+            // Preklopi vidljivost podkategorija
+            parentCategory.classList.toggle('active');
+            
+            // Ako je podkategorija otvorena, promeni strelicu
+            const arrow = button.querySelector('span');
+            if (parentCategory.classList.contains('active')) {
+                arrow.textContent = '▼';  // Strelica prema dole
+            } else {
+                arrow.textContent = '▶';  // Strelica prema desno
+            }
+        });
+    });
+});

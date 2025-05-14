@@ -97,126 +97,82 @@
 
     <main class="main-content">
         <aside class="sidebar">
-            <div class="KATEGORIJE">
-                <h4>Kategorije</h4>
-              
-                <!-- Odeća -->
-                <div class="side-category">
-                  <button class="side-btn">Odeća <span>▶</span></button>
-                  <ul class="side-dropdown">
-                    <li>
-                      <button class="sub-btn">Majice <span>▶</span></button>
-                      <ul class="sub-dropdown">
-                        <li><a href="#">Gucci</a></li>
-                        <li><a href="#">Nike</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                      <button class="sub-btn">Farmerke <span>▶</span></button>
-                      <ul class="sub-dropdown">
-                        <li><a href="#">Levi's</a></li>
-                        <li><a href="#">Wrangler</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Kape</a></li>
-                  </ul>
-                </div>
-              
-                <!-- Kuća -->
-                <div class="side-category">
-                  <button class="side-btn">Kuća <span>▶</span></button>
-                  <ul class="side-dropdown">
-                    <li>
-                      <button class="sub-btn">Kuhinja <span>▶</span></button>
-                      <ul class="sub-dropdown">
-                        <li><a href="#">Mikseri</a></li>
-                        <li><a href="#">Tiganji</a></li>
-                        <li><a href="#">Noževi</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Dekoracije</a></li>
-                    <li><a href="#">Osvetljenje</a></li>
-                  </ul>
-                </div>
-              
-                <!-- Sport -->
-                <div class="side-category">
-                  <button class="side-btn">Sport <span>▶</span></button>
-                  <ul class="side-dropdown">
-                    <li><a href="#">Teretana</a></li>
-                    <li>
-                      <button class="sub-btn">Lopte <span>▶</span></button>
-                      <ul class="sub-dropdown">
-                        <li><a href="#">Adidas</a></li>
-                        <li><a href="#">Nike</a></li>
-                        <li><a href="#">Mikasa</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              
-                <!-- Elektronika -->
-                <div class="side-category">
-                  <button class="side-btn">Elektronika <span>▶</span></button>
-                  <ul class="side-dropdown">
-                    <li>
-                      <button class="sub-btn">Telefoni <span>▶</span></button>
-                      <ul class="sub-dropdown">
-                        <li><a href="#">iPhone</a></li>
-                        <li><a href="#">Samsung</a></li>
-                        <li><a href="#">Xiaomi</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Televizori</a></li>
-                    <li><a href="#">Smart satovi</a></li>
-                  </ul>
-                </div>
-              
-                <!-- Lepota -->
-                <div class="side-category">
-                  <button class="side-btn">Lepota <span>▶</span></button>
-                  <ul class="side-dropdown">
-                    <li>
-                      <button class="sub-btn">Parfemi <span>▶</span></button>
-                      <ul class="sub-dropdown">
-                        <li><a href="#">Dior</a></li>
-                        <li><a href="#">Chanel</a></li>
-                        <li><a href="#">Versace</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Šminka</a></li>
-                    <li><a href="#">Kreme za lice</a></li>
-                  </ul>
-                </div>
-              
-                <!-- Aksesoari -->
-                <div class="side-category">
-                  <button class="side-btn">Aksesoari <span>▶</span></button>
-                  <ul class="side-dropdown">
-                    <li>
-                      <button class="sub-btn">Nakit <span>▶</span></button>
-                      <ul class="sub-dropdown">
-                        <li><a href="#">Minđuše</a></li>
-                        <li><a href="#">Ogrlice</a></li>
-                        <li><a href="#">Prstenje</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Torbe</a></li>
-                    <li><a href="#">Satovi</a></li>
-                  </ul>
-                </div>
-              </div>
-              
-            <div class="RASPON CENE">
-                <h4>RASPON CENE</h4>
-                <ul>
-                      <label><input type="checkbox" class="price-range" data-min="0" data-max="1000"> 0 - 1000 RSD</label><br>
-                      <label><input type="checkbox" class="price-range" data-min="1000" data-max="3000"> 1000 - 3000 RSD</label><br>
-                      <label><input type="checkbox" class="price-range" data-min="3000" data-max="5000"> 3000 - 5000 RSD</label><br>
-                      <label><input type="checkbox" class="price-range" data-min="5000" data-max="10000"> 5000 - 10000 RSD</label><br>
-                </ul>
-            </div>
-        </aside>
+    <div class="KATEGORIJE">
+        <h4>Kategorije</h4>
+
+        <!-- Odeća -->
+        <div class="side-category">
+            <label><input type="checkbox" class="category-filter" data-category="odeća"> Odeća <span>▶</span></label>
+            <ul class="side-dropdown">
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="majice"> Majice</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="farmerke"> Farmerke</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="kape"> Kape</label></li>
+            </ul>
+        </div>
+
+        <!-- Kuća -->
+        <div class="side-category">
+            <label><input type="checkbox" class="category-filter" data-category="kuća"> Kuća <span>▶</span></label>
+            <ul class="side-dropdown">
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="kuhinja"> Kuhinja</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="dekoracije"> Dekoracije</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="osvetljenje"> Osvetljenje</label></li>
+            </ul>
+        </div>
+
+        <!-- Sport -->
+        <div class="side-category">
+            <label><input type="checkbox" class="category-filter" data-category="sport"> Sport <span>▶</span></label>
+            <ul class="side-dropdown">
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="teretana"> Teretana</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="lopte"> Lopte</label></li>
+            </ul>
+        </div>
+
+        <!-- Elektronika -->
+        <div class="side-category">
+            <label><input type="checkbox" class="category-filter" data-category="elektronika"> Elektronika <span>▶</span></label>
+            <ul class="side-dropdown">
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="telefoni"> Telefoni</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="televizori"> Televizori</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="smart-satovi"> Smart satovi</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="slušalice"> Slušalice</label></li>
+            </ul>
+        </div>
+
+        <!-- Lepota -->
+        <div class="side-category">
+            <label><input type="checkbox" class="category-filter" data-category="lepota"> Lepota <span>▶</span></label>
+            <ul class="side-dropdown">
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="parfemi"> Parfemi</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="šminka"> Šminka</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="kreme"> Kreme za lice</label></li>
+            </ul>
+        </div>
+
+        <!-- Aksesoari -->
+        <div class="side-category">
+            <label><input type="checkbox" class="category-filter" data-category="aksesoari"> Aksesoari <span>▶</span></label>
+            <ul class="side-dropdown">
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="nakit"> Nakit</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="torbe"> Torbe</label></li>
+                <li><label><input type="checkbox" class="subcategory-filter" data-subcategory="satovi"> Satovi</label></li>
+            </ul>
+        </div>
+
+        <!-- Raspod Cena -->
+        <div class="RASPON CENE">
+            <h4>RASPON CENE</h4>
+            <ul>
+                <label><input type="checkbox" class="price-range" data-min="0" data-max="1000"> 0 - 1000 RSD</label><br>
+                <label><input type="checkbox" class="price-range" data-min="1000" data-max="3000"> 1000 - 3000 RSD</label><br>
+                <label><input type="checkbox" class="price-range" data-min="3000" data-max="5000"> 3000 - 5000 RSD</label><br>
+                <label><input type="checkbox" class="price-range" data-min="5000" data-max="10000"> 5000 - 10000 RSD</label><br>
+            </ul>
+        </div>
+    </div>
+</aside>
+
 
         <section class="product-section">
             <h2>SVI PROIZVODI</h2>

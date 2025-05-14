@@ -422,15 +422,16 @@ footer a:hover {
 }
 
 .side-dropdown {
-    list-style: none;
-    padding-left: 15px;
-    margin-top: 10px;
-    display: none;
+    display: none; /* Skrivene su podkategorije */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-.side-category.open .side-dropdown {
-    display: block;
+.side-category.active .side-dropdown {
+    display: block; /* Podkategorije se prikazuju kada je kategorija aktivna */
 }
+
 
 .side-dropdown li {
     margin-bottom: 5px;
