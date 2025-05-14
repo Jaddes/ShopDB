@@ -16,6 +16,7 @@ body {
     align-items: center;
     background-color: #C1E899;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
 }
 
 
@@ -121,20 +122,34 @@ header {
 
 /* Pretraga */
 .search-bar {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    padding: 0 20px;
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%; 
 }
+
 
 .search-bar input {
     width: 60%;
     padding: 8px;
+    padding-right: 35px;
     border: none;
     border-radius: 20px;
     outline: none;
     font-size: 16px;
 }
+
+.search-bar button {
+  position: absolute;
+  right: 23%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
 
 /* Ikonice */
 .navbar .icons {
@@ -176,21 +191,31 @@ header {
     cursor: pointer;
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    background: #17411D;
-    color: #fff;
-    border: none;
-    border-radius: 25px;
-    margin-top: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
+.nav-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background-color: #17411D;
+    color: white;
+    font-size: 20px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
-button:hover {
-    background: #333;
+.nav-icon:hover {
+    background-color: #333;
 }
+
+
+
+
+
+
+
+
 
 /*  main */
 
