@@ -51,3 +51,71 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+
+// SIDEBAR FUNKCIONALNOST
+
+
+// Glavne kategorije (npr. Odeća, Kuća)
+document.querySelectorAll('.side-category .side-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.parentElement.classList.toggle('open');
+  });
+});
+
+// Potkategorije (npr. Majice, Farmerke)
+document.querySelectorAll('.sub-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Sprečava zatvaranje roditeljskog menija
+    btn.parentElement.classList.toggle('open');
+  });
+});
+
+
+// VARIJABLE ZA UPRAVLJANJE PRIKAZOM
+
+const productsPerPage = 30;
+let currentlyDisplayed = 0;
+let allProducts = Array.from(document.querySelectorAll('.product-card'));
+const loadMoreBtn = document.querySelector('.load-more');
+const countDisplay = document.querySelector('.product-section p');
+
+
+// FUNKCIJA ZA AŽURIRANJE BROJA PRIKAZANIH PROIZVODA
+
+
+function updateProductCount() {
+  const visibleProducts = allProducts.filter(card => card.style.display !== 'none');
+  countDisplay.textContent = `Prikaz ${visibleProducts.length} od ${allProducts.length} proizvoda`;
+}
+
+
+// FUNKCIJA ZA PRIKAZ PROIZVODA U SERIJAMA OD 30
+
+
+function showNextProducts() {
+  let shown = 0;
+
+  // Prikazuje sledećih 30 proizvoda koji nisu skriveni filterom/pretragom
+  for (let i = currentlyDisplayed; i < allProducts.length && shown < productsPerPage; i++) {
+    if (allProducts[i].style.display !== 'none') {
+      allProducts[i].style.visibility = 'visible';
+      allProducts[i].style.display = 'block';
+      shown++;
+      currentlyDisplayed++;
+    } else {
+      currentlyDisplayed++;
+    }
+  }
+
+  updateProductCount();
+
+  // Sakrij dugme ako su svi prikazani
+  if (currentlyDisplayed >= allProducts.length) {
+    loadMoreBtn.style.display = 'none';
+  }
+}
+
+// Dugme "Učitaj više"
+loadMoreBtn.addEventListener('click', showNextProducts);
