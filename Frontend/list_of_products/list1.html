@@ -210,10 +210,10 @@
             <div class="RASPON CENE">
                 <h4>RASPON CENE</h4>
                 <ul>
-                    <li><label><input type="checkbox"> 0 - 1000 </label></li>
-                    <li><label><input type="checkbox"> 1000 - 2000</label></li>
-                    <li><label><input type="checkbox"> 2000 - 3000</label></li>
-                    <li><label><input type="checkbox"> 3000 - max</label></li>
+                     <label><input type="checkbox" class="price-range" data-min="0" data-max="1000"> 0 - 1000 RSD</label><br>
+  <label><input type="checkbox" class="price-range" data-min="1000" data-max="3000"> 1000 - 3000 RSD</label><br>
+  <label><input type="checkbox" class="price-range" data-min="3000" data-max="5000"> 3000 - 5000 RSD</label><br>
+  <label><input type="checkbox" class="price-range" data-min="5000" data-max="10000"> 5000 - 10000 RSD</label><br>
                 </ul>
             </div>
         </aside>
@@ -224,20 +224,38 @@
             <div class="sort-bar">
                 <select id="sort-options">
                     <option value="price-asc">po ceni: rastuće</option>
-                    <option value="price-desc">po ceni: opadajuče</option>
+                    <option value="price-desc">po ceni: opadajuće</option>
                     <option value="name">po nazivu</option>
                     <option value="best-sellers">po popularnosti</option>
                 </select>
             </div>
             <div class="product-grid">
-                <!-- Primer proizvoda -->
-                <div class="product-card">
-                    <div class="product-image">Img</div>
-                    <p class="product-name">Product Name</p>
-                    <p class="product-price">19.99€</p>
-                </div>
-                <!-- Možeš klonirati više ovakvih kartica -->
-            </div>
+               
+    <!-- Primer proizvoda -->
+    <div class="product-card novo akcija"
+         data-price="1800"
+         data-category="elektronika"
+         data-subcategory="slušalice"
+         data-name="Bluetooth Slušalice"
+         data-popularity="65">
+      <div class="product-image">🖼️</div>
+      <p class="product-name">Bluetooth Slušalice</p>
+      <p class="product-price">1800 RSD</p>
+    </div>
+
+    <div class="product-card"
+         data-price="950"
+         data-category="odeća"
+         data-subcategory="majice"
+         data-name="Majica Crna"
+         data-popularity="80">
+      <div class="product-image">🖼️</div>
+      <p class="product-name">Majica Crna</p>
+      <p class="product-price">950 RSD</p>
+    </div>
+
+    <!-- Dodaj još kartica po istom šablonu -->
+  </div>
             <button class="load-more">Učitaj više</button>
         </section>
     </main>
