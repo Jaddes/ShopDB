@@ -321,4 +321,10 @@ footer a:hover {
 }
 
 
+.icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* da budu bele, ako su crne originalno */
+}
 
