@@ -9,9 +9,9 @@ app.use(cors());
 
 // 🔐 Podesi podatke za konekciju ovde
 const dbConfig = {
-  user: 'shop',
-  password: 'shop123',
-  connectString: 'localhost/XEPDB1'  // izmeni po potrebi
+  user: 'Boris',
+  password: 'Ucenik01',
+  connectString: 'localhost/XEPDB1'
 };
 
 // 📥 API ruta za kategorije i podkategorije
@@ -22,7 +22,7 @@ app.get('/api/categories', async (req, res) => {
     connection = await oracledb.getConnection(dbConfig);
 
     const result = await connection.execute(`
-      SELECT k.naziv AS kategorija, p.naziv AS podkategorija
+      SELECT DISTINCT k.naziv AS kategorija, p.naziv AS podkategorija
       FROM KATEGORIJE k
       LEFT JOIN PODKATEGORIJE p ON k.id_kategorija = p.id_kategorija
       ORDER BY k.naziv, p.naziv
@@ -32,8 +32,13 @@ app.get('/api/categories', async (req, res) => {
     const grouped = {};
     for (const row of result.rows) {
       const [kategorija, podkategorija] = row;
+      // Ako kategorija ne postoji, napravi praznu listu
       if (!grouped[kategorija]) grouped[kategorija] = [];
-      if (podkategorija) grouped[kategorija].push(podkategorija);
+
+      // Dodaj podkategoriju samo ako je jedinstvena i ne null
+      if (podkategorija && !grouped[kategorija].includes(podkategorija)) {
+        grouped[kategorija].push(podkategorija);
+      }
     }
 
     res.json(grouped);
