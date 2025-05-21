@@ -106,22 +106,29 @@ header {
 
 /* Pretraga */
 .search-bar {
-  position: relative; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%; 
+    position: relative;
+    width: 30%; /* manji prostor */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-
 .search-bar input {
-    width: 60%;
-    padding: 8px;
-    padding-right: 35px;
+    width: 100%;
+    padding: 8px 15px 8px 40px;  /* leva margina za ikonicu */
     border: none;
     border-radius: 20px;
     outline: none;
     font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    filter: brightness(0) invert(0.4); /* tamna zelena */
 }
 
 .search-bar button {
@@ -198,13 +205,15 @@ main {
 }
 
 .login-box {
-    background: #FFE0B3;
+    background: rgba(85, 136, 59, 0.7); /* #55883B sa 50% providnosti */
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
+    color: white;
 }
+
 
 .login-box h2 {
     margin-bottom: 10px;
@@ -212,6 +221,11 @@ main {
 
 .login-box p {
     margin-bottom: 20px;
+}
+
+.login-box p a {
+    color: #EB9C35;
+    text-decoration: underline;
 }
 
 .input-group {
@@ -262,13 +276,21 @@ main {
     background-color: #333;
 }
 
+.icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
 
 
 .forgot {
+    color: #EB9C35;
+    font-size: 13px;
     display: block;
     margin-top: 15px;
-    font-size: 13px;
-    color: #555;
+    text-decoration: underline;
 }
 
 
