@@ -77,22 +77,29 @@ header {
 
 /* Pretraga */
 .search-bar {
-  position: relative; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%; 
+    position: relative;
+    width: 30%; /* manji prostor */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-
 .search-bar input {
-    width: 60%;
-    padding: 8px;
-    padding-right: 35px;
+    width: 100%;
+    padding: 8px 15px 8px 40px;  /* leva margina za ikonicu */
     border: none;
     border-radius: 20px;
     outline: none;
     font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    filter: brightness(0) invert(0.4); /* tamna zelena */
 }
 
 .search-bar button {
@@ -160,8 +167,12 @@ header {
     background-color: #333;
 }
 
-
-
+.icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
 
 
 
