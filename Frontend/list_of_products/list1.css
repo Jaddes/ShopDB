@@ -312,6 +312,21 @@ footer a:hover {
     font-size: 15px;
 }
 
+.clickable-category {
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.clickable-category:hover {
+  background-color: #EB9C35;
+  color: white;
+}
+
+
+
 .sort-bar { 
     display: flex;
     justify-content: flex-end;
