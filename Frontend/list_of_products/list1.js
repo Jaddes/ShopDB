@@ -47,7 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const matchesSearch = name.includes(searchTerm);
       const matchesPrice = selectedPriceRanges.length === 0 || selectedPriceRanges.some(range => price >= range.min && price <= range.max);
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(category);
-      const matchesSubcategory = selectedSubcategories.length === 0 || selectedSubcategories.includes(subcategory);
+      const matchesSubcategory =
+        selectedSubcategories.length === 0 ||
+        (selectedCategory && category === selectedCategory && selectedSubcategories.includes(subcategory));
+
 
       const show = matchesSearch && matchesPrice && matchesCategory && matchesSubcategory;
       card.style.display = show ? 'block' : 'none';
@@ -181,19 +184,28 @@ document.addEventListener('DOMContentLoaded', () => {
     applyFilters();
   });
 
-  document.querySelectorAll('.clickable-category').forEach(label => {
-    label.addEventListener('click', () => {
-      const category = label.dataset.category;
+ document.querySelectorAll('.clickable-category').forEach(label => {
+  label.addEventListener('click', () => {
+    const category = label.dataset.category;
 
-      const checkbox = document.querySelector(`.category-filter[data-category="${category}"]`);
-      if (checkbox) {
-        checkbox.checked = true;
-      }
+    // 1. Poništi sve prethodne kategorije i podkategorije
+    document.querySelectorAll('.category-filter').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.subcategory-filter').forEach(cb => cb.checked = false);
 
-      applyFilters();
-      showSubcategories(category);
-    });
+    // 2. Označi samo kliknutu kategoriju
+    const checkbox = document.querySelector(`.category-filter[data-category="${category}"]`);
+    if (checkbox) {
+      checkbox.checked = true;
+    }
+
+    // 3. Prikaži odgovarajuće podkategorije
+    showSubcategories(category);
+
+    // 4. Primeni filtriranje proizvoda
+    applyFilters();
   });
+});
+
 
   subcategoriesList.addEventListener('change', (e) => {
     if (e.target && e.target.matches('input.subcategory-checkbox')) {
