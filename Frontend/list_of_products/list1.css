@@ -339,6 +339,29 @@ footer a:hover {
   color: white;
 }
 
+#subcategories-view {
+  position: relative;        /* Da dugme može biti apsolutno pozicionirano u odnosu na ovaj blok */
+  padding-bottom: 50px;      /* Ostavi prostor ispod za dugme */
+  min-height: 200px;         /* Po želji, da ne "skače" ako nema sadržaja */
+}
+
+#back-to-categories {
+  position: absolute;
+  bottom: 10px;              /* 10px od dna bloka */
+  right: 10px;               /* 10px od desne ivice bloka */
+  background: none;
+  border: none;
+  color: #007BFF;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px 8px;
+  font-weight: bold;
+  user-select: none;
+}
+
+
+
+
 
 
 .sort-bar { 

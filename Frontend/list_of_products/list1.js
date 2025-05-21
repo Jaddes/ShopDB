@@ -46,10 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const matchesSearch = name.includes(searchTerm);
       const matchesPrice = selectedPriceRanges.length === 0 || selectedPriceRanges.some(range => price >= range.min && price <= range.max);
-      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(category);
-      const matchesSubcategory =
-        selectedSubcategories.length === 0 ||
+      // Ako je selektovana jedna kategorija (klikom), koristi samo nju
+      const matchesCategory = selectedCategory
+        ? category === selectedCategory
+        : (selectedCategories.length === 0 || selectedCategories.includes(category));
+
+      // Podkategorije se primenjuju samo ako pripadaju selektovanoj kategoriji
+      const matchesSubcategory = selectedSubcategories.length === 0 ||
         (selectedCategory && category === selectedCategory && selectedSubcategories.includes(subcategory));
+
 
 
       const show = matchesSearch && matchesPrice && matchesCategory && matchesSubcategory;
