@@ -110,6 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
       allProducts.forEach(card => {
         card.style.display = card.classList.contains('akcija') ? 'block' : 'none';
       });
+     } else if (urlFilter === 'najpopularnije') {
+      if (titleElement) titleElement.textContent = 'NAJPOPULARNIJE PROIZVODI';
+      allProducts.forEach(card => {
+        card.style.display = card.classList.contains('najpopularnije') ? 'block' : 'none';
+      });
     } else {
       allProducts.forEach(card => {
         card.style.display = 'block';
