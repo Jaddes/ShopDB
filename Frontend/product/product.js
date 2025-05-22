@@ -50,5 +50,35 @@ document.addEventListener("DOMContentLoaded", () => {
       favoriteBtn.textContent = favoriteBtn.classList.contains('active') ? '❤️' : '♡';
     });
   });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const variantThumbs = document.querySelectorAll('.variant-thumb');
+
+  variantThumbs.forEach(img => {
+    img.addEventListener('click', () => {
+      variantThumbs.forEach(i => i.classList.remove('selected'));
+      img.classList.add('selected');
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const mainImage = document.querySelector('.main-image img');
+  const thumbs = document.querySelectorAll('.thumb');
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      // ROTACIJA
+      const tempSrc = mainImage.src;
+      mainImage.src = thumb.src;
+      thumb.src = tempSrc;
+
+      // Izmena selekcije
+      thumbs.forEach(t => t.classList.remove('selected'));
+      thumb.classList.add('selected');
+    });
+  });
+});
+
   
   

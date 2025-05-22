@@ -827,3 +827,29 @@ main {
 .leave-comment .submit-comment:hover {
   background: #333;
 }
+
+.design-variants {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.variant-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 10px;
+}
+
+.variant-thumb {
+  width: 60px;
+  height: 60px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.variant-thumb.selected {
+  border-color: #000;
+}
+
