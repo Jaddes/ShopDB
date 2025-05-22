@@ -583,36 +583,21 @@ footer a:hover {
 }
 
 .full-width-btn:hover {
-    background-color: #2a682e;
+    background-color: #47994c;
 }
 
-.view-all-btn {
-    background-color: #17411D;
-    color: white;
-    padding: 10px 25px;
-    font-size: 14px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease;
-}
-
-.view-all-btn:hover {
-    background-color: #2a682e;
-}
 
 .top-header-text {
     flex: 1;
-  }
+}
   
-  .top-header-button {
+.top-header-button {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-  }
+}
   
-  .most-popular-section {
+.most-popular-section {
     width: 100%;
     background-color: #C1E899;
     padding: 60px 20px;
@@ -631,12 +616,21 @@ footer a:hover {
     flex: 1;
 }
 
-.popular-header-button {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.btn.btn-primary {
+    background-color: #17411D;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
+.btn.btn-primary:hover {
+    background-color: #47994c;
+}
 .popular-header h2 {
     font-size: 28px;
     color: #17411D;
