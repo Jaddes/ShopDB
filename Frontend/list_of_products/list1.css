@@ -401,19 +401,46 @@ footer a:hover {
 }
 
 .product-image {
-    width: 100%;
+    position: relative;
+    font-size: 48px;
+    text-align: center;
+    background-color: #f0f0f0;
     height: 200px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ccc;
-    font-size: 16px;
+}
+.wishlist-btn,
+.cart-btn {
+    position: absolute;
+    background: white;
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.wishlist-btn img,
+.cart-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Pozicija u slici */
+.wishlist-btn {
+    top: 5px;
+    right: 5px;
+}
+
+.cart-btn {
+    bottom: 5px;
+    left: 5px;
 }
 
 .product-name {
+    padding-top: 10px;
     font-weight: bold;
     color: #17411D;
 }
