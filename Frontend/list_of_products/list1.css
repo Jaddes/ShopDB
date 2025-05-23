@@ -439,6 +439,17 @@ footer a:hover {
     left: 5px;
 }
 
+.wishlist-btn img:hover {
+    filter: brightness(0) saturate(100%) invert(44%) sepia(96%) saturate(2155%) hue-rotate(350deg) brightness(103%) contrast(105%);
+    /* Narandžasta */
+}
+
+.cart-btn img:hover {
+    filter: brightness(0) saturate(100%) invert(33%) sepia(96%) saturate(1124%) hue-rotate(66deg) brightness(97%) contrast(97%);
+    /* Tamnozelena */
+}
+
+
 .product-name {
     padding-top: 10px;
     font-weight: bold;
