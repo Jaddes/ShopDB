@@ -48,4 +48,35 @@ document.querySelectorAll('.delete-btn').forEach(btn => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const tbody = document.querySelector("tbody");
+  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
+  // Očisti postojeće redove
+  tbody.innerHTML = "";
+
+  wishlist.forEach(item => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td><img src="${item.image}" style="width: 60px; border-radius: 8px;"></td>
+      <td>${item.title}</td>
+      <td>${item.price}</td>
+      <td><button class="add-to-cart-btn">🛒</button></td>
+      <td><button class="delete-btn">🗑</button></td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  // Dodaj funkcionalnost za brisanje
+  document.querySelectorAll(".delete-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const row = this.closest("tr");
+      const title = row.children[1].textContent.trim();
+
+      const updated = wishlist.filter(item => item.title !== title);
+      localStorage.setItem("wishlist", JSON.stringify(updated));
+
+      row.remove();
+    });
+  });
+});
