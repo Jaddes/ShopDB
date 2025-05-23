@@ -239,3 +239,38 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+//dodavanje u listu?
+document.addEventListener('click', (event) => {
+  // Wishlist
+  if (event.target.closest('.wishlist-btn')) {
+    const btn = event.target.closest('.wishlist-btn');
+    const id_proizvoda = btn.dataset.id;
+    const id_korisnika = 1; // ili iz sesije ako imaš autentikaciju
+
+    fetch('http://localhost:3000/api/wishlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_korisnika, id_proizvoda })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(err => alert('❌ Greška pri dodavanju u wishlist.'));
+  }
+
+  // Cart
+  if (event.target.closest('.cart-btn')) {
+    const btn = event.target.closest('.cart-btn');
+    const productCard = btn.closest('.product-card');
+    const id_proizvoda = productCard.dataset.id;
+    const id_korisnika = 1;
+
+    fetch('http://localhost:3000/api/cart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_korisnika, id_proizvoda })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(err => alert('❌ Greška pri dodavanju u korpu.'));
+  }
+});
