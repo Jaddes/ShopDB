@@ -216,21 +216,3 @@ VALUES (1, 2, 3, 1500);
 INSERT INTO ORDER_ITEMS (id_main_order, id_product, quantity, total_price)
 VALUES (1, 3, 1, 500);
 
-CREATE TABLE WISHLIST_ITEMS (
-    id_wishlist_item NUMBER(10) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_customer NUMBER(10) NOT NULL,
-    id_product NUMBER(10) NOT NULL,
-    added_date DATE DEFAULT SYSDATE,
-    CONSTRAINT fk_wishlist_customer FOREIGN KEY (id_customer) REFERENCES CUSTOMERS(id_customer) ON DELETE CASCADE,
-    CONSTRAINT fk_wishlist_product FOREIGN KEY (id_product) REFERENCES PRODUCTS(id_product) ON DELETE CASCADE
-);
-
-CREATE TABLE CART_ITEMS (
-    id_cart_item NUMBER(10) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_customer NUMBER(10) NOT NULL,
-    id_product NUMBER(10) NOT NULL,
-    quantity NUMBER(10) DEFAULT 1 CHECK (quantity > 0),
-    added_date DATE DEFAULT SYSDATE,
-    CONSTRAINT fk_cart_customer FOREIGN KEY (id_customer) REFERENCES CUSTOMERS(id_customer) ON DELETE CASCADE,
-    CONSTRAINT fk_cart_product FOREIGN KEY (id_product) REFERENCES PRODUCTS(id_product) ON DELETE CASCADE
-);

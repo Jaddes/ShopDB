@@ -67,27 +67,3 @@ app.listen(PORT, () => {
 });
 
 
-// 💖 Dodavanje proizvoda u wishlist
-app.post('/api/wishlist', express.json(), async (req, res) => {
-  const { id_korisnika, id_proizvoda } = req.body;
-
-  let connection;
-
-  try {
-    connection = await oracledb.getConnection(dbConfig);
-
-    await connection.execute(
-      `INSERT INTO WISHLIST (id_wishlist, id_korisnika, id_proizvoda)
-       VALUES (SEQ_WISHLIST.NEXTVAL, :id_korisnika, :id_proizvoda)`,
-      { id_korisnika, id_proizvoda },
-      { autoCommit: true }
-    );
-
-    res.json({ message: '💖 Proizvod dodat u listu želja!' });
-  } catch (err) {
-    console.error('❌ Greška pri dodavanju u listu želja:', err);
-    res.status(500).json({ error: 'Greška pri dodavanju u listu želja.' });
-  } finally {
-    if (connection) await connection.close();
-  }
-});
