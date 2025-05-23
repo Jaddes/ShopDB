@@ -104,23 +104,24 @@
         <!-- Leva galerija -->
         <div class="product-left">
           <div class="gallery-column">
-            <img src="../../accessories/picture_products/thumb1.jpg" class="thumb" alt="Thumb 1">
-            <img src="../../accessories/picture_products/thumb2.jpg" class="thumb selected" alt="Thumb 2">
-            <img src="../../accessories/picture_products/thumb3.jpg" class="thumb" alt="Thumb 3">
+            <img id="thumb1" src="../../accessories/picture_products/white/thumb1.jpg" class="thumb" alt="Thumb 1">
+            <img id="thumb2" src="../../accessories/picture_products/white/thumb2.jpg" class="thumb selected" alt="Thumb 2">
+            <img id="thumb3" src="../../accessories/picture_products/white/thumb3.jpg" class="thumb" alt="Thumb 3">
           </div>
-      
+
           <!-- Glavna slika -->
           <div class="main-image">
-            <img src="../../accessories/picture_products/main.jpg" alt="Main Product Image">
+            <img id="mainImage" src="../../accessories/picture_products/white/main.jpg" alt="Main Product Image">
           </div>
         </div>
-
         <!-- Desni deo: informacije -->
         <div class="product-right">
             <div class="product-details">
               <div class="title-bar">
                 <h2>Anja white socks (used for 2 weeks)</h2>
-                <button class="favorite">♡</button>
+                <button class="favorite" aria-label="Add to wishlist">
+                  <img src="../../accessories/heart.svg" alt="Heart" class="heart-icon">
+                </button>
               </div>
               <p class="price">$30.99 <span class="reviews">| ★★★★★ (3254 review)</span></p>
         
@@ -134,26 +135,25 @@
                 <li>Great present for loved ones</li>
               </ul>
         
-              <!-- Varijante dizajna -->
-              <div class="design-variants">
-                <p><strong>Izaberi dizajn:</strong></p>
+            <div class="bottom-actions">
+              <div class="color-variants">
+                <p><strong>Izaberi boju:</strong></p>
                 <div class="variant-grid">
-                  <img src="../../accessories/picture_products/design1.png" alt="Design 1" class="variant-thumb selected">
-                  <img src="../../accessories/picture_products/design2.png" alt="Design 2" class="variant-thumb">
-                  <img src="../../accessories/picture_products/design3.png" alt="Design 3" class="variant-thumb">
+                  <div class="variant-box selected" data-color="white" title="Bela"></div>
+                  <div class="variant-box" data-color="black" title="Crna"></div>
+                  <div class="variant-box" data-color="red" title="Crvena"></div>
                 </div>
               </div>
 
-      
-            <!-- Količina i kupovina -->
-            <div class="purchase-section">
-              <div class="quantity">
-                <button>-</button>
-                <span>1</span>
-                <button>+</button>
+              <div class="purchase-section">
+                <div class="quantity">
+                  <button>-</button>
+                  <span>1</span>
+                  <button>+</button>
+                </div>
+                <button class="add-cart">Add to Cart</button>
+                <button class="buy-now">Buy Now</button>
               </div>
-              <button class="add-cart">Add to Cart</button>
-              <button class="buy-now">Buy Now</button>
             </div>
       
             

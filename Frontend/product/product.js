@@ -36,20 +36,20 @@ document.querySelector('.buy-now').addEventListener('click', () => {
     alert('Hvala na kupovini!');
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const favoriteBtn = document.querySelector('.favorite');
-  
-    if (!favoriteBtn) {
-      console.warn("Dugme za favorite nije pronađeno.");
-      return;
-    }
-  
-    favoriteBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // sprečava klik da "prođe" na druge elemente
-      favoriteBtn.classList.toggle('active');
-      favoriteBtn.textContent = favoriteBtn.classList.contains('active') ? '❤️' : '♡';
-    });
+const favoriteBtn = document.querySelector('.favorite');
+const heartIcon = favoriteBtn?.querySelector('.heart-icon');
+
+if (favoriteBtn && heartIcon) {
+  favoriteBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    favoriteBtn.classList.toggle('active');
+
+    heartIcon.src = favoriteBtn.classList.contains('active')
+      ? "../../accessories/heart-filled.svg"
+      : "../../accessories/heart.svg";
   });
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const variantThumbs = document.querySelectorAll('.variant-thumb');
@@ -79,6 +79,56 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const main = document.getElementById("mainImage");
+  const thumbs = [
+    document.getElementById("thumb1"),
+    document.getElementById("thumb2"),
+    document.getElementById("thumb3")
+  ];
+
+  const basePath = "../../accessories/picture_products/";
+
+const variants = {
+  white: {
+    main: `${basePath}white/main.jpg`,
+    thumbs: [
+      `${basePath}white/thumb1.jpg`,
+      `${basePath}white/thumb2.jpg`,
+      `${basePath}white/thumb3.jpg`
+    ]
+  },
+  black: {
+    main: `${basePath}black/main.jpg`,
+    thumbs: [
+      `${basePath}black/thumb1.jpg`,
+      `${basePath}black/thumb2.jpg`,
+      `${basePath}black/thumb3.jpg`
+    ]
+  },
+  red: {
+    main: `${basePath}red/main.jpg`,
+    thumbs: [
+      `${basePath}red/thumb1.jpg`,
+      `${basePath}red/thumb2.jpg`,
+      `${basePath}red/thumb3.jpg`
+    ]
+  }
+};
+
+  document.querySelectorAll(".variant-box").forEach(box => {
+    box.addEventListener("click", () => {
+      const color = box.dataset.color;
+      main.src = variants[color].main;
+      thumbs.forEach((t, i) => t.src = variants[color].thumbs[i]);
+
+      document.querySelectorAll(".variant-box").forEach(b => b.classList.remove("selected"));
+      box.classList.add("selected");
+    });
+  });
+});
+
 
   
   

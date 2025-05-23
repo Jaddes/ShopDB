@@ -331,12 +331,13 @@ main {
   .product-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;  /* dve jednake kolone */
-    width: 90%;
+    width: 100%;
     background: white;
     border-radius: 20px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
     padding: 40px;
-    gap: 40px; /* razmak između kolona */
+    gap: 20px; /* razmak između kolona */
     max-width: 1600px;
     margin: 0 auto;
   }
@@ -349,8 +350,8 @@ main {
   }
   
   .gallery-column .thumb {
-    width: 60px;
-    height: 60px;
+    width: 130px;
+    height: 130px;
     object-fit: cover;
     border: 2px solid transparent;
     border-radius: 5px;
@@ -362,7 +363,7 @@ main {
   }
   
   .main-image img {
-    max-width: 400px;
+    max-width: 800px;
     border-radius: 10px;
   }
   
@@ -372,6 +373,7 @@ main {
     flex-direction: column;
     gap: 15px;
     min-width: 300px;
+    justify-content: space-between;
   }
   
   .title-bar {
@@ -380,31 +382,39 @@ main {
     align-items: center;
   }
   
-  .favorite {
-    background: #EB9C35;
-    border: none;
-    color: white;
-    font-size: 16px;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s;
-    position: relative;
-    z-index: 5;
-  }
-  
-  .favorite.active {
-    background: red;
-  }
+.favorite {
+  position: absolute;
+  right: -80px; /* way outside the box */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #EB9C35;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 2;
+}
 
-  .favorite:hover {
-    background-color: #d97f1a;
-  }
+.favorite:hover {
+  background-color: #55883B; /* green on hover */
+}
+
+.favorite .heart-icon {
+  width: 35px;
+  height: 35px;
+  transition: transform 0.2s ease;
+}
+
+.favorite.active .heart-icon {
+  content: url("../../accessories/heart-filled.svg");
+}
+
 
   .price {
     font-size: 22px;
@@ -516,20 +526,21 @@ main {
   }
   
   .title-bar {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+    padding-right: 60px; /* prevent text overlap */
   }
-  
+
   .title-bar h2 {
-    font-size: 24px;
+    font-size: 30px;
     flex: 1;
     color: #17411D;
   }
 
   .product-left {
     display: flex;
-    gap: 20px;
+    gap: 40px;
     align-items: flex-start;
   }
   
@@ -853,3 +864,36 @@ main {
   border-color: #000;
 }
 
+.variant-grid {
+  display: flex;
+  gap: 10px;
+}
+
+.variant-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.variant-box[data-color="white"] {
+  background: #fff;
+}
+.variant-box[data-color="black"] {
+  background: #000;
+}
+.variant-box[data-color="red"] {
+  background: #c00;
+}
+
+.variant-box.selected {
+  border-color: #000;
+}
+
+.bottom-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
