@@ -410,36 +410,45 @@ footer a:hover {
     align-items: center;
     justify-content: center;
 }
-.wishlist-btn,
-.cart-btn {
-    position: absolute;
-    background: white;
-    border: none;
-    padding: 5px;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
+.favorite {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 2;
 }
 
-.wishlist-btn img,
+.favorite .heart-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.cart-btn {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 2;
+}
+
 .cart-btn img {
-    width: 20px;
-    height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
-/* Pozicija u slici */
-.wishlist-btn {
-    top: 5px;
-    right: 5px;
+
+.cart-btn.in-cart img {
+  filter: invert(35%) sepia(90%) saturate(400%) hue-rotate(85deg) brightness(90%) contrast(105%);
+  /* ili promeni boju ili dodaj neku drugu oznaku */
 }
 
-.cart-btn {
-    bottom: 5px;
-    left: 5px;
-}
-
-.wishlist-btn img:hover {
+.favorite img:hover {
     filter: brightness(0) saturate(100%) invert(44%) sepia(96%) saturate(2155%) hue-rotate(350deg) brightness(103%) contrast(105%);
     /* Narandžasta */
 }

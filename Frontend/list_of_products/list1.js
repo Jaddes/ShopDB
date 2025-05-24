@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const productsPerPage = 30;
   let currentlyDisplayed = 0;
+  let selectedCategory = null;
 
   const productGrid = document.querySelector('.product-grid');
   let allProducts = Array.from(productGrid.querySelectorAll('.product-card'));
@@ -25,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     currentlyDisplayed += shown;
     updateProductCount();
-
     loadMoreBtn.style.display = (currentlyDisplayed >= filteredProducts.length) ? 'none' : 'block';
   }
 
@@ -46,16 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const matchesSearch = name.includes(searchTerm);
       const matchesPrice = selectedPriceRanges.length === 0 || selectedPriceRanges.some(range => price >= range.min && price <= range.max);
-      // Ako je selektovana jedna kategorija (klikom), koristi samo nju
       const matchesCategory = selectedCategory
         ? category === selectedCategory
         : (selectedCategories.length === 0 || selectedCategories.includes(category));
-
-      // Podkategorije se primenjuju samo ako pripadaju selektovanoj kategoriji
       const matchesSubcategory = selectedSubcategories.length === 0 ||
         (selectedCategory && category === selectedCategory && selectedSubcategories.includes(subcategory));
-
-
 
       const show = matchesSearch && matchesPrice && matchesCategory && matchesSubcategory;
       card.style.display = show ? 'block' : 'none';
@@ -85,12 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
     productGrid.innerHTML = '';
     sortedCards.forEach(card => productGrid.appendChild(card));
     allProducts = sortedCards;
-
     applyFilters();
   });
 
   searchInput.addEventListener('input', applyFilters);
-
   document.querySelectorAll('.price-range, .category-filter, .subcategory-filter').forEach(cb => {
     cb.addEventListener('change', applyFilters);
   });
@@ -100,46 +93,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const titleElement = document.querySelector('.product-section h2');
 
   function applyUrlFilter() {
-    if (urlFilter === 'novo') {
-      if (titleElement) titleElement.textContent = 'NOVI PROIZVODI';
-      allProducts.forEach(card => {
-        card.style.display = card.classList.contains('novo') ? 'block' : 'none';
-      });
-    } else if (urlFilter === 'akcija') {
-      if (titleElement) titleElement.textContent = 'PROIZVODI NA AKCIJI';
-      allProducts.forEach(card => {
-        card.style.display = card.classList.contains('akcija') ? 'block' : 'none';
-      });
-     } else if (urlFilter === 'najpopularnije') {
-      if (titleElement) titleElement.textContent = 'NAJPOPULARNIJE PROIZVODI';
-      allProducts.forEach(card => {
-        card.style.display = card.classList.contains('najpopularnije') ? 'block' : 'none';
-      });
-    } else {
-      allProducts.forEach(card => {
-        card.style.display = 'block';
-      });
-    }
-    currentlyDisplayed = 0;
-    showNextProducts();
-  }
+    if (urlFilter) {
+      let className = '';
+      if (urlFilter === 'novo') {
+        className = 'novo';
+        if (titleElement) titleElement.textContent = 'NOVI PROIZVODI';
+      } else if (urlFilter === 'akcija') {
+        className = 'akcija';
+        if (titleElement) titleElement.textContent = 'PROIZVODI NA AKCIJI';
+      } else if (urlFilter === 'najpopularnije') {
+        className = 'najpopularnije';
+        if (titleElement) titleElement.textContent = 'NAJPOPULARNIJI PROIZVODI';
+      }
 
-  applyUrlFilter();
+      allProducts.forEach(card => {
+        card.style.display = card.classList.contains(className) ? 'block' : 'none';
+      });
+
+      currentlyDisplayed = 0;
+      showNextProducts();
+    } else {
+      applyFilters();
+    }
+  }
 
   loadMoreBtn.addEventListener('click', showNextProducts);
 
-  const categoryButtons = document.querySelectorAll('.side-btn');
-  categoryButtons.forEach(button => {
+  document.querySelectorAll('.side-btn').forEach(button => {
     button.addEventListener('click', () => {
       const parentCategory = button.closest('.side-category');
       parentCategory.classList.toggle('active');
       const arrow = button.querySelector('span');
-      arrow.textContent = parentCategory.classList.contains('active') ? '▼' : '▶';
+      if (arrow) arrow.textContent = parentCategory.classList.contains('active') ? '▼' : '▶';
     });
   });
 
-  const subButtons = document.querySelectorAll('.sub-btn');
-  subButtons.forEach(btn => {
+  document.querySelectorAll('.sub-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
       btn.parentElement.classList.toggle('open');
@@ -160,8 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const subcategoriesView = document.getElementById('subcategories-view');
   const subcategoriesList = document.getElementById('subcategories-list');
   const backToCategoriesBtn = document.getElementById('back-to-categories');
-
-  let selectedCategory = null;
 
   function showSubcategories(category) {
     selectedCategory = category;
@@ -194,28 +181,20 @@ document.addEventListener('DOMContentLoaded', () => {
     applyFilters();
   });
 
- document.querySelectorAll('.clickable-category').forEach(label => {
-  label.addEventListener('click', () => {
-    const category = label.dataset.category;
+  document.querySelectorAll('.clickable-category').forEach(label => {
+    label.addEventListener('click', () => {
+      const category = label.dataset.category;
 
-    // 1. Poništi sve prethodne kategorije i podkategorije
-    document.querySelectorAll('.category-filter').forEach(cb => cb.checked = false);
-    document.querySelectorAll('.subcategory-filter').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.category-filter').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.subcategory-filter').forEach(cb => cb.checked = false);
 
-    // 2. Označi samo kliknutu kategoriju
-    const checkbox = document.querySelector(`.category-filter[data-category="${category}"]`);
-    if (checkbox) {
-      checkbox.checked = true;
-    }
+      const checkbox = document.querySelector(`.category-filter[data-category="${category}"]`);
+      if (checkbox) checkbox.checked = true;
 
-    // 3. Prikaži odgovarajuće podkategorije
-    showSubcategories(category);
-
-    // 4. Primeni filtriranje proizvoda
-    applyFilters();
+      showSubcategories(category);
+      applyFilters();
+    });
   });
-});
-
 
   subcategoriesList.addEventListener('change', (e) => {
     if (e.target && e.target.matches('input.subcategory-checkbox')) {
@@ -237,5 +216,92 @@ document.addEventListener('DOMContentLoaded', () => {
       applyFilters();
     }
   });
+
+  applyUrlFilter();
 });
 
+// Wishlist
+document.addEventListener("DOMContentLoaded", () => {
+  const favoriteBtn = document.querySelector('.favorite');
+  const heartIcon = favoriteBtn?.querySelector('.heart-icon');
+  const productId = "101";
+
+  const productData = {
+    id: productId,
+    title: "Majica Crna",
+    price: "950",
+    image: "../../accessories/picture_products/white/main.jpg"
+  };
+
+  const saved = JSON.parse(localStorage.getItem("wishlist")) || [];
+  if (saved.find(item => item.id === productId)) {
+    favoriteBtn?.classList.add("active");
+    if (heartIcon) heartIcon.src = "../../accessories/heart-filled.svg";
+  }
+
+  favoriteBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    favoriteBtn.classList.toggle('active');
+    const active = favoriteBtn.classList.contains('active');
+    if (heartIcon) {
+      heartIcon.src = active
+        ? "../../accessories/heart-filled.svg"
+        : "../../accessories/heart.svg";
+    }
+
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const index = wishlist.findIndex(item => item.id === productId);
+
+    if (index > -1) {
+      wishlist.splice(index, 1);
+    } else {
+      wishlist.push(productData);
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  });
+});
+
+
+
+// Cart
+document.addEventListener("DOMContentLoaded", () => {
+  const cartBtn = document.querySelector('.cart-btn');
+  const cartIcon = cartBtn?.querySelector('img');
+  const productId = "101";
+
+  const productData = {
+    id: productId,
+    title: "Majica Crna",
+    price: "950",
+    image: "../../accessories/picture_products/white/main.jpg"
+  };
+
+  const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (savedCart.find(item => item.id === productId)) {
+    cartBtn?.classList.add("active");
+    if (cartIcon) cartIcon.src = "../../accessories/shopping_cart_filled.svg";
+  }
+
+  cartBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    cartBtn.classList.toggle('active');
+    const active = cartBtn.classList.contains('active');
+    if (cartIcon) {
+      cartIcon.src = active
+        ? "../../accessories/shopping_cart_filled.svg"
+        : "../../accessories/shopping_cart.svg";
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const index = cart.findIndex(item => item.id === productId);
+
+    if (index > -1) {
+      cart.splice(index, 1);
+    } else {
+      cart.push(productData);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+  });
+});

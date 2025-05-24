@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   });
 
+
   // Varijante
   const variantThumbs = document.querySelectorAll('.variant-thumb');
   variantThumbs.forEach(img => {

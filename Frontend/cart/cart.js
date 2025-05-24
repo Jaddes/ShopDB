@@ -1,40 +1,58 @@
-// Footer ponašanje pri skrolovanju
-document.addEventListener("scroll", function () {
-    const footer = document.querySelector("footer");
+document.addEventListener("DOMContentLoaded", function () {
+  const cartTableBody = document.querySelector("table tbody");
+  const totalPriceElem = document.getElementById("total-price");
+  const grandTotalElem = document.getElementById("grand-total");
+  const deliveryFee = 400;
 
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        footer.style.transform = "translateY(0)";
-    } else {
-        footer.style.transform = "translateY(100%)";
-    }
-});
+  // Učitavanje korpe iz localStorage
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Pretraga proizvoda po nazivu
-document.getElementById('searchInput').addEventListener('input', function () {
-  const searchTerm = this.value.toLowerCase();
-  const productCards = document.querySelectorAll('.product-card');
+  function renderCart() {
+    cartTableBody.innerHTML = "";
+    let total = 0;
 
-  productCards.forEach(card => {
-    const nameElement = card.querySelector('.product-name');
-    const productName = nameElement ? nameElement.textContent.toLowerCase() : '';
+    cart.forEach((item, index) => {
+      const quantity = item.quantity || 1;
+      const price = parseInt(item.price);
+      const subtotal = price * quantity;
+      total += subtotal;
 
-    // Prikaži proizvod ako sadrži unos iz pretrage
-    if (productName.includes(searchTerm)) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-});
-
-// Klik na dugme za brisanje (kanticu)
-document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        this.classList.add('clicked');
-
-        // Opcionalno ukloni red iz tabele:
-        // this.closest('tr').remove();
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.title}</td>
+        <td>${price}RSD</td>
+        <td><input type="number" value="${quantity}" min="1" data-index="${index}" class="qty-input" /></td>
+        <td>${subtotal}RSD</td>
+        <td><button class="delete-btn" data-index="${index}">🗑</button></td>
+      `;
+      cartTableBody.appendChild(row);
     });
+
+    totalPriceElem.textContent = `Međuzbir: ${total}RSD`;
+    grandTotalElem.textContent = `Ukupno: ${total + deliveryFee}RSD`;
+
+    // Dodaj event listenere za brisanje i promenu količine
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const index = this.getAttribute("data-index");
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      });
+    });
+
+    document.querySelectorAll(".qty-input").forEach(input => {
+      input.addEventListener("input", function () {
+        const index = this.getAttribute("data-index");
+        const newQty = parseInt(this.value);
+        if (newQty > 0) {
+          cart[index].quantity = newQty;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
+        }
+      });
+    });
+  }
+
+  renderCart();
 });
-
-

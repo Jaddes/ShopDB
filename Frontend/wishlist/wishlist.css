@@ -262,6 +262,7 @@ main.cart-container h2 {
 .delete-btn {
     width: 110px;         /* fiksna širina */
     height: 30px;        /* fiksna visina */
+    border-radius: 20px;
     padding: 0;          /* uklanja sve unutrašnje margine */
     font-size: 16px;     /* dovoljno veliko za ikonu */
     background-color: #55883B;
