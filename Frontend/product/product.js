@@ -130,6 +130,62 @@ document.addEventListener("DOMContentLoaded", () => {
       box.classList.add("selected");
     });
   });
+
+  const commentForm = document.getElementById('comment-form');
+  const commentList = document.querySelector('.product-comments');
+
+  // Učitavanje komentara iz localStorage
+  const loadComments = () => {
+    const savedComments = JSON.parse(localStorage.getItem("product-comments")) || [];
+    commentList.innerHTML = ""; // Očisti postojeće
+    savedComments.forEach(comment => {
+      const commentDiv = document.createElement("div");
+      commentDiv.className = "comment";
+      commentDiv.innerHTML = `
+        <p class="comment-author">${comment.author || "Anonymous"}</p>
+        <p class="comment-text">${comment.text}</p>
+        <div class="comment-footer">
+          <div class="comment-actions">
+            <a href="#">Like</a>
+            <a href="#">Reply</a>
+            <span>${comment.time}</span>
+          </div>
+          <div class="comment-rating">${"★".repeat(comment.rating)}${"☆".repeat(5 - comment.rating)}</div>
+        </div>
+      `;
+      commentList.appendChild(commentDiv);
+    });
+  };
+
+  loadComments();
+
+  commentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const selectedRating = document.querySelector('input[name="rating"]:checked');
+    const commentText = document.getElementById('comment-text').value.trim();
+
+    if (!selectedRating && !commentText) {
+      alert("Unesite ocenu i/ili komentar!");
+      return;
+    }
+
+    const comment = {
+      rating: selectedRating ? parseInt(selectedRating.value) : 0,
+      text: commentText || "Bez teksta.",
+      time: new Date().toLocaleString(),
+      author: "Anonymous" // Ovde možeš dodati input za ime ako želiš
+    };
+
+    let comments = JSON.parse(localStorage.getItem("product-comments")) || [];
+    comments.push(comment);
+    localStorage.setItem("product-comments", JSON.stringify(comments));
+
+    commentForm.reset(); // Očisti formu
+    loadComments();      // Ponovo učitaj komentare
+  });
+
+  
+
 });
 
 
