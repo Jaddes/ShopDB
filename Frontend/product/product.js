@@ -38,9 +38,21 @@ document.querySelector('.buy-now').addEventListener('click', () => {
 
 //Wishlist
 document.addEventListener("DOMContentLoaded", () => {
+  // Glavna slika i thumbovi
+  const mainImage = document.querySelector('.main-image img');
+  const thumbs = document.querySelectorAll('.thumb');
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      mainImage.src = thumb.src;
+      thumbs.forEach(t => t.classList.remove('selected'));
+      thumb.classList.add('selected');
+    });
+  });
+
+  // Wishlist (srce)
   const favoriteBtn = document.querySelector('.favorite');
   const heartIcon = favoriteBtn?.querySelector('.heart-icon');
-
   const productId = "product-anja-white";
   const productData = {
     id: productId,
@@ -49,14 +61,12 @@ document.addEventListener("DOMContentLoaded", () => {
     image: "../../accessories/picture_products/white/main.jpg"
   };
 
-  // Provera da li je već u wishlist
   const saved = JSON.parse(localStorage.getItem("wishlist")) || [];
   if (saved.find(item => item.id === productId)) {
     favoriteBtn.classList.add("active");
     heartIcon.src = "../../accessories/heart-filled.svg";
   }
 
-  // Klik na srce
   favoriteBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     favoriteBtn.classList.toggle('active');
@@ -67,138 +77,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     const index = wishlist.findIndex(item => item.id === productId);
-
     if (index > -1) {
       wishlist.splice(index, 1);
     } else {
       wishlist.push(productData);
     }
-
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   });
 
-
-  // Varijante
-  const variantThumbs = document.querySelectorAll('.variant-thumb');
-  variantThumbs.forEach(img => {
-    img.addEventListener('click', () => {
-      variantThumbs.forEach(i => i.classList.remove('selected'));
-      img.classList.add('selected');
-    });
-  });
-
-  const mainImage = document.querySelector('.main-image img');
-  const thumbs = document.querySelectorAll('.thumb');
-  thumbs.forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      const tempSrc = mainImage.src;
-      mainImage.src = thumb.src;
-      thumb.src = tempSrc;
-
-      thumbs.forEach(t => t.classList.remove('selected'));
-      thumb.classList.add('selected');
-    });
-  });
-
-  const main = document.getElementById("mainImage");
+  // Varijante boja (variant-box)
   const variantBoxes = document.querySelectorAll(".variant-box");
-  const variantThumbIds = ["thumb1", "thumb2", "thumb3"];
-  const thumbsEls = variantThumbIds.map(id => document.getElementById(id));
-
-  const basePath = "../../accessories/picture_products/";
-  const variants = {
-    white: {
-      main: `${basePath}white/main.jpg`,
-      thumbs: [`${basePath}white/thumb1.jpg`, `${basePath}white/thumb2.jpg`, `${basePath}white/thumb3.jpg`]
-    },
-    black: {
-      main: `${basePath}black/main.jpg`,
-      thumbs: [`${basePath}black/thumb1.jpg`, `${basePath}black/thumb2.jpg`, `${basePath}black/thumb3.jpg`]
-    },
-    red: {
-      main: `${basePath}red/main.jpg`,
-      thumbs: [`${basePath}red/thumb1.jpg`, `${basePath}red/thumb2.jpg`, `${basePath}red/thumb3.jpg`]
-    }
-  };
-
-  variantBoxes.forEach(box => {
-    box.addEventListener("click", () => {
-      const color = box.dataset.color;
-      main.src = variants[color].main;
-      thumbsEls.forEach((t, i) => t.src = variants[color].thumbs[i]);
-
-      variantBoxes.forEach(b => b.classList.remove("selected"));
-      box.classList.add("selected");
-    });
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const mainImage = document.querySelector('.main-image img');
-  const thumbs = document.querySelectorAll('.thumb');
-
-  thumbs.forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      // ROTACIJA
-      const tempSrc = mainImage.src;
-      mainImage.src = thumb.src;
-      thumb.src = tempSrc;
-
-      // Izmena selekcije
-      thumbs.forEach(t => t.classList.remove('selected'));
-      thumb.classList.add('selected');
-    });
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const main = document.getElementById("mainImage");
-  const thumbs = [
+  const thumbsEls = [
     document.getElementById("thumb1"),
     document.getElementById("thumb2"),
     document.getElementById("thumb3")
   ];
 
   const basePath = "../../accessories/picture_products/";
+  const variants = {
+    white: {
+      main: `${basePath}white/main.jpg`,
+      thumbs: [
+        `${basePath}white/thumb1.jpg`,
+        `${basePath}white/thumb2.jpg`,
+        `${basePath}white/thumb3.jpg`
+      ]
+    },
+    black: {
+      main: `${basePath}black/main.jpg`,
+      thumbs: [
+        `${basePath}black/thumb1.jpg`,
+        `${basePath}black/thumb2.jpg`,
+        `${basePath}black/thumb3.jpg`
+      ]
+    },
+    red: {
+      main: `${basePath}red/main.jpg`,
+      thumbs: [
+        `${basePath}red/thumb1.jpg`,
+        `${basePath}red/thumb2.jpg`,
+        `${basePath}red/thumb3.jpg`
+      ]
+    }
+  };
 
-const variants = {
-  white: {
-    main: `${basePath}white/main.jpg`,
-    thumbs: [
-      `${basePath}white/thumb1.jpg`,
-      `${basePath}white/thumb2.jpg`,
-      `${basePath}white/thumb3.jpg`
-    ]
-  },
-  black: {
-    main: `${basePath}black/main.jpg`,
-    thumbs: [
-      `${basePath}black/thumb1.jpg`,
-      `${basePath}black/thumb2.jpg`,
-      `${basePath}black/thumb3.jpg`
-    ]
-  },
-  red: {
-    main: `${basePath}red/main.jpg`,
-    thumbs: [
-      `${basePath}red/thumb1.jpg`,
-      `${basePath}red/thumb2.jpg`,
-      `${basePath}red/thumb3.jpg`
-    ]
-  }
-};
-
-  document.querySelectorAll(".variant-box").forEach(box => {
+  variantBoxes.forEach(box => {
     box.addEventListener("click", () => {
       const color = box.dataset.color;
-      main.src = variants[color].main;
-      thumbs.forEach((t, i) => t.src = variants[color].thumbs[i]);
-
-      document.querySelectorAll(".variant-box").forEach(b => b.classList.remove("selected"));
+      mainImage.src = variants[color].main;
+      thumbsEls.forEach((thumb, i) => thumb.src = variants[color].thumbs[i]);
+      variantBoxes.forEach(b => b.classList.remove("selected"));
       box.classList.add("selected");
     });
   });
 });
+
+
+
+
 
 
   
