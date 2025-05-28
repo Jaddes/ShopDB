@@ -359,7 +359,112 @@ footer a:hover {
   user-select: none;
 }
 
+/*raspon cene */
 
+.price-filter {
+  max-width: 250px; 
+  width: 100%;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  overflow-x: hidden; 
+}
+
+.range-slider {
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 100%;
+  pointer-events: none; /* Disable default slider interaction */
+  -webkit-appearance: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.range-slider::-webkit-slider-thumb {
+  pointer-events: auto; /* Re-enable pointer events on thumb */
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 3;
+  margin-top: -8px;
+}
+
+.range-slider::-moz-range-thumb {
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 3;
+}
+
+.slider-track {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.slider-track::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  background: #007bff;
+  border-radius: 2px;
+  left: 0;
+  right: 0;
+  width: 0;
+  z-index: 1;
+  transition: left 0.3s, right 0.3s;
+}
+
+.inputs-container {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.inputs-container input[type="number"] {
+  width: 70px;
+  padding: 5px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#priceRangeDisplay {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14px;
+}
 
 
 
@@ -384,6 +489,8 @@ footer a:hover {
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     width: 100%;
+    max-width: 100%;      /* ograniči širinu ako treba */
+    overflow-x: hidden; 
 }
 
 

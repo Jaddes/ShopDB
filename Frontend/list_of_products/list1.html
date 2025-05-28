@@ -124,8 +124,8 @@
       </ul>
     </div>
 
-    <!-- Raspod Cena -->
-    <div class="RASPON CENE">
+    <!-- Raspon Cena -->
+    <!--<div class="RASPON CENE">
       <h4>RASPON CENE</h4>
       <ul>
         <li><label><input type="checkbox" class="price-range" data-min="0" data-max="1000"> 0 - 1000 RSD</label></li>
@@ -134,13 +134,31 @@
         <li><label><input type="checkbox" class="price-range" data-min="5000" data-max="10000"> 5000 - 10000 RSD</label></li>
       </ul>
     </div>
-  </aside>
+  </aside>   -->
+
+  <div class="price-filter">
+    <h4>RASPON CENE</h4>
+    <div class="slider-container">
+      <input type="range" id="priceMin" min="0" max="20000" value="0" step="10" class="range-slider" />
+      <input type="range" id="priceMax" min="0" max="20000" value="20000" step="10" class="range-slider" />
+      <div class="slider-track"></div>
+    </div>
+    <div class="inputs-container">
+      <input type="number" id="priceMinInput" min="0" max="20000" value="0" step="10" />
+      <span> - </span>
+      <input type="number" id="priceMaxInput" min="0" max="20000" value="20000" step="10" />
+      <span> RSD</span>
+    </div>
+    <div id="priceRangeDisplay">Cena: 0 - 20000 RSD</div>
+</div>
+
+</aside>
 
 
+<section class="product-section">
+      <h2>SVI PROIZVODI</h2>
+      <p>Prikaz X od X proizvoda</p>
 
-        <section class="product-section">
-            <h2>SVI PROIZVODI</h2>
-            <p>Prikaz X od X proizvoda</p>
             <div class="sort-bar">
                 <select id="sort-options">
                       <option value="">Sortiraj</option>
@@ -150,7 +168,8 @@
                       <option value="name-desc">Naziv (Š-A)</option>
                 </select>
             </div>
-            <div class="product-grid">
+
+    <div class="product-grid">
                
     <!-- Primer proizvoda -->
     <div class="product-card novo akcija"
