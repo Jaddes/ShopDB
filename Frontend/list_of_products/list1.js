@@ -1,3 +1,4 @@
+// Glavni DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   const productsPerPage = 30;
   let currentlyDisplayed = 0;
@@ -10,12 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const countDisplay = document.querySelector('.product-section p');
   const searchInput = document.getElementById('searchInput');
   const sortSelect = document.getElementById('sort-options');
-
-  const priceMinSlider = document.getElementById('priceMin');
-  const priceMaxSlider = document.getElementById('priceMax');
-  const priceMinInput = document.getElementById('priceMinInput');
-  const priceMaxInput = document.getElementById('priceMaxInput');
-  const priceRangeDisplay = document.getElementById('priceRangeDisplay');
 
   function updateProductCount() {
     const filteredProducts = allProducts.filter(card => card.style.display !== 'none');
@@ -37,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyFilters() {
     const searchTerm = searchInput.value.toLowerCase();
-    const priceMin = parseFloat(priceMinInput.value);
-    const priceMax = parseFloat(priceMaxInput.value);
+    const priceMin = parseFloat(document.getElementById('priceMin').value);
+    const priceMax = parseFloat(document.getElementById('priceMax').value);
 
     const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked')).map(cb => cb.dataset.category);
     const selectedSubcategories = Array.from(document.querySelectorAll('.subcategory-filter:checked')).map(cb => cb.dataset.subcategory);
@@ -140,60 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Price Range ---
-  const updatePriceDisplay = () => {
-    const min = parseInt(priceMinSlider.value);
-    const max = parseInt(priceMaxSlider.value);
-    priceRangeDisplay.textContent = `Cena: ${min} - ${max} RSD`;
-  };
-
-  const syncSliderWithInputs = () => {
-    let min = parseInt(priceMinInput.value);
-    let max = parseInt(priceMaxInput.value);
-
-    if (isNaN(min)) min = parseInt(priceMinSlider.min);
-    if (isNaN(max)) max = parseInt(priceMaxSlider.max);
-
-    if (min > max) min = max;
-    if (max < min) max = min;
-
-    priceMinSlider.value = min;
-    priceMaxSlider.value = max;
-
-    updatePriceDisplay();
-    applyFilters();
-  };
-
-  const syncInputsWithSlider = (event) => {
-    let min = parseInt(priceMinSlider.value);
-    let max = parseInt(priceMaxSlider.value);
-
-    if (min > max) {
-      if (event.target === priceMinSlider) {
-        min = max;
-        priceMinSlider.value = min;
-      } else {
-        max = min;
-        priceMaxSlider.value = max;
-      }
-    }
-
-    priceMinInput.value = min;
-    priceMaxInput.value = max;
-
-    updatePriceDisplay();
-    applyFilters();
-  };
-
-  priceMinSlider.addEventListener('input', syncInputsWithSlider);
-  priceMaxSlider.addEventListener('input', syncInputsWithSlider);
-
-  priceMinInput.addEventListener('input', syncSliderWithInputs);
-  priceMaxInput.addEventListener('input', syncSliderWithInputs);
-
-  updatePriceDisplay();
-
-  // --- Kategorije i podkategorije ---
   const subcategoriesData = {
     'odeća': ['Majice', 'Farmerke', 'Kape'],
     'kuća': ['Kuhinja', 'Dekoracije', 'Osvetljenje'],
@@ -276,4 +217,143 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   applyUrlFilter();
+});
+
+// Wishlist
+document.addEventListener("DOMContentLoaded", () => {
+  const favoriteBtn = document.querySelector('.favorite');
+  const heartIcon = favoriteBtn?.querySelector('.heart-icon');
+  const productId = "101";
+
+  const productData = {
+    id: productId,
+    title: "Bluetooth Slušalice",
+    price: "1800",
+    image: "../../accessories/picture_products/white/main.jpg"
+  };
+
+  const saved = JSON.parse(localStorage.getItem("wishlist")) || [];
+  if (saved.find(item => item.id === productId)) {
+    favoriteBtn?.classList.add("active");
+    if (heartIcon) heartIcon.src = "../../accessories/heart-filled.svg";
+  }
+
+  favoriteBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    favoriteBtn.classList.toggle('active');
+    const active = favoriteBtn.classList.contains('active');
+    if (heartIcon) {
+      heartIcon.src = active
+        ? "../../accessories/heart-filled.svg"
+        : "../../accessories/heart.svg";
+    }
+
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const index = wishlist.findIndex(item => item.id === productId);
+
+    if (index > -1) {
+      wishlist.splice(index, 1);
+    } else {
+      wishlist.push(productData);
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  });
+});
+
+// Cart
+document.addEventListener("DOMContentLoaded", () => {
+  const cartBtn = document.querySelector('.cart-btn');
+  const cartIcon = cartBtn?.querySelector('img');
+  const productId = "101";
+
+  const productData = {
+    id: productId,
+    title: "Bluetooth Slušalice",
+    price: "1800",
+    image: "../../accessories/picture_products/white/main.jpg"
+  };
+
+  const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (savedCart.find(item => item.id === productId)) {
+    cartBtn?.classList.add("active");
+    if (cartIcon) cartIcon.src = "../../accessories/shopping_cart_filled.svg";
+  }
+
+  cartBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    cartBtn.classList.toggle('active');
+    const active = cartBtn.classList.contains('active');
+    if (cartIcon) {
+      cartIcon.src = active
+        ? "../../accessories/shopping_cart_filled.svg"
+        : "../../accessories/shopping_cart.svg";
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const index = cart.findIndex(item => item.id === productId);
+
+    if (index > -1) {
+      cart.splice(index, 1);
+    } else {
+      cart.push(productData);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+  });
+});
+
+// Price range slider
+document.addEventListener('DOMContentLoaded', () => {
+  const priceMinSlider = document.getElementById('priceMin');
+  const priceMaxSlider = document.getElementById('priceMax');
+  const priceMinInput = document.getElementById('priceMinInput');
+  const priceMaxInput = document.getElementById('priceMaxInput');
+  const priceRangeDisplay = document.getElementById('priceRangeDisplay');
+
+  const updateDisplay = () => {
+    const min = parseInt(priceMinSlider.value);
+    const max = parseInt(priceMaxSlider.value);
+    priceRangeDisplay.textContent = `Cena: ${min} - ${max} RSD`;
+  };
+
+  const syncSliderWithInputs = () => {
+    let min = parseInt(priceMinInput.value);
+    let max = parseInt(priceMaxInput.value);
+
+    if (min > max) min = max;
+    if (max < min) max = min;
+
+    priceMinSlider.value = min;
+    priceMaxSlider.value = max;
+
+    updateDisplay();
+    applyFilters();
+  };
+
+  const syncInputsWithSlider = () => {
+    let min = parseInt(priceMinSlider.value);
+    let max = parseInt(priceMaxSlider.value);
+
+    if (min > max) {
+      if (event.target === priceMinSlider) {
+        min = max;
+        priceMinSlider.value = min;
+      } else {
+        max = min;
+        priceMaxSlider.value = max;
+      }
+    }
+
+    priceMinInput.value = min;
+    priceMaxInput.value = max;
+
+    updateDisplay();
+    applyFilters();
+  };
+
+  priceMinSlider.addEventListener('input', syncInputsWithSlider);
+  priceMaxSlider.addEventListener('input', syncInputsWithSlider);
+  priceMinInput.addEventListener('input', syncSliderWithInputs);
+  priceMaxInput.addEventListener('input', syncSliderWithInputs);
 });

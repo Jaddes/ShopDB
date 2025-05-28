@@ -144,19 +144,23 @@
                 <div class="info-item">
                   <span>Promeni lozinku:</span>
                   <div style="flex: 1;">
-                      <div class="password-wrapper">
-                        <input type="password" id="oldPassword" class="password-input" placeholder="Stara lozinka">
-                        <span class="toggle-password" onclick="togglePasswordVisibility('oldPassword', this)">👁️</span>
-                      </div>
-                      <div class="password-wrapper">
-                        <input type="password" id="newPassword" class="password-input" placeholder="Nova lozinka">
-                        <span class="toggle-password" onclick="togglePasswordVisibility('oldPassword', this)">👁️</span>
-                      </div>
-                       <div class="password-wrapper">
-                        <input type="password" id="confirmPassword" class="password-input" placeholder="Potvrdi novu lozinku">
-                        <span class="toggle-password" onclick="togglePasswordVisibility('oldPassword', this)">👁️</span>
-                      </div>
-                      <button onclick="updatePassword()">Sačuvaj</button>
+                     <div class="password-wrapper">
+                      <input type="password" id="oldPassword" placeholder="Stara lozinka">
+                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">👁️</span>
+                    </div>
+
+                    <div class="password-wrapper">
+                      <input type="password" id="newPassword" placeholder="Nova lozinka">
+                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">👁️</span>
+                    </div>
+
+                    <div class="password-wrapper">
+                      <input type="password" id="confirmPassword" placeholder="Potvrdi lozinku">
+                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">👁️</span>
+                    </div>
+
+                      <button class="edit-btn" onclick="updatePassword()">Sačuvaj</button>
+
                       <p style="margin-top:10px;">
                           <a href="../reset_password/reset_password.html" target="_blank" style="color:#17411D;text-decoration:underline;">Zaboravili ste lozinku?</a>
                       </p>

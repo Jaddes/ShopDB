@@ -52,9 +52,11 @@ function updatePassword() {
     document.getElementById('confirmPassword').value = '';
 }
 
-function togglePasswordVisibility(inputId, iconElement) {
-    const input = document.getElementById(inputId);
-    const isPassword = input.type === "password";
-    input.type = isPassword ? "text" : "password";
-    iconElement.textContent = isPassword ? "🙈" : "👁️";
+function togglePasswordVisibility(iconElement) {
+    const wrapper = iconElement.closest('.password-wrapper');
+    const input = wrapper.querySelector('input');
+    const isPassword = input.type === 'password';
+
+    input.type = isPassword ? 'text' : 'password';
+    iconElement.textContent = isPassword ? '🙈' : '👁️';
 }
