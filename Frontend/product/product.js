@@ -159,6 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadComments = () => {
     const savedComments = JSON.parse(localStorage.getItem("product-comments")) || [];
     commentList.innerHTML = "";
+
+    let totalRating = 0;
+    
     savedComments.forEach(comment => {
       const commentDiv = document.createElement("div");
       commentDiv.className = "comment";
@@ -174,8 +177,29 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="comment-rating">${"★".repeat(comment.rating)}${"☆".repeat(5 - comment.rating)}</div>
         </div>
       `;
+      totalRating += comment.rating;
       commentList.appendChild(commentDiv);
     });
+
+     // Ažuriranje prosečne ocene i broja komentara ispod naslova
+    const averageRating = savedComments.length ? (totalRating / savedComments.length) : 0;
+    const roundedRating = Math.round(averageRating);
+    const reviewsElement = document.querySelector(".reviews");
+
+    if (reviewsElement) {
+      reviewsElement.innerHTML = `
+        ${"★".repeat(roundedRating)}${"☆".repeat(5 - roundedRating)} (${savedComments.length} review${savedComments.length !== 1 ? "s" : ""})
+      `;
+    }
+
+      // Ažuriranje prosečne ocene i broja komentara kod opisa proizvoda
+    const opisRatingElement = document.querySelector(".more-info-section .rating");
+    const opisTotalElement = document.querySelector(".more-info-section .rating-total");
+
+    if (opisRatingElement && opisTotalElement) {
+      opisRatingElement.innerHTML = `★ ${averageRating.toFixed(1)} / 5 <span class="rating-total">(${savedComments.length} komentar${savedComments.length !== 1 ? "a" : ""})</span>`;
+    }
+
   };
 
   loadComments();
