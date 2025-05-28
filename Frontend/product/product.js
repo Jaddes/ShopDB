@@ -1,11 +1,10 @@
 document.addEventListener("scroll", function() {
     const footer = document.querySelector("footer");
 
-    // Proverava da li je korisnik skrolovao do dna stranice
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        footer.style.transform = "translateY(0)"; // Footer se prikazuje
+        footer.style.transform = "translateY(0)";
     } else {
-        footer.style.transform = "translateY(100%)"; // Footer ostaje sakriven
+        footer.style.transform = "translateY(100%)";
     }
 });
 
@@ -18,7 +17,6 @@ document.getElementById('searchInput').addEventListener('input', function () {
     const nameElement = card.querySelector('.product-name');
     const productName = nameElement ? nameElement.textContent.toLowerCase() : '';
 
-    // Prikaži proizvod ako sadrži unos iz pretrage
     if (productName.includes(searchTerm)) {
       card.style.display = 'block';
     } else {
@@ -27,7 +25,7 @@ document.getElementById('searchInput').addEventListener('input', function () {
   });
 });
 
-// Dugmad - prikazuju alert kao privremena funkcionalnost
+// Dugmad - privremena funkcionalnost
 document.querySelector('.add-cart')?.addEventListener('click', () => {
     alert('Proizvod je dodat u korpu!');
 });
@@ -36,21 +34,38 @@ document.querySelector('.buy-now').addEventListener('click', () => {
     alert('Hvala na kupovini!');
 });
 
-//Wishlist
+// Wishlist i slike
 document.addEventListener("DOMContentLoaded", () => {
-  // Glavna slika i thumbovi
   const mainImage = document.querySelector('.main-image img');
   const thumbs = document.querySelectorAll('.thumb');
+  let imageSources = Array.from(thumbs).map(thumb => thumb.src);
+  let currentIndex = 0;
 
-  thumbs.forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      mainImage.src = thumb.src;
+  const updateMainImage = (index) => {
+    if (index >= 0 && index < imageSources.length) {
+      mainImage.src = imageSources[index];
       thumbs.forEach(t => t.classList.remove('selected'));
-      thumb.classList.add('selected');
+      if (thumbs[index]) thumbs[index].classList.add('selected');
+      currentIndex = index;
+    }
+  };
+
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => {
+      updateMainImage(index);
     });
   });
 
-  // Wishlist (srce)
+  document.querySelector('.prev-btn')?.addEventListener('click', () => {
+    const newIndex = (currentIndex - 1 + imageSources.length) % imageSources.length;
+    updateMainImage(newIndex);
+  });
+
+  document.querySelector('.next-btn')?.addEventListener('click', () => {
+    const newIndex = (currentIndex + 1) % imageSources.length;
+    updateMainImage(newIndex);
+  });
+
   const favoriteBtn = document.querySelector('.favorite');
   const heartIcon = favoriteBtn?.querySelector('.heart-icon');
   const productId = "product-anja-white";
@@ -85,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   });
 
-  // Varijante boja (variant-box)
   const variantBoxes = document.querySelectorAll(".variant-box");
   const thumbsEls = [
     document.getElementById("thumb1"),
@@ -125,7 +139,15 @@ document.addEventListener("DOMContentLoaded", () => {
     box.addEventListener("click", () => {
       const color = box.dataset.color;
       mainImage.src = variants[color].main;
-      thumbsEls.forEach((thumb, i) => thumb.src = variants[color].thumbs[i]);
+      variants[color].thumbs.forEach((src, i) => {
+        if (thumbsEls[i]) thumbsEls[i].src = src;
+      });
+
+      imageSources = variants[color].thumbs.slice();
+      thumbs.forEach(t => t.classList.remove('selected'));
+      thumbs[0]?.classList.add('selected');
+      currentIndex = 0;
+
       variantBoxes.forEach(b => b.classList.remove("selected"));
       box.classList.add("selected");
     });
@@ -134,10 +156,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const commentForm = document.getElementById('comment-form');
   const commentList = document.querySelector('.product-comments');
 
-  // Učitavanje komentara iz localStorage
   const loadComments = () => {
     const savedComments = JSON.parse(localStorage.getItem("product-comments")) || [];
-    commentList.innerHTML = ""; // Očisti postojeće
+    commentList.innerHTML = "";
     savedComments.forEach(comment => {
       const commentDiv = document.createElement("div");
       commentDiv.className = "comment";
@@ -173,25 +194,14 @@ document.addEventListener("DOMContentLoaded", () => {
       rating: selectedRating ? parseInt(selectedRating.value) : 0,
       text: commentText || "Bez teksta.",
       time: new Date().toLocaleString(),
-      author: "Anonymous" // Ovde možeš dodati input za ime ako želiš
+      author: "Anonymous"
     };
 
     let comments = JSON.parse(localStorage.getItem("product-comments")) || [];
     comments.push(comment);
     localStorage.setItem("product-comments", JSON.stringify(comments));
 
-    commentForm.reset(); // Očisti formu
-    loadComments();      // Ponovo učitaj komentare
+    commentForm.reset();
+    loadComments();
   });
-
-  
-
 });
-
-
-
-
-
-
-  
-  
