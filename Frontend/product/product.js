@@ -187,9 +187,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const reviewsElement = document.querySelector(".reviews");
 
     if (reviewsElement) {
-      reviewsElement.innerHTML = `
-        ${"★".repeat(roundedRating)}${"☆".repeat(5 - roundedRating)} (${savedComments.length} review${savedComments.length !== 1 ? "s" : ""})
-      `;
+      let fullStars = Math.floor(averageRating);
+      let fractional = averageRating - fullStars;
+      let halfStar = fractional >= 0.25 && fractional <= 0.75;
+      let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+      let starsHTML = '';
+
+      // Dodaj pune zvezdice
+      for (let i = 0; i < fullStars; i++) {
+          starsHTML += '<img src="../../accessories/star_fill.svg" alt="star" class="star-icon">';
+      }
+
+      // Dodaj pola zvezdice (koristi <span> ili možeš Unicode za pola zvezdice, npr. '⯨')
+      if (halfStar) {
+          starsHTML += '<img src="../../accessories/star_half.svg" alt="half star" class="star-icon">';
+      }
+
+      // Dodaj prazne zvezdice
+      for (let i = 0; i < emptyStars; i++) {  // OVDE MOŽE BITI GREŠKA
+          starsHTML += '<img src="../../accessories/star_nofill.svg" alt="empty star" class="star-icon">';
+      }
+
+      reviewsElement.innerHTML = `${starsHTML} ${averageRating.toFixed(1)} / 5 (${savedComments.length} review${savedComments.length !== 1 ? "s" : ""})`;
     }
 
       // Ažuriranje prosečne ocene i broja komentara kod opisa proizvoda
@@ -197,8 +216,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const opisTotalElement = document.querySelector(".more-info-section .rating-total");
 
     if (opisRatingElement && opisTotalElement) {
-      opisRatingElement.innerHTML = `★ ${averageRating.toFixed(1)} / 5 <span class="rating-total">(${savedComments.length} komentar${savedComments.length !== 1 ? "a" : ""})</span>`;
+      let fullStars = Math.floor(averageRating);
+      let fractional = averageRating - fullStars;
+      let halfStar = fractional >= 0.25 && fractional <= 0.75;
+      let emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+      let starsHTML = '';
+
+      for (let i = 0; i < fullStars; i++) {
+        starsHTML += '<img src="../../accessories/star_fill.svg" alt="star" class="star-icon">';
+      }
+      if (halfStar) {
+        starsHTML += '<img src="../../accessories/star_half.svg" alt="half star" class="star-icon">';
+      }
+      for (let i = 0; i < emptyStars; i++) {
+        starsHTML += '<img src="../../accessories/star_nofill.svg" alt="empty star" class="star-icon">';
+      }
+
+      opisRatingElement.innerHTML = `
+        <div class="rating-display">
+          <div class="stars">${starsHTML}</div>
+          <div class="rating-text">
+            <span class="average">${averageRating.toFixed(1)}</span> / 5 
+            <span class="rating-total">(${savedComments.length} komentar${savedComments.length !== 1 ? "a" : ""})</span>
+          </div>
+        </div>
+      `;
     }
+
 
   };
 

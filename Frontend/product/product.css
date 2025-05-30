@@ -452,9 +452,11 @@ main {
   }
   
   .reviews {
-    font-size: 14px;
-    color: gray;
+      font-size: 18px; /* Povećaj veličinu */
+      font-weight: bold; /* Učini font podebljanim */
+      color: #000; /* Crna boja */
   }
+
   
   .description {
     color: #444;
@@ -635,6 +637,28 @@ main {
     font-size: 16px;
     color: #EB9C35;
   }
+
+  .rating-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;        /* Povećaj */
+    font-weight: bold;      /* Podebljaj */
+    color: #000;            /* Crna boja */
+    margin-top: 10px;       /* Spusti */
+  }
+
+  .rating-display .stars img {
+      width: 24px;            /* Veće zvezdice */
+      height: 24px;
+  }
+
+  .rating-display .rating-text {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000;
+  }
+
   
   .info-columns {
     display: flex;
@@ -926,4 +950,11 @@ main {
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+.star-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 2px;
 }
