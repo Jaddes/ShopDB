@@ -27,12 +27,81 @@ document.getElementById('searchInput').addEventListener('input', function () {
 
 // Dugmad - privremena funkcionalnost
 document.querySelector('.add-cart')?.addEventListener('click', () => {
-    alert('Proizvod je dodat u korpu!');
+    const productId = "product-anja-white"; // možeš i iz data-id ili slično
+    const productTitle = "Anja white socks (used for 2 weeks)";
+    const productPrice = 3099; // Cena u dinarima (bez znaka i decimala)
+    const productImage = "../../accessories/picture_products/white/main.jpg";
+
+    const quantity = parseInt(document.querySelector('.quantity span').textContent); // uzmi broj iz span
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Proveri da li proizvod već postoji
+    const existingItemIndex = cart.findIndex(item => item.id === productId);
+    if (existingItemIndex !== -1) {
+        cart[existingItemIndex].quantity += quantity;
+    } else {
+        cart.push({
+            id: productId,
+            title: productTitle,
+            price: productPrice,
+            image: productImage,
+            quantity: quantity
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert(`Dodato ${quantity} x ${productTitle} u korpu!`);
 });
 
-document.querySelector('.buy-now').addEventListener('click', () => {
-    alert('Hvala na kupovini!');
+
+document.querySelector('.buy-now')?.addEventListener('click', () => {
+    const productId = "product-anja-white";
+    const productTitle = "Anja white socks (used for 2 weeks)";
+    const productPrice = 3099;
+    const productImage = "../../accessories/picture_products/white/main.jpg";
+    const quantity = parseInt(document.querySelector('.quantity span').textContent);
+
+    // Spremi podatke u localStorage (za shipping info)
+    const order = [{
+        id: productId,
+        title: productTitle,
+        price: productPrice,
+        image: productImage,
+        quantity: quantity
+    }];
+    localStorage.setItem("order", JSON.stringify(order));
+
+    // Preusmeri na shipping_info.html
+    window.location.href = "/shipping_info/shipping_info.html";
 });
+
+
+document.querySelector('.quantity button:nth-child(1)')?.addEventListener('click', () => {
+    let span = document.querySelector('.quantity span');
+    let currentQty = parseInt(span.textContent);
+    if (currentQty > 1) {
+        span.textContent = currentQty - 1;
+    }
+});
+
+document.querySelector('.quantity button:nth-child(3)')?.addEventListener('click', () => {
+    let span = document.querySelector('.quantity span');
+    let currentQty = parseInt(span.textContent);
+    span.textContent = currentQty + 1;
+});
+
+function updateCartIcon() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartIcon = document.querySelector('.nav-icon img[alt="Cart"]');
+    if (cartIcon) {
+        cartIcon.setAttribute('data-quantity', totalQuantity); // ili upiši u HTML
+    }
+}
+updateCartIcon();
+
 
 // Wishlist i slike
 document.addEventListener("DOMContentLoaded", () => {

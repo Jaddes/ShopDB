@@ -61,3 +61,24 @@ function toggleSavedData() {
     button.classList.add('selected-button');
     button.innerText = "Izabrano";
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+      const summary = document.querySelector(".shipping-summary");
+      const order = JSON.parse(localStorage.getItem("order")) || [];
+
+      if (order.length > 0) {
+          // Očisti prethodni sadržaj
+          summary.innerHTML = "<h3>Vaša korpa</h3>";
+          let total = 0;
+          order.forEach(item => {
+              const subtotal = item.price * item.quantity;
+              total += subtotal;
+              summary.innerHTML += `<p><strong>${item.title}</strong><br>${item.quantity} x ${item.price} RSD</p>`;
+          });
+          summary.innerHTML += `<p><strong>Ukupno:</strong> ${total} RSD</p>`;
+          summary.innerHTML += `<button>Potvrdi narudžbinu</button>`;
+      } else {
+          summary.innerHTML += `<p>Korpa je prazna.</p>`;
+      }
+
+});
