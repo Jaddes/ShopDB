@@ -452,6 +452,34 @@ main h3 {
     gap: 5px;
 }
 
+.checkout-btn {
+    padding: 12px 25px;
+    background-color: #17411D; /* Zelena boja teme */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px; /* Lep zaobljeni oblik */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Senci za "plutajući" efekat */
+}
+
+.checkout-btn:hover {
+    background-color: #446b2e; /* Tamnija zelena na hover */
+    transform: translateY(-2px); /* Blago podizanje na hover */
+}
+
+.trash-icon {
+    width: 24px;      /* Veličina SVG ikone */
+    height: 24px;
+    filter: brightness(0) invert(0.4); /* Tamno zelena ili prilagodba boje */
+    transition: transform 0.2s ease;
+}
+
+.delete-btn:hover .trash-icon {
+    transform: scale(1.2); /* Blagi uvećani efekat na hover */
+}
 
 
 

@@ -74,7 +74,7 @@ document.querySelector('.buy-now')?.addEventListener('click', () => {
     localStorage.setItem("order", JSON.stringify(order));
 
     // Preusmeri na shipping_info.html
-    window.location.href = "/shipping_info/shipping_info.html";
+    window.location.href = "../shipping_info/shipping_info.html";
 });
 
 
