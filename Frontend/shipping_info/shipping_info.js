@@ -82,3 +82,34 @@ function toggleSavedData() {
       }
 
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const summaryButton = document.querySelector('.shipping-summary button');
+
+    summaryButton.addEventListener('click', () => {
+        const selectedAddressElement = document.querySelector('.select-button.selected-button');
+        
+        if (!selectedAddressElement) {
+            alert("Molimo vas da izaberete adresu za dostavu pre potvrde narudžbine!");
+            return;
+        }
+
+        const addressDiv = selectedAddressElement.closest('.saved-address');
+        const addressText = addressDiv ? addressDiv.querySelector('p').textContent : "Nepoznata adresa";
+
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (cart.length === 0) {
+            alert("Vaša korpa je prazna. Nije moguće potvrditi narudžbinu.");
+            return;
+        }
+
+        const order = {
+            address: addressText,
+            items: cart
+        };
+        localStorage.setItem("order", JSON.stringify(order));
+
+        // Preusmeravanje na order_confirmation.html
+        window.location.href = '../order_confirmation/order_confirmation.html';
+    });
+});
