@@ -426,3 +426,34 @@ main {
     color: #888;
     user-select: none;
 }
+
+.icon-svg {
+    width: 20px;      /* prilagodi veličinu */
+    height: 20px;
+    vertical-align: middle;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-item p, .info-item .edit-input {
+    flex: 1; /* Zauzima isti prostor */
+    margin: 0;
+    text-align: center; /* Ili centriraj ako želiš */
+    font-size: 18px;
+    color: #17411D;
+}
+
+.edit-input {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 18px;
+    color: #17411D;
+    outline: none;
+}

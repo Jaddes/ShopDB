@@ -81,7 +81,7 @@ function toggleSavedData() {
           summary.innerHTML += `<p>Korpa je prazna.</p>`;
       }
 
-});
+  }); 
 
 document.addEventListener("DOMContentLoaded", () => {
     const summaryButton = document.querySelector('.shipping-summary button');

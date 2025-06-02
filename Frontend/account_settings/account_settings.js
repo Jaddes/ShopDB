@@ -58,5 +58,29 @@ function togglePasswordVisibility(iconElement) {
     const isPassword = input.type === 'password';
 
     input.type = isPassword ? 'text' : 'password';
-    iconElement.textContent = isPassword ? '🙈' : '👁️';
+    iconElement.querySelector('img').src = isPassword 
+    ? "../../accessories/monkey.svg" 
+    : "../../accessories/eye.svg";
 }
+
+function toggleEdit(button) {
+    const infoItem = button.closest('.info-item');
+    const displayText = infoItem.querySelector('p');
+    const inputField = infoItem.querySelector('.edit-input');
+
+    if (inputField.style.display === "none") {
+        inputField.style.display = "inline-block";
+        inputField.value = displayText.textContent.trim();
+        displayText.style.display = "none";
+        button.textContent = "Sačuvaj";
+    } else {
+        displayText.textContent = inputField.value.trim();
+        inputField.style.display = "none";
+        displayText.style.display = "block";
+        button.textContent = "Izmeni";
+
+        // Ovde možeš dodati logiku da čuvaš podatke, npr. u localStorage
+        // localStorage.setItem('user_' + infoItem.querySelector('span').textContent.trim(), inputField.value.trim());
+    }
+}
+

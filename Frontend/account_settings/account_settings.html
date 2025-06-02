@@ -104,59 +104,81 @@
                 <div class="info-item">
                     <span>Ime:</span>
                     <p>Vladan</p>
-                    <button class="edit-btn">Izmeni</button>
+                    <input type="text" class="edit-input" style="display:none;">
+                    <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
+
                 <div class="info-item">
                     <span>Prezime:</span>
                     <p>Stamenović</p>
-                    <button class="edit-btn">Izmeni</button>
+                    <input type="text" class="edit-input" style="display:none;">
+                    <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
+
                 <div class="info-item">
                     <span>Ulica:</span>
                     <p>Main Street</p>
-                    <button class="edit-btn">Izmeni</button>
+                    <input type="text" class="edit-input" style="display:none;">
+                    <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
+
                 <div class="info-item">
                     <span>Broj:</span>
                     <p>123</p>
-                    <button class="edit-btn">Izmeni</button>
+                    <input type="text" class="edit-input" style="display:none;">
+                    <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
+
                 <div class="info-item">
                     <span>Grad:</span>
                     <p>Novi Sad</p>
-                    <button class="edit-btn">Izmeni</button>
+                    <input type="text" class="edit-input" style="display:none;">
+                    <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
+
                 <div class="info-item">
                     <span>Poštanski broj:</span>
                     <p>21000</p>
-                    <button class="edit-btn">Izmeni</button>
+                    <input type="text" class="edit-input" style="display:none;">
+                    <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
+
                 <div class="info-item">
                     <span>Email:</span>
                     <p>vladanstamenovic@gmail.com</p>
-                    <button class="edit-btn">Izmeni</button>
+                    <input type="email" class="edit-input" style="display:none;">
+                    <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
+
                 <div class="info-item">
                     <span>Broj telefona:</span>
                     <p>+381 60 1234567</p>
-                    <button class="edit-btn">Izmeni</button>
+                    <input type="text" class="edit-input" style="display:none;">
+                    <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
+
                 <div class="info-item">
                   <span>Promeni lozinku:</span>
                   <div style="flex: 1;">
                      <div class="password-wrapper">
                       <input type="password" id="oldPassword" placeholder="Stara lozinka">
-                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">👁️</span>
+                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">
+                          <img src="../../accessories/eye.svg" alt="Eye Icon" class="icon-svg">
+                      </span>
                     </div>
 
                     <div class="password-wrapper">
                       <input type="password" id="newPassword" placeholder="Nova lozinka">
-                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">👁️</span>
+                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">
+                          <img src="../../accessories/eye.svg" alt="Eye Icon" class="icon-svg">
+                      </span>
                     </div>
 
                     <div class="password-wrapper">
                       <input type="password" id="confirmPassword" placeholder="Potvrdi lozinku">
-                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">👁️</span>
+                      <span class="toggle-password" onclick="togglePasswordVisibility(this)">
+                          <img src="../../accessories/eye.svg" alt="Eye Icon" class="icon-svg">
+                      </span>
                     </div>
 
                       <button class="edit-btn" onclick="updatePassword()">Sačuvaj</button>
