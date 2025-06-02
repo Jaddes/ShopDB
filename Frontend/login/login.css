@@ -228,6 +228,22 @@ main {
     text-decoration: underline;
 }
 
+.login-box button {
+    background-color: #17411D; /* tamno zelena boja */
+    color: white;
+    border: none;
+    border-radius: 25px; /* zaobljene ivice */
+    padding: 10px 20px;  /* umjeren padding da ne bude preveliko */
+    font-size: 14px; /* srednja veličina */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-box button:hover {
+    background-color: #333; /* hover efekat */
+}
+
+
 .input-group {
     text-align: left;
     margin-bottom: 15px;
@@ -435,3 +451,8 @@ footer a:hover {
     gap: 5px;
 }
 
+.icon-svg {
+    width: 20px;      /* prilagodi veličinu */
+    height: 20px;
+    vertical-align: middle;
+}

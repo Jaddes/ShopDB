@@ -103,7 +103,7 @@
     <main>
         <div class="signup-box">
             <h2>Registruj se</h2>
-            <p>Imaš nalog? <a href="#">Uloguj se.</a></p>
+            <p>Imaš nalog? <a href="../login/login.html">Uloguj se.</a></p>
             <form id="signupForm">
                 <div class="form-row">
                     <div class="input-group">
@@ -154,14 +154,18 @@
                         <label for="password">Lozinka</label>
                         <div class="password-wrapper">
                             <input type="password" id="password" required>
-                            <span id="togglePassword">👁️</span>
+                            <span class="toggle-password" onclick="togglePasswordVisibility(this)">
+                              <img src="../../accessories/eye.svg" alt="Eye Icon" class="icon-svg">
+                            </span>
                         </div>
                     </div>
                     <div class="input-group">
                         <label for="confirmPassword">Potvrdite lozinku</label>
                         <div class="password-wrapper">
                             <input type="password" id="confirmPassword" required>
-                            <span id="toggleConfirmPassword">👁️</span>
+                            <span class="toggle-password" onclick="togglePasswordVisibility(this)">
+                              <img src="../../accessories/eye.svg" alt="Eye Icon" class="icon-svg">
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -193,7 +197,7 @@
         </div>
     </footer>  
     
-    <script src="script.js"></script>
+    <script src="signup.js"></script>
 </body>
 
 </html>

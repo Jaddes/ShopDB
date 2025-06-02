@@ -28,3 +28,14 @@ document.getElementById('searchInput').addEventListener('input', function () {
     }
   });
 });
+
+function togglePasswordVisibility(iconElement) {
+    const wrapper = iconElement.closest('.password-wrapper');
+    const input = wrapper.querySelector('input');
+    const isPassword = input.type === 'password';
+
+    input.type = isPassword ? 'text' : 'password';
+    iconElement.querySelector('img').src = isPassword 
+        ? "../../accessories/monkey.svg"
+        : "../../accessories/eye.svg";
+}

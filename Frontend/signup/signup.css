@@ -233,23 +233,66 @@ header {
 /*  main */
 
 .signup-box {
-    background:  #E6E6E6;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 450px;
+    background: rgba(85, 136, 59, 0.7); 
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 450px; 
     text-align: center;
-    margin-top: 200px;
+    margin-top: 200px; 
     margin-bottom: 100px;
+    color: white;
+    font-family: Arial, sans-serif; 
 }
 
 .signup-box h2 {
+    font-family: 'Irish Grover', cursive;
+    color: white;
+    font-size: 32px;
+    letter-spacing: 1px;
+    line-height: 1.4;
     margin-bottom: 15px;
-    color: #17411D;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
+
 .signup-box p {
     margin-bottom: 20px;
+    color: white; /* tekstovi u signup box-u */
 }
+
+.signup-box p a {
+    color: #EB9C35; /* link boja kao u login box */
+    text-decoration: underline;
+}
+
+.input-group label,
+.input-group input {
+    font-family: 'Irish Grover', cursive; 
+    color: #17411D; 
+    font-size: 16px; 
+}
+
+.icon-svg {
+    width: 20px;      /* prilagodi veličinu */
+    height: 20px;
+    vertical-align: middle;
+}
+
+.signup-box button {
+    padding: 10px 20px; /* sličan padding */
+    background: #17411D; /* tamno zelena */
+    color: #fff;
+    border: none;
+    border-radius: 20px; /* zaobljeno */
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 16px; /* možeš prilagoditi */
+}
+
+.signup-box button:hover {
+    background: #333; /* hover efekat */
+}
+
 
 /* Stil za input polja u dve kolone */
 .form-row {
