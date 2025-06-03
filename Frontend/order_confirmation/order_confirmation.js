@@ -94,7 +94,9 @@ fetch('http://localhost:3000/api/categories')
 document.addEventListener("DOMContentLoaded", () => {
     const content = document.querySelector(".content-placeholder");
 
-    const order = JSON.parse(localStorage.getItem("order"));
+    const orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    const order = orders[orders.length - 1]; // Poslednja narudžbina
+
 
     if (!order) {
         // Ako nema narudžbine, prikaži poruku o grešci
@@ -140,7 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     const orderDetailsContent = document.getElementById("orderDetailsContent");
-    const order = JSON.parse(localStorage.getItem("order"));
+    const orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    const order = orders[orders.length - 1]; // Poslednja narudžbina
+
 
     if (!order) {
         orderDetailsContent.innerHTML = "<p>Greška: Nema podataka o narudžbini.</p>";

@@ -64,7 +64,9 @@ function toggleSavedData() {
 
   document.addEventListener("DOMContentLoaded", () => {
       const summary = document.querySelector(".shipping-summary");
-      const order = JSON.parse(localStorage.getItem("order")) || [];
+      const orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+      const order = orders[orders.length - 1]; // Poslednja narudžbina
+
 
       if (order.length > 0) {
           // Očisti prethodni sadržaj
@@ -107,7 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
             address: addressText,
             items: cart
         };
-        localStorage.setItem("order", JSON.stringify(order));
+        const previousOrders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+        previousOrders.push(order);
+        localStorage.setItem("orderHistory", JSON.stringify(previousOrders));
+
 
         // Preusmeravanje na order_confirmation.html
         window.location.href = '../order_confirmation/order_confirmation.html';
