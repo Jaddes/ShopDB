@@ -1,3 +1,5 @@
+
+
 document.addEventListener("scroll", function() {
     const footer = document.querySelector("footer");
 
@@ -108,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const order = {
         address: addressText,
         items: cart
+        
     };
 
     const previousOrders = JSON.parse(localStorage.getItem("orderHistory")) || [];
