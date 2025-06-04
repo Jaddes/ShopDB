@@ -1,5 +1,16 @@
-// Glavni DOMContentLoaded
+// FOOTER PRIKAZ NA DNU STRANICE
+document.addEventListener("scroll", function() { 
+    const footer = document.querySelector("footer");
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        footer.style.transform = "translateY(0)";
+    } else {
+        footer.style.transform = "translateY(100%)";
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+  // -------------------------------------------------------------------------
+  // GLOBALNE PROMENLJIVE ZA STRANICU PROIZVODA
   const productsPerPage = 30;
   let currentlyDisplayed = 0;
   let selectedCategory = null;
@@ -12,12 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput');
   const sortSelect = document.getElementById('sort-options');
 
-  function updateProductCount() {
-    const filteredProducts = allProducts.filter(card => card.style.display !== 'none');
-    const visibleCount = Math.min(currentlyDisplayed, filteredProducts.length);
-    countDisplay.textContent = `Prikaz ${visibleCount} od ${filteredProducts.length} proizvoda`;
-  }
+  // URL FILTER („akcija”, „novo”, „najpopularnije”…)
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlFilter = urlParams.get('filter'); // npr. "akcija" ili null
 
+  // Naslov sekcije (h2 unutar .product-section)
+  const titleElement = document.querySelector('.product-section h2');
+
+  // -------------------------------------------------------------------------
+  // Funkcija za prikazivanje sledećih N proizvoda (load more)
   function showNextProducts() {
     const filteredProducts = allProducts.filter(card => card.style.display !== 'none');
     let shown = 0;
@@ -30,41 +44,86 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMoreBtn.style.display = (currentlyDisplayed >= filteredProducts.length) ? 'none' : 'block';
   }
 
+  // Funkcija za ažuriranje prikaza broja proizvoda
+  function updateProductCount() {
+    const filteredCount = allProducts.filter(card => card.style.display !== 'none').length;
+    const visibleCount = Math.min(currentlyDisplayed, filteredCount);
+    countDisplay.textContent = `Prikaz ${visibleCount} od ${filteredCount} proizvoda`;
+  }
+
+  // -------------------------------------------------------------------------
+  // GLAVNA funkcija za filtriranje prema svim kriterijumima:
+  // - pretraga po imenu
+  // - cena (min, max)
+  // - kategorije / podkategorije
+  // - i URL-filter (npr. “akcija”)
   function applyFilters() {
     const searchTerm = searchInput.value.toLowerCase();
-    const priceMin = parseFloat(document.getElementById('priceMin').value);
-    const priceMax = parseFloat(document.getElementById('priceMax').value);
+    const priceMin = parseFloat(document.getElementById('priceMin').value) || 0;
+    const priceMax = parseFloat(document.getElementById('priceMax').value) || Infinity;
 
-    const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked')).map(cb => cb.dataset.category);
-    const selectedSubcategories = Array.from(document.querySelectorAll('.subcategory-filter:checked')).map(cb => cb.dataset.subcategory);
+    const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
+                                    .map(cb => cb.dataset.category);
+    const selectedSubcategories = Array.from(document.querySelectorAll('.subcategory-filter:checked'))
+                                       .map(cb => cb.dataset.subcategory);
 
     allProducts.forEach(card => {
       const name = card.querySelector('.product-name')?.textContent.toLowerCase() || '';
-      const price = parseFloat(card.getAttribute('data-price'));
-      const category = card.getAttribute('data-category');
-      const subcategory = card.getAttribute('data-subcategory');
+      const price = parseFloat(card.dataset.price) || 0;
+      const category = card.dataset.category;
+      const subcategory = card.dataset.subcategory;
 
       const matchesSearch = name.includes(searchTerm);
       const matchesPrice = price >= priceMin && price <= priceMax;
+
       const matchesCategory = selectedCategory
         ? category === selectedCategory
         : (selectedCategories.length === 0 || selectedCategories.includes(category));
-      const matchesSubcategory = selectedSubcategories.length === 0 ||
-        (selectedCategory && category === selectedCategory && selectedSubcategories.includes(subcategory));
 
-      const show = matchesSearch && matchesPrice && matchesCategory && matchesSubcategory;
+      const matchesSubcategory = selectedSubcategories.length === 0
+        || (selectedCategory && category === selectedCategory && selectedSubcategories.includes(subcategory));
+
+      // Provera URL-filtera
+      const matchesUrlFilter = !urlFilter || card.classList.contains(urlFilter);
+
+      const show = matchesSearch
+                && matchesPrice
+                && matchesCategory
+                && matchesSubcategory
+                && matchesUrlFilter;
+
       card.style.display = show ? 'block' : 'none';
     });
 
     currentlyDisplayed = 0;
     const filteredCount = allProducts.filter(card => card.style.display !== 'none').length;
-    loadMoreBtn.style.display = filteredCount > productsPerPage ? 'block' : 'none';
+    loadMoreBtn.style.display = (filteredCount > productsPerPage) ? 'block' : 'none';
     showNextProducts();
   }
 
+  // -------------------------------------------------------------------------
+  // „URL-filter” samo menja naslov, a onda delegira na applyFilters()
+  function applyUrlFilter() {
+    if (urlFilter) {
+      if (urlFilter === 'novo') {
+        if (titleElement) titleElement.textContent = 'NOVI PROIZVODI';
+      } else if (urlFilter === 'akcija') {
+        if (titleElement) titleElement.textContent = 'PROIZVODI NA AKCIJI';
+      } else if (urlFilter === 'najpopularnije') {
+        if (titleElement) titleElement.textContent = 'NAJPOPULARNIJI PROIZVODI';
+      } else {
+        // Ako imate i druge varijante (npr. preporuceno), ovde nastavite
+      }
+    }
+    applyFilters();
+  }
+
+  // -------------------------------------------------------------------------
+  // EVENT-LISTENER-i
+
+  // 1) Sort opcije
   sortSelect.addEventListener('change', () => {
     const option = sortSelect.value;
-    allProducts = Array.from(productGrid.querySelectorAll('.product-card'));
     let sortedCards = [...allProducts];
 
     if (option === 'price-asc') {
@@ -83,42 +142,18 @@ document.addEventListener('DOMContentLoaded', () => {
     applyFilters();
   });
 
+  // 2) Pretraga po imenu (update prilikom unosa)
   searchInput.addEventListener('input', applyFilters);
-  document.querySelectorAll('.price-range, .category-filter, .subcategory-filter').forEach(cb => {
-    cb.addEventListener('change', applyFilters);
+
+  // 3) Filter po ceni / kategorijama / podkategorijama
+  document.querySelectorAll('.price-range, .category-filter, .subcategory-filter').forEach(el => {
+    el.addEventListener('change', applyFilters);
   });
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlFilter = urlParams.get('filter');
-  const titleElement = document.querySelector('.product-section h2');
-
-  function applyUrlFilter() {
-    if (urlFilter) {
-      let className = '';
-      if (urlFilter === 'novo') {
-        className = 'novo';
-        if (titleElement) titleElement.textContent = 'NOVI PROIZVODI';
-      } else if (urlFilter === 'akcija') {
-        className = 'akcija';
-        if (titleElement) titleElement.textContent = 'PROIZVODI NA AKCIJI';
-      } else if (urlFilter === 'najpopularnije') {
-        className = 'najpopularnije';
-        if (titleElement) titleElement.textContent = 'NAJPOPULARNIJI PROIZVODI';
-      }
-
-      allProducts.forEach(card => {
-        card.style.display = card.classList.contains(className) ? 'block' : 'none';
-      });
-
-      currentlyDisplayed = 0;
-      showNextProducts();
-    } else {
-      applyFilters();
-    }
-  }
-
+  // 4) Load more dugme
   loadMoreBtn.addEventListener('click', showNextProducts);
 
+  // 5) Sidobar: otvaranje/zatvaranje glavnih kategorija
   document.querySelectorAll('.side-btn').forEach(button => {
     button.addEventListener('click', () => {
       const parentCategory = button.closest('.side-category');
@@ -128,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Otvaranje/zaklapanje podkategorija u sidebaru
   document.querySelectorAll('.sub-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
@@ -135,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Generisanje liste podkategorija na osnovu izabrane glavne kategorije
   const subcategoriesData = {
     'odeća': ['Majice', 'Farmerke', 'Kape'],
     'kuća': ['Kuhinja', 'Dekoracije', 'Osvetljenje'],
@@ -183,13 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.clickable-category').forEach(label => {
     label.addEventListener('click', () => {
       const category = label.dataset.category;
-
       document.querySelectorAll('.category-filter').forEach(cb => cb.checked = false);
       document.querySelectorAll('.subcategory-filter').forEach(cb => cb.checked = false);
-
       const checkbox = document.querySelector(`.category-filter[data-category="${category}"]`);
       if (checkbox) checkbox.checked = true;
-
       showSubcategories(category);
       applyFilters();
     });
@@ -199,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target && e.target.matches('input.subcategory-checkbox')) {
       const value = e.target.value.toLowerCase();
       let subCheckbox = document.querySelector(`.subcategory-filter[data-subcategory="${value}"]`);
-
       if (!subCheckbox) {
         subCheckbox = document.createElement('input');
         subCheckbox.type = 'checkbox';
@@ -211,33 +244,29 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         subCheckbox.checked = e.target.checked;
       }
-
       applyFilters();
     }
   });
 
+  // Na kraju, pokrećemo početni prikaz filtriranih proizvoda
   applyUrlFilter();
-});
 
-// Wishlist
-document.addEventListener("DOMContentLoaded", () => {
+  // -------------------------------------------------------------------------
+  // WISHLIST (dodavanje/uklanjanje iz omiljenih)
   const favoriteBtn = document.querySelector('.favorite');
   const heartIcon = favoriteBtn?.querySelector('.heart-icon');
-  const productId = "101";
-
-  const productData = {
-    id: productId,
+  const productIdWishlist = "101";
+  const productDataWishlist = {
+    id: productIdWishlist,
     title: "Bluetooth Slušalice",
     price: "1800",
     image: "../../accessories/picture_products/white/main.jpg"
   };
-
-  const saved = JSON.parse(localStorage.getItem("wishlist")) || [];
-  if (saved.find(item => item.id === productId)) {
+  let savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  if (savedWishlist.find(item => item.id === productIdWishlist)) {
     favoriteBtn?.classList.add("active");
     if (heartIcon) heartIcon.src = "../../accessories/heart-filled.svg";
   }
-
   favoriteBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     favoriteBtn.classList.toggle('active');
@@ -247,39 +276,32 @@ document.addEventListener("DOMContentLoaded", () => {
         ? "../../accessories/heart-filled.svg"
         : "../../accessories/heart.svg";
     }
-
     let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    const index = wishlist.findIndex(item => item.id === productId);
-
+    const index = wishlist.findIndex(item => item.id === productIdWishlist);
     if (index > -1) {
       wishlist.splice(index, 1);
     } else {
-      wishlist.push(productData);
+      wishlist.push(productDataWishlist);
     }
-
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   });
-});
 
-// Cart
-document.addEventListener("DOMContentLoaded", () => {
+  // -------------------------------------------------------------------------
+  // CART (dodavanje/uklanjanje iz korpe)
   const cartBtn = document.querySelector('.cart-btn');
   const cartIcon = cartBtn?.querySelector('img');
-  const productId = "101";
-
-  const productData = {
-    id: productId,
+  const productIdCart = "101";
+  const productDataCart = {
+    id: productIdCart,
     title: "Bluetooth Slušalice",
     price: "1800",
     image: "../../accessories/picture_products/white/main.jpg"
   };
-
-  const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
-  if (savedCart.find(item => item.id === productId)) {
+  let savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (savedCart.find(item => item.id === productIdCart)) {
     cartBtn?.classList.add("active");
     if (cartIcon) cartIcon.src = "../../accessories/shopping_cart_filled.svg";
   }
-
   cartBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     cartBtn.classList.toggle('active');
@@ -289,52 +311,44 @@ document.addEventListener("DOMContentLoaded", () => {
         ? "../../accessories/shopping_cart_filled.svg"
         : "../../accessories/shopping_cart.svg";
     }
-
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const index = cart.findIndex(item => item.id === productId);
-
+    const index = cart.findIndex(item => item.id === productIdCart);
     if (index > -1) {
       cart.splice(index, 1);
     } else {
-      cart.push(productData);
+      cart.push(productDataCart);
     }
-
     localStorage.setItem("cart", JSON.stringify(cart));
   });
-});
 
-// Price range slider
-document.addEventListener('DOMContentLoaded', () => {
+  // -------------------------------------------------------------------------
+  // PRICE RANGE SLIDER (sinhronizacija slidera i input polja)
   const priceMinSlider = document.getElementById('priceMin');
   const priceMaxSlider = document.getElementById('priceMax');
   const priceMinInput = document.getElementById('priceMinInput');
   const priceMaxInput = document.getElementById('priceMaxInput');
   const priceRangeDisplay = document.getElementById('priceRangeDisplay');
 
-  const updateDisplay = () => {
+  function updateDisplay() {
     const min = parseInt(priceMinSlider.value);
     const max = parseInt(priceMaxSlider.value);
     priceRangeDisplay.textContent = `Cena: ${min} - ${max} RSD`;
-  };
+  }
 
-  const syncSliderWithInputs = () => {
+  function syncSliderWithInputs() {
     let min = parseInt(priceMinInput.value);
     let max = parseInt(priceMaxInput.value);
-
     if (min > max) min = max;
     if (max < min) max = min;
-
     priceMinSlider.value = min;
     priceMaxSlider.value = max;
-
     updateDisplay();
     applyFilters();
-  };
+  }
 
-  const syncInputsWithSlider = () => {
+  function syncInputsWithSlider(event) {
     let min = parseInt(priceMinSlider.value);
     let max = parseInt(priceMaxSlider.value);
-
     if (min > max) {
       if (event.target === priceMinSlider) {
         min = max;
@@ -344,13 +358,11 @@ document.addEventListener('DOMContentLoaded', () => {
         priceMaxSlider.value = max;
       }
     }
-
     priceMinInput.value = min;
     priceMaxInput.value = max;
-
     updateDisplay();
     applyFilters();
-  };
+  }
 
   priceMinSlider.addEventListener('input', syncInputsWithSlider);
   priceMaxSlider.addEventListener('input', syncInputsWithSlider);
