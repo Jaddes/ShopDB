@@ -468,3 +468,83 @@ footer a:hover {
     gap: 5px;
   }
   
+
+
+  /*popup prozor sa listom proizvoda*/
+  /* Modal pozadina */
+.modal {
+  display: none; /* Skriven dok ne otvoriš */
+  position: fixed; 
+  z-index: 2000; /* Iznad svega */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.5); /* Poluprovidna pozadina */
+}
+
+/* Modal sadržaj */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  color: #17411D;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+/* Dugme za zatvaranje */
+.close-btn {
+  color: #EB9C35;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+/* Lista proizvoda u modal-u */
+#productsList {
+  margin-top: 30px;
+  text-align: left;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.product-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.product-details {
+  flex-grow: 1;
+}
+
+.product-details p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.product-price {
+  font-weight: bold;
+  color: #EB9C35;
+}
