@@ -51,8 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     localStorage.setItem("order", JSON.stringify(cart));
+   
     window.location.href = "../shipping_info/shipping_info.html";
   });
+
+
+
+
 
   // Event delegation za brisanje
   cartTableBody.addEventListener("click", function (e) {
