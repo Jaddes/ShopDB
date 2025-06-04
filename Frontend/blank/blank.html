@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Base Template</title>
-    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="blank.css">
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="blank.css" />
 </head>
 
 <body>
@@ -18,31 +18,39 @@
                 <nav class="nav-links">
                     <a href="../main_site/main_site.html">Početna</a>
                     <div class="category">
-                      <a href="#">Kategorije</a>
-                      <ul class="dropdown">
-                        <!-- OVDJE ĆE blank.js UBACITI DINAMIČKE KATEGORIJE -->
-                      </ul>
-                    </div>                      
+                        <a href="#">Kategorije</a>
+                        <ul class="dropdown">
+                            <!-- OVDJE ĆE blank.js UBACITI DINAMIČKE KATEGORIJE -->
+                        </ul>
+                    </div>
                     <a href="../list_of_products/list1.html?filter=novo">Novo</a>
                     <a href="../list_of_products/list1.html?filter=akcija">Akcija</a>
                 </nav>
             </div>
             <div class="search-bar">
-              <img src="../../accessories/magnifying-glass.svg" alt="Search" class="search-icon">
-              <input type="text" id="searchInput" placeholder="Search...">
+                <img src="../../accessories/magnifying-glass.svg" alt="Search" class="search-icon" />
+                <input type="text" id="searchInput" placeholder="Search..." />
             </div>
-            
+
             <div class="icons">
-              <a href="../wishlist/wishlist.html" class="nav-icon">
-                <img src="../../accessories/heart.svg" alt="Wishlist" class="icon-img">
-              </a>
-              <a href="../cart/cart.html" class="nav-icon">
-                <img src="../../accessories/shopping_cart.svg" alt="Cart" class="icon-img">
-              </a>
-              <a href="../account_settings/account_settings.html" class="nav-icon">
-                <img src="../../accessories/user.svg" alt="Account" class="icon-img">
-              </a>
-            </div>
+                <a href="../wishlist/wishlist.html" class="nav-icon">
+                    <img src="../../accessories/heart.svg" alt="Wishlist" class="icon-img" />
+                </a>
+                <a href="../cart/cart.html" class="nav-icon">
+                    <img src="../../accessories/shopping_cart.svg" alt="Cart" class="icon-img" />
+                </a>
+
+                <!-- Ovde je account-dropdown koji obuhvata ikonu i dropdown meni -->
+                <div class="account-dropdown nav-icon">
+                    <img src="../../accessories/user.svg" alt="Account" class="icon-img" />
+
+                    <!-- Padajući meni za Account -->
+                    <ul class="account-menu">
+                        <li><a href="../account_settings/account_settings.html">Informacije o nalogu</a></li>
+                        <li><a href="../order_history/order_history.html">Istorija poručivanja</a></li>
+                        <li><button id="logout-btn">Izloguj se</button></li>
+                    </ul>
+                </div>
 
             </div>
         </div>
@@ -51,6 +59,17 @@
     <!-- Glavni sadrzaj stranice - prazna sekcija koja moze biti koriscena za razlicite stranice -->
     <main>
         <div class="content-placeholder"></div>
+
+        <!-- Modal za potvrdu odjave -->
+        <div id="logoutModal">
+            <div class="modal-content">
+                <p>Da li ste sigurni da želite da se izlogujete?</p>
+                <div class="buttons">
+                    <button class="confirm-logout">Izloguj se</button>
+                    <button class="cancel-logout">Odustani</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -73,8 +92,8 @@
                 <li><a href="#">Privacy Policy</a></li>
             </ul>
         </div>
-    </footer>  
-    
+    </footer>
+
     <script src="blank.js"></script>
 </body>
 
