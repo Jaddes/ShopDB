@@ -472,6 +472,38 @@ main {
     width: 100%;
 }
 
+.password-item {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.password-label-wrapper {
+    flex: 0 0 200px;
+    font-weight: bold;
+    color: #333;
+    padding-top: 10px;
+}
+
+.password-inputs-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    min-width: 250px;
+    align-items: center;
+}
+
+.password-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+
+    transform: translateX(-100px);
+}
 
 .forgot-link {
     margin-top: 10px;
@@ -482,3 +514,4 @@ main {
     color: #17411D;
     text-decoration: underline;
 }
+
