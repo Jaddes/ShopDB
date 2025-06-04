@@ -1,3 +1,5 @@
+
+
 document.addEventListener("scroll", function() {
     const footer = document.querySelector("footer");
 
@@ -91,32 +93,37 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!summaryButton) return; // Dugme nije prikazano ako je korpa prazna
 
     summaryButton.addEventListener('click', () => {
-        const selectedAddressElement = document.querySelector('.select-button.selected-button');
+    const selectedAddressElement = document.querySelector('.select-button.selected-button');
+
+    if (!selectedAddressElement) {
+        alert("Molimo vas da izaberete adresu za dostavu pre potvrde narudžbine!");
+        return;
+    }
+
+    const addressDiv = selectedAddressElement.closest('.saved-address');
+    const addressText = addressDiv ? addressDiv.querySelector('p').textContent : "Nepoznata adresa";
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cart.length === 0) {
+        alert("Vaša korpa je prazna. Nije moguće potvrditi narudžbinu.");
+        return;
+    }
+
+    const order = {
+        address: addressText,
+        items: cart
         
-        if (!selectedAddressElement) {
-            alert("Molimo vas da izaberete adresu za dostavu pre potvrde narudžbine!");
-            return;
-        }
+    };
 
-        const addressDiv = selectedAddressElement.closest('.saved-address');
-        const addressText = addressDiv ? addressDiv.querySelector('p').textContent : "Nepoznata adresa";
+    const previousOrders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    previousOrders.push(order);
+    localStorage.setItem("orderHistory", JSON.stringify(previousOrders));
 
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        if (cart.length === 0) {
-            alert("Vaša korpa je prazna. Nije moguće potvrditi narudžbinu.");
-            return;
-        }
+    // ⬇⬇⬇ Ovo briše korpu nakon potvrde narudžbine ⬇⬇⬇
+    localStorage.removeItem("cart");
 
-        const order = {
-            address: addressText,
-            items: cart
-        };
-        const previousOrders = JSON.parse(localStorage.getItem("orderHistory")) || [];
-        previousOrders.push(order);
-        localStorage.setItem("orderHistory", JSON.stringify(previousOrders));
+    // Preusmeravanje na order_confirmation.html
+    window.location.href = '../order_confirmation/order_confirmation.html';
+  });
 
-
-        // Preusmeravanje na order_confirmation.html
-        window.location.href = '../order_confirmation/order_confirmation.html';
-    });
 });
