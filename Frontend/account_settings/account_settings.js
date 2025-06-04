@@ -73,11 +73,13 @@ function toggleEdit(button) {
         inputField.value = displayText.textContent.trim();
         displayText.style.display = "none";
         button.textContent = "Sačuvaj";
+        inputField.classList.add('active');
     } else {
         displayText.textContent = inputField.value.trim();
         inputField.style.display = "none";
         displayText.style.display = "block";
         button.textContent = "Izmeni";
+        inputField.classList.remove('active');
 
         // Ovde možeš dodati logiku da čuvaš podatke, npr. u localStorage
         // localStorage.setItem('user_' + infoItem.querySelector('span').textContent.trim(), inputField.value.trim());

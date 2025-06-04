@@ -300,8 +300,7 @@ main {
     border-radius: 20px;
     cursor: pointer;
     transition: background 0.3s;
-    width: auto;
-    min-width: 70px;
+    width: 90px;
     text-align: center;
 }
 
@@ -456,4 +455,30 @@ main {
     font-size: 18px;
     color: #17411D;
     outline: none;
+}
+
+.edit-input.active {
+    border: 1px solid #17411D;
+    background-color: #F0F0F0;
+    border-radius: 5px;
+    padding: 4px 8px;
+}
+
+.password-change {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+
+.forgot-link {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.forgot-link a {
+    color: #17411D;
+    text-decoration: underline;
 }
