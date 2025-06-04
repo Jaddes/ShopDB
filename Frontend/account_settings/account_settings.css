@@ -457,3 +457,23 @@ main {
     color: #17411D;
     outline: none;
 }
+
+/* centriranje sekcije za promenu lozinke */
+.password-change {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+
+.forgot-link {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.forgot-link a {
+    color: #17411D;
+    text-decoration: underline;
+}
