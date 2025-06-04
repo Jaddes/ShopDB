@@ -157,9 +157,9 @@
                     <button class="edit-btn" onclick="toggleEdit(this)">Izmeni</button>
                 </div>
 
-                <div class="info-item">
-                  <span>Promeni lozinku:</span>
-                  <div style="flex: 1;">
+                <div class="info-item password-item">
+                  <div class="password-change">
+                    <span class="password-label">Promeni lozinku:</span>
                      <div class="password-wrapper">
                       <input type="password" id="oldPassword" placeholder="Stara lozinka">
                       <span class="toggle-password" onclick="togglePasswordVisibility(this)">
@@ -183,8 +183,8 @@
 
                       <button class="edit-btn" onclick="updatePassword()">Sačuvaj</button>
 
-                      <p style="margin-top:10px;">
-                          <a href="../reset_password/reset_password.html" target="_blank" style="color:#17411D;text-decoration:underline;">Zaboravili ste lozinku?</a>
+                      <p class="forgot-link">
+                          <a href="../reset_password/reset_password.html" target="_blank">Zaboravili ste lozinku?</a>
                       </p>
                   </div>
               </div>

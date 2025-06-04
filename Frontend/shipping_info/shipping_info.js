@@ -70,11 +70,11 @@ function toggleSavedData() {
       const order = orders[orders.length - 1]; // Poslednja narudžbina
 
 
-      if (order.length > 0) {
+      if (order && Array.isArray(order.items) && order.items.length > 0) {
           // Očisti prethodni sadržaj
           summary.innerHTML = "<h3>Vaša korpa</h3>";
           let total = 0;
-          order.forEach(item => {
+          order.items.forEach(item => {
               const subtotal = item.price * item.quantity;
               total += subtotal;
               summary.innerHTML += `<p><strong>${item.title}</strong><br>${item.quantity} x ${item.price} RSD</p>`;
@@ -89,6 +89,8 @@ function toggleSavedData() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const summaryButton = document.querySelector('.shipping-summary button');
+
+    if (!summaryButton) return; // Dugme nije prikazano ako je korpa prazna
 
     summaryButton.addEventListener('click', () => {
     const selectedAddressElement = document.querySelector('.select-button.selected-button');
