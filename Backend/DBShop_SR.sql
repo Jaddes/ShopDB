@@ -40,9 +40,7 @@ CREATE SEQUENCE seq_narudzbine START WITH 1 INCREMENT BY 1;
 CREATE TABLE NARUDZBINE (
     id_narudzbina NUMBER(10) PRIMARY KEY,
     id_proizvod NUMBER(10) NOT NULL,
-    naziv_proizvoda VARCHAR2(255) NOT NULL,
     kolicina NUMBER(10) NOT NULL CHECK (kolicina > 0),
-    cena_po_komadu NUMBER(10,2) NOT NULL CHECK (cena_po_komadu > 0),
     ukupna_cena NUMBER(10,2) GENERATED ALWAYS AS (kolicina * cena_po_komadu) VIRTUAL,
     datum_narudzbine DATE DEFAULT SYSDATE,
     status NUMBER(1) DEFAULT 0 CHECK (status IN (0, 1)),
