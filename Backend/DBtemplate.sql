@@ -70,7 +70,7 @@ CREATE TABLE PROIZVODI (
     datum_nabavke DATE DEFAULT SYSDATE,
     nabavna_cena NUMBER(10, 2) NOT NULL,
     prodajna_cena NUMBER(10, 2) NOT NULL,
-    kolicina NUMBER DEFAULT 0 CHECK (kolicina >= 0),
+    stanje NUMBER DEFAULT 0 CHECK (kolicina >= 0),
     CONSTRAINT fk_proizvod_podkategorija FOREIGN KEY (id_podkategorija) REFERENCES PODKATEGORIJE(id_podkategorija),
     CONSTRAINT fk_proizvod_boja FOREIGN KEY (id_boja) REFERENCES BOJE(id_boja),
     CONSTRAINT fk_proizvod_oznaka FOREIGN KEY (id_oznaka) REFERENCES OZNAKE(id_oznaka)
@@ -80,34 +80,34 @@ CREATE TABLE PROIZVODI (
 CREATE TABLE KORPA (
     id_korpa NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_kupac NUMBER NOT NULL,
+    id_stavka_korpe NUMBER NOT NULL,
     datum_kreiranja DATE DEFAULT SYSDATE,
-    CONSTRAINT fk_korpa_kupac FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE
+    CONSTRAINT fk_korpa_kupac FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE,
+    CONSTRAINT fk_stavke_korpe_korpa FOREIGN KEY (id_stavka_korpe) REFERENCES STAVKE_KORPE(id_stavka_korpe) ON DELETE CASCADE,
 );
 
 -- Stavke unutar korpe
 CREATE TABLE STAVKE_KORPE (
     id_stavka_korpe NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_korpa NUMBER NOT NULL,
     id_proizvod NUMBER NOT NULL,
     kolicina NUMBER NOT NULL CHECK (kolicina > 0),
-    CONSTRAINT fk_stavke_korpe_korpa FOREIGN KEY (id_korpa) REFERENCES KORPA(id_korpa) ON DELETE CASCADE,
     CONSTRAINT fk_stavke_korpe_proizvod FOREIGN KEY (id_proizvod) REFERENCES PROIZVODI(id_proizvod)
 );
 
 -- Wishlist povezan sa korisnikom (kupcem)
 CREATE TABLE WISHLIST (
     id_wishlist NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_stavka_wishlist NUMBER NOT NULL,
     id_kupac NUMBER NOT NULL,
     datum_kreiranja DATE DEFAULT SYSDATE,
+    CONSTRAINT fk_stavka_wishlist FOREIGN KEY (id_stavka_wishlist) REFERENCES WISHLIST_STAVKE(id_stavka_wishlist) ON DELETE CASCADE,
     CONSTRAINT fk_wishlist_kupac FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE
 );
 
 -- Stavke unutar liste želja
 CREATE TABLE WISHLIST_STAVKE (
     id_stavka_wishlist NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_wishlist NUMBER NOT NULL,
     id_proizvod NUMBER NOT NULL,
-    CONSTRAINT fk_stavka_wishlist FOREIGN KEY (id_wishlist) REFERENCES WISHLIST(id_wishlist) ON DELETE CASCADE,
     CONSTRAINT fk_stavka_proizvod FOREIGN KEY (id_proizvod) REFERENCES PROIZVODI(id_proizvod)
 );
 
