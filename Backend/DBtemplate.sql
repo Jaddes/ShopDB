@@ -13,24 +13,37 @@ CREATE TABLE KORISNICI (
 CREATE TABLE KUPCI (
     id_kupac NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_korisnik NUMBER NOT NULL,
+    telefon VARCHAR2(50),
+    CONSTRAINT fk_kupci_korisnici FOREIGN KEY (id_korisnik) REFERENCES KORISNICI(id_korisnik) ON DELETE CASCADE
+);
+
+CREATE TABLE ADRESE (
+    id_adresa NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     ulica VARCHAR2(100),
     broj VARCHAR2(10),
     grad VARCHAR2(100),
-    postanski_broj VARCHAR2(10),
-    telefon VARCHAR2(50),
-    CONSTRAINT fk_kupci_korisnici FOREIGN KEY (id_korisnik) REFERENCES KORISNICI(id_korisnik) ON DELETE CASCADE
+    postanski_broj VARCHAR2(10)
+);
+
+
+CREATE TABLE KORISNICKE_ADRESE (
+    id_kor_adr NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_kupac NUMBER NOT NULL,
+    id_adresa NUMBER NOT NULL,
+    CONSTRAINT fk_kor_adr_kupci FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE
+    CONSTRAINT fk_kor_adr_adrese FOREIGN KEY (id_adresa) REFERENCES ADRESE(id_adresa) ON DELETE CASCADE
 );
 
 -- Glavna narudžbina, jedna po korisniku
 CREATE TABLE NARUDZBINE (
     id_narudzbina NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_kupac NUMBER NOT NULL,
+    id_kor_adr NUMBER NOT NULL,
     datum_narudzbine DATE DEFAULT SYSDATE,
     status VARCHAR2(20) DEFAULT 'naručeno' CHECK (status IN ('naručeno', 'poslato', 'stiglo')),
     nacin_dostave VARCHAR2(20) CHECK (nacin_dostave IN ('lično', 'pošta', 'pouzećem')),
     cena_dostave NUMBER(10, 2) DEFAULT 0,
     ukupna_cena NUMBER(10, 2),
-    CONSTRAINT fk_narudzbine_kupac FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE SET NULL
+    CONSTRAINT fk_narudzbine_kor_adr FOREIGN KEY (id_kor_adr) REFERENCES KORISNIKCKE_ADRESE(id_kor_adr) ON DELETE SET NULL
 );
 
 -- Stavke narudžbine (proizvodi unutar jedne narudžbine)
