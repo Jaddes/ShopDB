@@ -30,7 +30,7 @@ CREATE TABLE KORISNICKE_ADRESE (
     id_kor_adr NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_kupac NUMBER NOT NULL,
     id_adresa NUMBER NOT NULL,
-    CONSTRAINT fk_kor_adr_kupci FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE
+    CONSTRAINT fk_kor_adr_kupci FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE,
     CONSTRAINT fk_kor_adr_adrese FOREIGN KEY (id_adresa) REFERENCES ADRESE(id_adresa) ON DELETE CASCADE
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE NARUDZBINE (
     nacin_dostave VARCHAR2(20) CHECK (nacin_dostave IN ('lično', 'pošta', 'pouzećem')),
     cena_dostave NUMBER(10, 2) DEFAULT 0,
     ukupna_cena NUMBER(10, 2),
-    CONSTRAINT fk_narudzbine_kor_adr FOREIGN KEY (id_kor_adr) REFERENCES KORISNIKCKE_ADRESE(id_kor_adr) ON DELETE SET NULL,
+    CONSTRAINT fk_narudzbine_kor_adr FOREIGN KEY (id_kor_adr) REFERENCES KORISNICKE_ADRESE(id_kor_adr) ON DELETE SET NULL,
     CONSTRAINT fk_narudzbine_stavke_narudzbine FOREIGN KEY (id_stavka_narudzbine) REFERENCES STAVKE_NARUDZBINE(id_stavka_narudzbine) ON DELETE SET NULL
 );
 
@@ -54,7 +54,6 @@ CREATE TABLE STAVKE_NARUDZBINE (
     id_narudzbina NUMBER NOT NULL,
     id_proizvod NUMBER NOT NULL,
     kolicina NUMBER NOT NULL CHECK (kolicina > 0),
-    cena_po_komadu NUMBER(10,2) NOT NULL,
     ukupna_cena NUMBER(10,2) GENERATED ALWAYS AS (kolicina * cena_po_komadu) VIRTUAL,
     CONSTRAINT fk_stavka_narudzbine FOREIGN KEY (id_narudzbina) REFERENCES NARUDZBINE(id_narudzbina) ON DELETE CASCADE,
     CONSTRAINT fk_stavka_narudzbina_proizvod FOREIGN KEY (id_proizvod) REFERENCES PROIZVODI(id_proizvod)
