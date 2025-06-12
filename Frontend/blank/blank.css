@@ -182,45 +182,37 @@ header {
   cursor: pointer;
 }
 
-/* Sakrivanje dropdown menija pre klika */
-.account-menu {
-  display: block;
-  position: absolute;
-  top: 110%; /* ispod ikone */
-  right: 0;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  list-style: none;
-  padding: 8px 0;
-  margin: 0;
-  width: 200px;
-  z-index: 1500;
 
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+
+.account-menu {
+  position: absolute;
+  top: 100%; /* odmah ispod ikone */
+  left: 0;
+  display: none;
+  background: white;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* Kada je otvoren dropdown meni */
 .account-dropdown.open .account-menu {
-  max-height: 500px; /* dovoljno da vidi sav sadržaj */
-  opacity: 1;
-  pointer-events: auto;
+  display: block;
 }
 
 /* Stavke su jasno jedna ispod druge */
 .account-menu li {
-   display: block; /* blok elementi, vertikalno */
-  padding: 8px 20px;
-  border-bottom: 1px solid #eee; 
+ list-style: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: block;
+    text-align: left;
 }
 
-.account-menu li:last-child {
-  border-bottom: none; /* poslednja stavka nema donju liniju */
-}
+
 
 /* Linkovi i dugmad u meniju */
 .account-menu li a,
@@ -302,6 +294,17 @@ header {
 #logoutModal .buttons .cancel-logout:hover {
   background-color: #aaa;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /* Footer stilovi */
 footer {
@@ -411,17 +414,29 @@ main {
 
 /* Responsive prilagođavanja */
 @media screen and (max-width: 768px) {
-    .navbar {
-        flex-wrap: wrap;
-        padding: 15px 20px;
-    }
+    .product-card {
+    width: 100%;
+    margin: 10px 0;
+  }
 
-    .search-bar {
-        width: 100%;
-        margin-top: 10px;
-    }
+  /* Navigacija pada u kolonu */
+  .dropdown {
+    flex-direction: column;
+  }
 
-    .account-menu {
-        width: 150px;
+  /* Footer se prilagođava */
+  footer {
+    font-size: 14px;
+    padding: 20px 10px;
+    text-align: center;
+  }
+
+  /* Account meni bolje pozicioniran */
+  .account-menu {
+    position: static;
+    width: 100%;
+  }
+  .search-bar {
+  width: 30%;
     }
 }
