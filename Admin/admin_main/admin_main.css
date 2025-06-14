@@ -1,0 +1,442 @@
+/* Reset osnovnih stilova */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Osnovni stil za ceo dokument */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #C1E899;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Header stilovi */
+header {
+    background: #C1E899;
+    padding: 0.1px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Navigaciona traka */
+.navbar {
+    background-color: #EB9C35;
+    padding: 15px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Irish Grover', cursive;
+    color: #55883B;
+}
+
+/* Navigacioni linkovi */
+.navbar .nav-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    height: 100%;      
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #17411D;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+}
+
+.navbar .category {
+    position: relative;
+}
+
+/* Pretraga */
+.search-bar {
+    position: relative;
+    width: 30%; /* manji prostor */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 8px 15px 8px 40px;  /* leva margina za ikonicu */
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    filter: brightness(0) invert(0.4); /* tamda zelena */
+}
+
+.search-bar button {
+  position: absolute;
+  right: 23%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Ikonice */
+.navbar .icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    background: #EB9C35;
+    border-radius: 5px;
+}
+
+.navbar .left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar .icons i {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background-color: #17411D;
+    color: white;
+    font-size: 20px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.nav-icon:hover {
+    background-color: #333;
+}
+
+.icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+/* Account dropdown meni */
+.account-dropdown {
+  position: relative;
+  
+  align-items: center;
+  cursor: pointer;
+}
+
+
+
+.account-menu {
+  position: absolute;
+  top: 100%; /* odmah ispod ikone */
+  left: 0;
+  display: none;
+  background: white;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-dropdown.open .account-menu {
+  display: block;
+}
+
+/* Stavke su jasno jedna ispod druge */
+.account-menu li {
+ list-style: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: block;
+    text-align: left;
+}
+
+
+
+/* Linkovi i dugmad u meniju */
+.account-menu li a,
+.account-menu li button {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: #17411D;
+  font-size: 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.account-menu li a:hover,
+.account-menu li button:hover {
+  background-color: #f0f0f0;
+}
+
+/* ======== Modal za potvrdu odjave ======== */
+#logoutModal {
+  display: none; /* skriven dok ga ne pozovemo */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+#logoutModal .modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#logoutModal .modal-content p {
+  font-size: 16px;
+  color: #17411D;
+  margin-bottom: 20px;
+}
+
+#logoutModal .buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+#logoutModal .buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#logoutModal .buttons .confirm-logout {
+  background-color: #EB9C35;
+  color: white;
+}
+
+#logoutModal .buttons .confirm-logout:hover {
+  background-color: #d17f1c;
+}
+
+#logoutModal .buttons .cancel-logout {
+  background-color: #ccc;
+  color: #17411D;
+}
+
+#logoutModal .buttons .cancel-logout:hover {
+  background-color: #aaa;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Footer stilovi */
+footer {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    background: #55883B;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    margin-top: auto;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.footer-section {
+    flex: 1;
+    max-width: 300px;
+}
+
+.footer-center {
+    text-align: center;
+}
+
+.footer-center h3 {
+    font-family: 'Irish Grover', cursive;
+    color: #EB9C35;
+    font-size: 54px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    border-bottom: 2px solid #fff;
+    display: inline-block;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    margin: 5px 0;
+}
+
+footer a {
+    text-decoration: none;
+    color: #222;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Account Settings */
+main {
+    padding-top: 160px;
+    width: 100%;
+}
+
+.account-container {
+    max-width: 1000px;
+    margin: 0 auto 50px;
+    padding: 0 20px;
+    text-align: center;
+    color: #17411D;
+}
+
+.account-container h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #17411D;
+    font-family: 'Irish Grover', cursive;
+}
+
+.account-info {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.account-info p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Button za izmenu */
+.edit-btn {
+    background-color: #EB9C35;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-btn:hover {
+    background-color: #d17f1c;
+}
+
+/* Responsive prilagođavanja */
+@media screen and (max-width: 768px) {
+    .product-card {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  /* Navigacija pada u kolonu */
+  .dropdown {
+    flex-direction: column;
+  }
+
+  /* Footer se prilagođava */
+  footer {
+    font-size: 14px;
+    padding: 20px 10px;
+    text-align: center;
+  }
+
+  /* Account meni bolje pozicioniran */
+  .account-menu {
+    position: static;
+    width: 100%;
+  }
+  .search-bar {
+  width: 80%;
+    }
+}
