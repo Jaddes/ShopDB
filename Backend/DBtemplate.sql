@@ -38,12 +38,18 @@ CREATE TABLE KORISNICKE_ADRESE (
 CREATE TABLE NARUDZBINE (
     id_narudzbina NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_kor_adr NUMBER NOT NULL,
+    id_stavka_narudzbine NUBER NOT NULL,
     datum_narudzbine DATE DEFAULT SYSDATE,
     status VARCHAR2(20) DEFAULT 'naručeno' CHECK (status IN ('naručeno', 'poslato', 'stiglo')),
     nacin_dostave VARCHAR2(20) CHECK (nacin_dostave IN ('lično', 'pošta', 'pouzećem')),
     cena_dostave NUMBER(10, 2) DEFAULT 0,
     ukupna_cena NUMBER(10, 2),
+<<<<<<< HEAD
     CONSTRAINT fk_narudzbine_kor_adr FOREIGN KEY (id_kor_adr) REFERENCES KORISNICKE_ADRESE(id_kor_adr) ON DELETE SET NULL
+=======
+    CONSTRAINT fk_narudzbine_kor_adr FOREIGN KEY (id_kor_adr) REFERENCES KORISNICKE_ADRESE(id_kor_adr) ON DELETE SET NULL,
+    CONSTRAINT fk_narudzbine_stavke_narudzbine FOREIGN KEY (id_stavka_narudzbine) REFERENCES STAVKE_NARUDZBINE(id_stavka_narudzbine) ON DELETE SET NULL
+>>>>>>> d4e9fb1258c9b813d7bc466063b6d94bb19c4855
 );
 
 -- Stavke narudžbine (proizvodi unutar jedne narudžbine)
@@ -52,7 +58,6 @@ CREATE TABLE STAVKE_NARUDZBINE (
     id_narudzbina NUMBER NOT NULL,
     id_proizvod NUMBER NOT NULL,
     kolicina NUMBER NOT NULL CHECK (kolicina > 0),
-    cena_po_komadu NUMBER(10,2) NOT NULL,
     ukupna_cena NUMBER(10,2) GENERATED ALWAYS AS (kolicina * cena_po_komadu) VIRTUAL,
     CONSTRAINT fk_stavka_narudzbine FOREIGN KEY (id_narudzbina) REFERENCES NARUDZBINE(id_narudzbina) ON DELETE CASCADE,
     CONSTRAINT fk_stavka_narudzbina_proizvod FOREIGN KEY (id_proizvod) REFERENCES PROIZVODI(id_proizvod)
@@ -69,7 +74,7 @@ CREATE TABLE PROIZVODI (
     datum_nabavke DATE DEFAULT SYSDATE,
     nabavna_cena NUMBER(10, 2) NOT NULL,
     prodajna_cena NUMBER(10, 2) NOT NULL,
-    kolicina NUMBER DEFAULT 0 CHECK (kolicina >= 0),
+    stanje NUMBER DEFAULT 0 CHECK (stanje >= 0),
     CONSTRAINT fk_proizvod_podkategorija FOREIGN KEY (id_podkategorija) REFERENCES PODKATEGORIJE(id_podkategorija),
     CONSTRAINT fk_proizvod_boja FOREIGN KEY (id_boja) REFERENCES BOJE(id_boja),
     CONSTRAINT fk_proizvod_oznaka FOREIGN KEY (id_oznaka) REFERENCES OZNAKE(id_oznaka)
@@ -82,8 +87,13 @@ CREATE TABLE KORPA (
     sifra NUMBER NOT NULL,
     id_stavka_korpe NUMBER NOT NULL,
     datum_kreiranja DATE DEFAULT SYSDATE,
+<<<<<<< HEAD
     CONSTRAINT fk_korpa_kupac FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE,
     CONSTRAINT fk_stavke_korpe_korpa FOREIGN KEY (id_stavka_korpe ) REFERENCES STAVKE_KORPE(id_korpa) ON DELETE CASCADE
+=======
+    CONSTRAINT fk_korpa_kupac FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE
+
+>>>>>>> d4e9fb1258c9b813d7bc466063b6d94bb19c4855
 );
 
 -- Stavke unutar korpe
@@ -92,8 +102,13 @@ CREATE TABLE STAVKE_KORPE (
     id_korpa NUMBER NOT NULL,
     id_proizvod NUMBER NOT NULL,
     kolicina NUMBER NOT NULL CHECK (kolicina > 0),
+<<<<<<< HEAD
     CONSTRAINT fk_stavke_korpe_proizvod FOREIGN KEY (id_proizvod) REFERENCES PROIZVODI(id_proizvod),
     CONSTRAINT fk_korpa_kupac FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE
+=======
+    CONSTRAINT fk_sifra_korpe_korpa FOREIGN KEY (id_korpa) REFERENCES KORPA(id_korpa) ON DELETE CASCADE,
+    CONSTRAINT fk_stavke_korpe_proizvod FOREIGN KEY (id_proizvod) REFERENCES PROIZVODI(id_proizvod)
+>>>>>>> d4e9fb1258c9b813d7bc466063b6d94bb19c4855
 );
 
 -- Wishlist povezan sa korisnikom (kupcem)
