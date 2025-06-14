@@ -234,6 +234,14 @@ header {
   background-color: #f0f0f0;
 }
 
+.account-dropdown .account-menu {
+  display: none;
+}
+
+.account-dropdown:hover .account-menu {
+  display: block;
+}
+
 /* ======== Modal za potvrdu odjave ======== */
 #logoutModal {
   display: none; /* skriven dok ga ne pozovemo */

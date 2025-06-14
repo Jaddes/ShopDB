@@ -70,10 +70,10 @@ fetch('http://localhost:3000/api/categories')
   const accountDropdown = document.querySelector('.account-dropdown');
   const accountMenu = document.querySelector('.account-dropdown .account-menu');
 
-  accountDropdown.addEventListener('click', (e) => {
-    e.stopPropagation(); // da klik ne „propagates” i ne zatvori meni odmah
-    accountDropdown.classList.toggle('open');
-  });
+  // accountDropdown.addEventListener('click', (e) => {
+  //   e.stopPropagation(); // da klik ne „propagates” i ne zatvori meni odmah
+  //   accountDropdown.classList.toggle('open');
+  // });
 
   // Zatvori dropdown ako korisnik klikne van njega
   document.addEventListener('click', () => {
