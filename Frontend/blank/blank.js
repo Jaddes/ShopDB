@@ -64,54 +64,59 @@ fetch('http://localhost:3000/api/categories')
   });
 
 
- /* account dropdown */
- document.addEventListener('DOMContentLoaded', () => {
-  // ---------- TOGGLE DROPDOWN ZA ACCOUNT IKONU ----------
+ document.addEventListener('DOMContentLoaded', function () {
   const accountDropdown = document.querySelector('.account-dropdown');
-  const accountMenu = document.querySelector('.account-dropdown .account-menu');
-
-  // accountDropdown.addEventListener('click', (e) => {
-  //   e.stopPropagation(); // da klik ne „propagates” i ne zatvori meni odmah
-  //   accountDropdown.classList.toggle('open');
-  // });
-
-  // Zatvori dropdown ako korisnik klikne van njega
-  document.addEventListener('click', () => {
-    accountDropdown.classList.remove('open');
-  });
-
-  // ---------- HANDLERI ZA LOGOUT MODAL ----------
-  const logoutBtn = document.getElementById('logout-btn');
+  const accountMenu = accountDropdown.querySelector('.account-menu');
   const logoutModal = document.getElementById('logoutModal');
-  const confirmLogout = logoutModal.querySelector('.confirm-logout');
-  const cancelLogout = logoutModal.querySelector('.cancel-logout');
+  const confirmLogout = document.querySelector('.confirm-logout');
+  const cancelLogout = document.querySelector('.cancel-logout');
 
-  // Otvori modal kad se klikne na “Izloguj se” u meniju
-  logoutBtn.addEventListener('click', (e) => {
-    e.stopPropagation();       // ne dozvoli da klik zatvori dropdown
-    accountDropdown.classList.remove('open');
-    logoutModal.style.display = 'block';
-  });
+  // Provera da li je korisnik ulogovan
+  const isLoggedIn = localStorage.getItem('ulogovan') === 'true';
 
-  // Kad klikneš “Odustani” u modal-u, zatvori modal
-  cancelLogout.addEventListener('click', () => {
+  // Popuni meni u zavisnosti od stanja prijave
+  if (isLoggedIn) {
+    accountMenu.innerHTML = `
+      <li><a href="../account_settings/account_settings.html">Informacije o nalogu</a></li>
+      <li><a href="../order_history/order_history.html">Istorija poručivanja</a></li>
+      <li><button id="logout-btn">Izloguj se</button></li>
+    `;
+
+    // Dodavanje događaja za dugme za odjavu
+    const logoutBtn = document.getElementById('logout-btn');
+    logoutBtn.addEventListener('click', function (e) {
+      e.stopPropagation(); // spreči zatvaranje menija
+      accountDropdown.classList.remove('open');
+      logoutModal.style.display = 'block';
+    });
+
+  } else {
+    accountMenu.innerHTML = `
+      <li><a href="../login/login.html">Uloguj se</a></li>
+    `;
+  }
+
+  // Zatvori modal kada klikneš "Odustani"
+  cancelLogout.addEventListener('click', function () {
     logoutModal.style.display = 'none';
   });
 
-  // Kad klikneš na pozadinu modala, zatvori ga
-  window.addEventListener('click', (e) => {
-    if (e.target === logoutModal) {
+  // Potvrdi odjavu
+  confirmLogout.addEventListener('click', function () {
+    localStorage.setItem('ulogovan', 'false');
+    logoutModal.style.display = 'none';
+    location.reload(); // ili preusmeravanje na login stranicu
+  });
+
+  // Zatvaranje modala klikom van sadržaja
+  window.addEventListener('click', function (event) {
+    if (event.target === logoutModal) {
       logoutModal.style.display = 'none';
     }
   });
 
-  // Kad se potvrdi odjava, npr. brišemo token ili localStorage i vraćamo na login/početnu
-  confirmLogout.addEventListener('click', () => {
-    // Ovde obriši lokalne podatke korisnika, npr. localStorage.clear() ili samo token/ID
-    // localStorage.clear();
-    // Ili: localStorage.removeItem("userToken"); itd.
-
-    // Preusmeri korisnika na stranicu za login ili glavnu
-    window.location.href = '../main_site/main_site.html';
+  // Ručno toggle-ovanje menija (ako ne koristiš :hover)
+  accountDropdown.addEventListener('click', function () {
+    accountDropdown.classList.toggle('open');
   });
 });

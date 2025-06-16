@@ -174,6 +174,139 @@ header {
     filter: brightness(0) invert(1);
 }
 
+/* Account dropdown meni */
+.account-dropdown {
+  position: relative;
+  
+  align-items: center;
+  cursor: pointer;
+}
+
+
+.account-menu {
+  position: absolute;
+  top: 100%; /* odmah ispod ikone */
+  left: 0;
+  display: none;
+  background: white;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-dropdown.open .account-menu {
+  display: block;
+}
+
+/* Stavke su jasno jedna ispod druge */
+.account-menu li {
+ list-style: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: block;
+    text-align: left;
+}
+
+
+
+/* Linkovi i dugmad u meniju */
+.account-menu li a,
+.account-menu li button {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: #17411D;
+  font-size: 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.account-menu li a:hover,
+.account-menu li button:hover {
+  background-color: #f0f0f0;
+}
+
+.account-dropdown .account-menu {
+  display: none;
+}
+
+.account-dropdown:hover .account-menu {
+  display: block;
+}
+
+/* ======== Modal za potvrdu odjave ======== */
+#logoutModal {
+  display: none; /* skriven dok ga ne pozovemo */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+#logoutModal .modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#logoutModal .modal-content p {
+  font-size: 16px;
+  color: #17411D;
+  margin-bottom: 20px;
+}
+
+#logoutModal .buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+#logoutModal .buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#logoutModal .buttons .confirm-logout {
+  background-color: #EB9C35;
+  color: white;
+}
+
+#logoutModal .buttons .confirm-logout:hover {
+  background-color: #d17f1c;
+}
+
+#logoutModal .buttons .cancel-logout {
+  background-color: #ccc;
+  color: #17411D;
+}
+
+#logoutModal .buttons .cancel-logout:hover {
+  background-color: #aaa;
+}
+
+
+
+
+
+
 
 
 
