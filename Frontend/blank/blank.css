@@ -424,7 +424,9 @@ main {
 }
 
 
-
+html {
+    overflow-x: hidden;
+}
 
 
 
@@ -458,6 +460,8 @@ main {
   .search-bar {
     width: 100%;
     margin-top: 10px;
+    min-width: 0;
+    flex-shrink: 1;
     order: 3;
   }
 
@@ -468,14 +472,14 @@ main {
     align-items: center;
     width: 100%;
     padding: 5px 0;
-    gap: 10px;
+    gap: 4px;
     flex-wrap: nowrap;
     order: 4;
   }
 
   .nav-links a {
-    padding: 6px 10px;
-    font-size: 14px;
+    padding: 4px 8px;
+    font-size: 12px;
     white-space: nowrap;
   }
 
