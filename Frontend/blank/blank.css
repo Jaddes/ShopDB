@@ -494,8 +494,10 @@ html {
 
 @media (max-width: 480px) {
   .nav-links {
-    flex-wrap: nowrap;   /* sprečava prelamanje u novi red */
-    overflow-x: hidden;    /* dozvoljava horizontalni skrol ako je potrebno */
+    flex-wrap: nowrap;      /* da budu u jednom redu */
+    gap: 0;               /* minimalan razmak, ili 0 ako hoćeš skroz zbijeno */
+    overflow-x: auto;       /* dozvoli horizontalni scroll ako zatreba */
+    -webkit-overflow-scrolling: touch; /* glatki scroll na mobilnim */
     
   }
 
