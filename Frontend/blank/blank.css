@@ -474,7 +474,7 @@ html {
     padding: 5px 0;
     gap: 2px;
     flex-wrap: nowrap;
-    order: 5;
+    order: 4;
   }
 
   .nav-links a {
@@ -487,7 +487,42 @@ html {
     justify-content: center;
     width: 100%;
     gap: 10px;
-    order: 4;
+    order: 5;
   }
 }
 
+
+@media (max-width: 480px) {
+  .nav-links {
+    flex-wrap: nowrap;   /* sprečava prelamanje u novi red */
+    overflow-x: auto;    /* dozvoljava horizontalni skrol ako je potrebno */
+    -webkit-overflow-scrolling: touch; /* glatkiji scroll na iOS */
+  }
+
+  .nav-links a {
+    padding: 2px 6px;
+    font-size: 10px;
+    white-space: nowrap; /* sprečava prelamanje teksta linka */
+    display: inline-block;
+  }
+
+  .navbar .logo {
+    font-size: 18px;
+  }
+
+  .nav-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon-img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Da ne bi bilo horizontalnog skrola na celom body-ju */
+body, .navbar {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
