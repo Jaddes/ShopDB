@@ -59,8 +59,6 @@
 
     <!-- Glavni sadrzaj stranice - prazna sekcija koja moze biti koriscena za razlicite stranice -->
     <main>
-        <div class="content-placeholder"></div>
-
         <!-- Modal za potvrdu odjave -->
         <div id="logoutModal">
             <div class="modal-content">
@@ -72,7 +70,22 @@
             </div>
         </div>
 
-        <div class="content-placeholder"></div>
+        <div id="admin-panel">
+        <div class="admin-tabs">
+            <button onclick="prikaziKorisnike()">Korisnici</button>
+            <button onclick="prikaziKupce()">Kupci</button>
+            <button onclick="prikaziProizvode()">Proizvodi</button>
+            <button onclick="prikaziNarudzbine()">Narudžbine</button>
+            <button onclick="prikaziKorpe()">Korpa</button>
+            <button onclick="prikaziRecenzije()">Recenzije</button>
+            <button onclick="prikaziListaZelja()">Lista Želja</button>
+            <button onclick="prikaziKatiPKat()">Kat i PKat</button>
+        </div>
+
+        <div class="content-placeholder" style="flex: 1; padding: 20px;"></div>
+        </div>
+
+
     </main>
 
     <footer>

@@ -22,3 +22,5 @@ async function initializeApiBaseUrl() {
   const lokalOk = await testApiConnection(lokalni);
   API_BASE_URL = lokalOk ? lokalni : fallback;
 }
+
+window.API_BASE_URL = API_BASE_URL; // ovo zapamti kao globalnu promenljivu

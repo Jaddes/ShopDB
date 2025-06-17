@@ -238,9 +238,6 @@ header {
   background-color: #f0f0f0;
 }
 
-.account-dropdown:hover .account-menu {
-  display: block;
-}
 
 /* ======== Modal za potvrdu odjave ======== */
 #logoutModal {
@@ -303,9 +300,53 @@ header {
   background-color: #aaa;
 }
 
+/* Mjau Mjau dugmad za tabele */
 
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  position: sticky;
+  top: 100px; /* ispod navbar-a */
+  background-color: #C1E899;
+  z-index: 999;
+  padding: 10px 0;
+}
 
+.admin-tabs button {
+  padding: 10px 20px;
+  background-color: #17411D;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
 
+.admin-tabs button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+aside button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #EB9C35;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+aside button:hover {
+  background-color: #d17f1c;
+}
 
 
 
@@ -372,7 +413,7 @@ footer a:hover {
 
 /* Account Settings */
 main {
-    padding-top: 160px;
+    padding-top: 100px;
     width: 100%;
 }
 

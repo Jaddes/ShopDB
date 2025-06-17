@@ -129,3 +129,8 @@ CREATE TABLE RECENZIJE (
     CONSTRAINT fk_recenzije_kupac FOREIGN KEY (id_kupac) REFERENCES KUPCI(id_kupac) ON DELETE CASCADE,
     CONSTRAINT fk_recenzije_proizvod FOREIGN KEY (id_proizvod) REFERENCES PROIZVODI(id_proizvod) ON DELETE CASCADE
 );
+
+INSERT INTO KORISNICI (ime, prezime, email, lozinka, uloga) VALUES 
+('Marko', 'Marković', 'marko@email.com', 'lozinka123', 'kupac'),
+('Jelena', 'Jelić', 'jelena@email.com', 'tajna123', 'kupac'),
+('Admin', 'Adminović', 'admin@email.com', 'adminpass', 'administrator');
