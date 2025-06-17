@@ -495,14 +495,15 @@ html {
 @media (max-width: 480px) {
   .nav-links {
     flex-wrap: nowrap;   /* sprečava prelamanje u novi red */
-    overflow-x: auto;    /* dozvoljava horizontalni skrol ako je potrebno */
-    -webkit-overflow-scrolling: touch; /* glatkiji scroll na iOS */
+    overflow-x: hidden;    /* dozvoljava horizontalni skrol ako je potrebno */
+    
   }
 
   .nav-links a {
     padding: 0;
     font-size: 7px;
-    
+    white-space: nowrap; /* sprečava prelamanje teksta linka */
+    display: inline-block;
   }
 
   .navbar .logo {
