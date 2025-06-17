@@ -99,3 +99,30 @@ function togglePasswordVisibility(iconElement) {
     accountDropdown.classList.toggle('open');
   });
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('signupForm'); // Prilagodi ID forme ako je drugačiji
+  const modal = document.getElementById('registrationModal');
+  const closeModal = document.getElementById('closeModal');
+  const okModalBtn = document.getElementById('okModalBtn');
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // OVDE ide tvoja logika registracije, npr. čuvanje u localStorage ili AJAX poziv
+      // Nakon što je registracija uspešna, prikaži modal
+      modal.style.display = 'flex';
+    });
+  }
+
+  // OK dugme i X dugme — oba vode na login stranicu
+  function redirectToLogin() {
+    window.location.href = '../login/login.html'; // ili "./login.html" u zavisnosti od strukture
+  }
+
+  okModalBtn.addEventListener('click', redirectToLogin);
+  closeModal.addEventListener('click', redirectToLogin);
+});
