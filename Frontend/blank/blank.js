@@ -121,11 +121,3 @@ fetch('http://localhost:3000/api/categories')
   });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const hamburgerBtn = document.getElementById("hamburgerBtn");
-    const navLinks = document.querySelector(".nav-links");
-
-    hamburgerBtn.addEventListener("click", function () {
-        navLinks.classList.toggle("active");
-    });
-});

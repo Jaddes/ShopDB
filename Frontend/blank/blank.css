@@ -429,28 +429,6 @@ main {
 
 
 
-/* Hamburger dugme - sakriveno na desktopu */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 6px;
-  padding: 10px;
-  user-select: none;
-}
-
-.hamburger div {
-  width: 30px;
-  height: 4px;
-  background-color: #17411D;
-  border-radius: 3px;
-}
-
-
-
-
-
-
 
 @media (max-width: 768px) {
   .navbar {
