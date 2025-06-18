@@ -1,26 +1,19 @@
-let API_BASE_URL = "http://localhost:3000"; // Prvo probaj lokalni
+let API_BASE_URL = "http://localhost:3000"; // Početna vrednost (nije konačna)
 
-async function testApiConnection(url) {
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1000); // 1s timeout
-
-    const response = await fetch(`${url}/api/ping`, { signal: controller.signal });
-    clearTimeout(timeoutId);
-
-    return response.ok;
-  } catch (err) {
-    return false;
-  }
-}
-
-// Pozivaš ovo pre nego koristiš API
 async function initializeApiBaseUrl() {
-  const lokalni = "http://192.168.1.67:3000";   // LAN backend
-  const fallback = "http://178.222.213.49:3000"; // Javni IP backend
+  const lokalni = "http://192.168.1.67:3000";      // tvoje LAN okruženje (npr. ako pristupaš sa istog Wi-Fi-ja)
+  const javni = "http://109.92.160.174:3000";      // tvoja javna IP adresa (za pristup preko interneta)
 
-  const lokalOk = await testApiConnection(lokalni);
-  API_BASE_URL = lokalOk ? lokalni : fallback;
+  try {
+    const response = await fetch(`${lokalni}/api/ping`, { method: 'GET' });
+    if (response.ok) {
+      API_BASE_URL = lokalni;
+    } else {
+      API_BASE_URL = javni;
+    }
+  } catch (err) {
+    API_BASE_URL = javni;
+  }
+
+  window.API_BASE_URL = API_BASE_URL; // postavi globalnu promenljivu tek kad je sve provereno
 }
-
-window.API_BASE_URL = API_BASE_URL; // ovo zapamti kao globalnu promenljivu

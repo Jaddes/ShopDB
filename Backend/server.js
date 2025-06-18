@@ -1,11 +1,6 @@
 let API_BASE_URL = "";
 let apiReady = false;
 
-initializeApiBaseUrl().then(() => {
-  API_BASE_URL = window.API_BASE_URL;
-  apiReady = true;
-});
-
 
 const express = require('express');
 const cors = require('cors');

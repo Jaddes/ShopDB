@@ -225,13 +225,22 @@ initializeApiBaseUrl().then(() => {
 });
 
 //Dugme za korisnike
-function prikaziKorisnike() {
+async function prikaziKorisnike() {
+  try {
+    const res = await fetch(`${window.API_BASE_URL}/api/korisnici`);
+    const podaci = await res.json();
+
+    // Prikaz u tabeli...
+    console.log(podaci); // privremeno
+  } catch (err) {
+    console.error("❌ Greška pri dohvatanju korisnika:", err);
+  }
+}
+
+async function prikaziKorisnike() {
   const container = document.querySelector('.content-placeholder');
 
   // Resetuj sadržaj da bi se sve prikazalo ponovo
-  container.innerHTML = "";
-
-  // Zatim prikaži ponovo tabelu
   container.innerHTML = `
     <h2 style="text-align:center;">Korisnici</h2>
     <table class="admin-table" id="korisniciTabela">
@@ -250,29 +259,29 @@ function prikaziKorisnike() {
     </table>
   `;
 
-  // Pozovi fetch svaki put iznova
-  fetch(`${API_BASE_URL}/api/korisnici`)
-    .then(res => res.json())
-    .then(data => {
-      const tbody = document.querySelector('#korisniciTabela tbody');
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${row[0]}</td>
-          <td>${row[1]}</td>
-          <td>${row[2]}</td>
-          <td>${row[3]}</td>
-          <td>${row[4]}</td>
-          <td>${row[5]}</td>
-          <td>${row[6]}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(err => {
-      console.error("❌ Greška u fetch korisnika:", err);
+  try {
+    const res = await fetch(`${window.API_BASE_URL}/api/korisnici`);
+    const data = await res.json();
+
+    const tbody = document.querySelector('#korisniciTabela tbody');
+    data.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row[0]}</td>
+        <td>${row[1]}</td>
+        <td>${row[2]}</td>
+        <td>${row[3]}</td>
+        <td>${row[4]}</td>
+        <td>${row[5]}</td>
+        <td>${row[6]}</td>
+      `;
+      tbody.appendChild(tr);
     });
+  } catch (err) {
+    console.error("❌ Greška u fetch korisnika:", err);
+  }
 }
+
 
 
 //Dugme za Kupce
@@ -731,3 +740,16 @@ function prikaziPodkategorije(idKategorije) {
       console.error("❌ Greška u fetch podkategorija:", err);
     });
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await initializeApiBaseUrl(); // sigurno sačekaj da API_BASE_URL bude spreman
+
+  const dugmeKorisnici = document.querySelector('button[data-action="korisnici"]');
+  if (dugmeKorisnici) {
+    dugmeKorisnici.addEventListener('click', prikaziKorisnike);
+  } else {
+    console.error("❌ Dugme 'Korisnici' nije pronađeno.");
+  }
+});
+
+
