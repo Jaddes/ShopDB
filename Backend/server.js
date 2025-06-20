@@ -12,6 +12,7 @@ const oracledb = require('oracledb');
 const kategorijeRoutes = require('./routes/kategorije');
 const korisniciRoutes = require('./routes/korisnici');
 const podkategorijeRoutes = require('./routes/podkategorije');
+const kupciRoutes = require('./routes/kupci');
 
 const app = express();
 const PORT = 3000;
@@ -19,7 +20,8 @@ const PORT = 3000;
 app.use(cors());
 app.use('/api', kategorijeRoutes);
 app.use('/api', korisniciRoutes);
-app.use('/api/podkategorije', podkategorijeRoutes);
+app.use('/api', podkategorijeRoutes);
+app.use('/api', kupciRoutes);
 
 
 app.get('/', (req, res) => {
@@ -63,34 +65,34 @@ app.get('/api/korisnici', async (req, res) => {
 });
 
 // //Dugme za Kupce
-// app.get('/api/kupci', async (req, res) => {
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
+app.get('/api/kupci', async (req, res) => {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
 
-//     const result = await connection.execute(`
-//       SELECT 
-//         k.id_kupac,
-//         k.id_korisnik,
-//         k.ulica,
-//         k.broj,
-//         k.grad,
-//         k.postanski_broj,
-//         k.telefon,
-//         u.ime || ' ' || u.prezime AS korisnik
-//       FROM KUPCI k
-//       JOIN KORISNICI u ON k.id_korisnik = u.id_korisnik
-//       ORDER BY k.id_kupac
-//     `);
+    const result = await connection.execute(`
+      SELECT 
+        k.id_kupac,
+        k.id_korisnik,
+        k.ulica,
+        k.broj,
+        k.grad,
+        k.postanski_broj,
+        k.telefon,
+        u.ime || ' ' || u.prezime AS korisnik
+      FROM KUPCI k
+      JOIN KORISNICI u ON k.id_korisnik = u.id_korisnik
+      ORDER BY k.id_kupac
+    `);
 
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u /api/kupci:", err);
-//     res.status(500).json({ error: 'Greška u bazi kupaca' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/kupci:", err);
+    res.status(500).json({ error: 'Greška u bazi kupaca' });
+  } finally {
+    if (connection) await connection.close();
+  }
+});
 
 
 

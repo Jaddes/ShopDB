@@ -177,52 +177,51 @@ async function prikaziKorisnike() {
 }
 
 
-
 // //Dugme za Kupce
-// function prikaziKupce() {
-//   const container = document.querySelector('.content-placeholder');
-//   container.innerHTML = `
-//     <h2 style="text-align:center;">Kupci</h2>
-//     <table class="admin-table" id="kupciTabela">
-//       <thead>
-//         <tr>
-//           <th>ID_KUPAC</th>
-//           <th>ID_KORISNIK</th>
-//           <th>Korisnik</th>
-//           <th>Ulica</th>
-//           <th>Broj</th>
-//           <th>Grad</th>
-//           <th>Poštanski broj</th>
-//           <th>Telefon</th>
-//         </tr>
-//       </thead>
-//       <tbody></tbody>
-//     </table>
-//   `;
+function prikaziKupce() {
+  const container = document.querySelector('.content-placeholder');
+  container.innerHTML = `
+    <h2 style="text-align:center;">Kupci</h2>
+    <table class="admin-table" id="kupciTabela">
+      <thead>
+        <tr>
+          <th>ID_KUPAC</th>
+          <th>ID_KORISNIK</th>
+          <th>Korisnik</th>
+          <th>Ulica</th>
+          <th>Broj</th>
+          <th>Grad</th>
+          <th>Poštanski broj</th>
+          <th>Telefon</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  `;
 
-//   fetch(`${API_BASE_URL}/api/kupci`)
-//     .then(res => res.json())
-//     .then(data => {
-//       const tbody = document.querySelector('#kupciTabela tbody');
-//       data.forEach(row => {
-//         const tr = document.createElement('tr');
-//         tr.innerHTML = `
-//           <td>${row[0]}</td> <!-- ID_KUPAC -->
-//           <td>${row[1]}</td> <!-- ID_KORISNIK -->
-//           <td>${row[7]}</td> <!-- Korisnik (ime + prezime) -->
-//           <td>${row[2]}</td> <!-- Ulica -->
-//           <td>${row[3]}</td> <!-- Broj -->
-//           <td>${row[4]}</td> <!-- Grad -->
-//           <td>${row[5]}</td> <!-- Poštanski broj -->
-//           <td>${row[6]}</td> <!-- Telefon -->
-//         `;
-//         tbody.appendChild(tr);
-//       });
-//     })
-//     .catch(err => {
-//       console.error("❌ Greška u fetch kupaca:", err);
-//     });
-// }
+  fetch(`${API_BASE_URL}/api/kupci`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('#kupciTabela tbody');
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row[0]}</td> <!-- ID_KUPAC -->
+          <td>${row[1]}</td> <!-- ID_KORISNIK -->
+          <td>${row[7]}</td> <!-- Korisnik (ime + prezime) -->
+          <td>${row[2]}</td> <!-- Ulica -->
+          <td>${row[3]}</td> <!-- Broj -->
+          <td>${row[4]}</td> <!-- Grad -->
+          <td>${row[5]}</td> <!-- Poštanski broj -->
+          <td>${row[6]}</td> <!-- Telefon -->
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch kupaca:", err);
+    });
+}
 
 
 // //Dugme za proizvode
