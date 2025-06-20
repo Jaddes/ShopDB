@@ -11,6 +11,7 @@ const oracledb = require('oracledb');
 //Konekcije sa api
 const kategorijeRoutes = require('./routes/kategorije');
 const korisniciRoutes = require('./routes/korisnici');
+const podkategorijeRoutes = require('./routes/podkategorije');
 
 const app = express();
 const PORT = 3000;
@@ -18,6 +19,7 @@ const PORT = 3000;
 app.use(cors());
 app.use('/api', kategorijeRoutes);
 app.use('/api', korisniciRoutes);
+app.use('/api/podkategorije', podkategorijeRoutes);
 
 
 app.get('/', (req, res) => {

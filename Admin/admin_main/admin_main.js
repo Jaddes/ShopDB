@@ -594,6 +594,8 @@ function prikaziKatiPKat() {
     </table>
   `;
 
+  prikaziSvePodkategorije();
+
   fetch(`${API_BASE_URL}/api/kategorije`)
     .then(res => res.json())
     .then(data => {
@@ -611,29 +613,51 @@ function prikaziKatiPKat() {
     .catch(err => {
       console.error("❌ Greška u fetch kategorija:", err);
     });
+
 }
 
-function prikaziPodkategorije(idKategorije) {
+// Podkategorije
+function prikaziSvePodkategorije() {
   const tbody = document.querySelector('#podkategorijeTabela tbody');
   tbody.innerHTML = '';
 
-  fetch(`${API_BASE_URL}/api/kategorije/${idKategorije}/podkategorije`)
+  fetch(`${API_BASE_URL}/api/podkategorije`)
     .then(res => res.json())
     .then(data => {
+      if (!Array.isArray(data) || data.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 3;
+        td.textContent = "Nema nijedne podkategorije.";
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+
       data.forEach(row => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${row[0]}</td>
-          <td>${row[1]}</td>
-          <td>${row[2]}</td>
-        `;
+
+        const tdId = document.createElement('td');
+        tdId.textContent = row[0];
+
+        const tdKatId = document.createElement('td');
+        tdKatId.textContent = row[1];
+
+        const tdNaziv = document.createElement('td');
+        tdNaziv.textContent = row[2];
+
+        tr.appendChild(tdId);
+        tr.appendChild(tdKatId);
+        tr.appendChild(tdNaziv);
+
         tbody.appendChild(tr);
       });
     })
     .catch(err => {
-      console.error("❌ Greška u fetch podkategorija:", err);
+      console.error("❌ Greška u fetch svih podkategorija:", err);
     });
 }
+
 
 document.addEventListener('DOMContentLoaded', async () => {
   await initializeApiBaseUrl(); // sigurno sačekaj da API_BASE_URL bude spreman
@@ -643,6 +667,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     dugmeKorisnici.addEventListener('click', prikaziKorisnike);
   } else {
     console.error("❌ Dugme 'Korisnici' nije pronađeno.");
+  }
+
+  const dugmeKategorije = document.querySelector('button[data-action="kategorije"]');
+  if (dugmeKategorije) {
+    dugmeKategorije.addEventListener('click', prikaziKatiPKat);
   }
 });
 
