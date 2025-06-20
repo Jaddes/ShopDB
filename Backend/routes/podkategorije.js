@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../connection');
+const { getConnection } = require('../db/connection'); 
 
 // Ruta za dohvatanje svih podkategorija (bez filtera)
 router.get('/', async (req, res) => {

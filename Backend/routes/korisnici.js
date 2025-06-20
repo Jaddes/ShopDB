@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getConnection } = require('../db/connection'); // ako je u istom folderu
+const { getConnection } = require('../db/connection'); 
 
 router.get('/korisnici', async (req, res) => {
   let connection;
