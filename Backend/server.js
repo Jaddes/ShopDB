@@ -19,6 +19,9 @@ const stavkeNarudzbineRoutes = require('./routes/stavke_narudzbine');
 const korpaRoutes = require('./routes/korpa');
 const stavkeKorpeRoutes = require('./routes/stavke_korpe');
 const recenzijeRoutes = require('./routes/recenzije');
+const wishlistRoutes = require('./routes/wishlist');
+const stavkeWishlistRoutes = require('./routes/stavke_wishlist');
+
 
 
 const app = express();
@@ -35,6 +38,10 @@ app.use('/api', stavkeNarudzbineRoutes);
 app.use('/api', korpaRoutes);
 app.use('/api', stavkeKorpeRoutes);
 app.use('/api', recenzijeRoutes);
+app.use('/api', wishlistRoutes);
+app.use('/api', stavkeWishlistRoutes);
+
+
 
 
 

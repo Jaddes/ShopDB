@@ -438,125 +438,125 @@ function prikaziKorpe() {
 
 
 // //Dugme za Recenziju
-// function prikaziRecenzije() {
-//   const container = document.querySelector('.content-placeholder');
-//   container.innerHTML = `
-//     <h2 style="text-align:center;">Recenzije</h2>
-//     <table class="admin-table" id="recenzijeTabela">
-//       <thead>
-//         <tr>
-//           <th>ID_RECENZIJA</th>
-//           <th>ID_KUPAC</th>
-//           <th>Kupac</th>
-//           <th>ID_PROIZVOD</th>
-//           <th>Proizvod</th>
-//           <th>Ocena</th>
-//           <th>Komentar</th>
-//           <th>Datum</th>
-//         </tr>
-//       </thead>
-//       <tbody></tbody>
-//     </table>
-//   `;
+function prikaziRecenzije() {
+  const container = document.querySelector('.content-placeholder');
+  container.innerHTML = `
+    <h2 style="text-align:center;">Recenzije</h2>
+    <table class="admin-table" id="recenzijeTabela">
+      <thead>
+        <tr>
+          <th>ID_RECENZIJA</th>
+          <th>ID_KUPAC</th>
+          <th>Kupac</th>
+          <th>ID_PROIZVOD</th>
+          <th>Proizvod</th>
+          <th>Ocena</th>
+          <th>Komentar</th>
+          <th>Datum</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  `;
 
-//   fetch(`${API_BASE_URL}/api/recenzije`)
-//     .then(res => res.json())
-//     .then(data => {
-//       const tbody = document.querySelector('#recenzijeTabela tbody');
-//       data.forEach(row => {
-//         const tr = document.createElement('tr');
-//         tr.innerHTML = `
-//           <td>${row[0]}</td> <!-- ID_RECENZIJA -->
-//           <td>${row[1]}</td> <!-- ID_KUPAC -->
-//           <td>${row[2]}</td> <!-- Kupac ime -->
-//           <td>${row[3]}</td> <!-- ID_PROIZVOD -->
-//           <td>${row[4]}</td> <!-- Naziv proizvoda -->
-//           <td>${row[5]}</td> <!-- Ocena -->
-//           <td>${row[6]}</td> <!-- Komentar -->
-//           <td>${row[7]}</td> <!-- Datum -->
-//         `;
-//         tbody.appendChild(tr);
-//       });
-//     })
-//     .catch(err => {
-//       console.error("❌ Greška u fetch recenzija:", err);
-//     });
-// }
+  fetch(`${API_BASE_URL}/api/recenzije`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('#recenzijeTabela tbody');
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row[0]}</td> <!-- ID_RECENZIJA -->
+          <td>${row[1]}</td> <!-- ID_KUPAC -->
+          <td>${row[2]}</td> <!-- Kupac ime -->
+          <td>${row[3]}</td> <!-- ID_PROIZVOD -->
+          <td>${row[4]}</td> <!-- Naziv proizvoda -->
+          <td>${row[5]}</td> <!-- Ocena -->
+          <td>${row[6]}</td> <!-- Komentar -->
+          <td>${row[7]}</td> <!-- Datum -->
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch recenzija:", err);
+    });
+}
 
 // //Dugme za Listu Zelja/Wishlist
-// function prikaziListaZelja() {
-//   const container = document.querySelector('.content-placeholder');
-//   container.innerHTML = `
-//     <h2 style="text-align:center;">Liste želja</h2>
-//     <table class="admin-table" id="wishlistTabela">
-//       <thead>
-//         <tr>
-//           <th>ID_WISHLIST</th>
-//           <th>ID_KUPAC</th>
-//           <th>Kupac</th>
-//           <th>Datum kreiranja</th>
-//         </tr>
-//       </thead>
-//       <tbody></tbody>
-//     </table>
+function prikaziListaZelja() {
+  const container = document.querySelector('.content-placeholder');
+  container.innerHTML = `
+    <h2 style="text-align:center;">Liste želja</h2>
+    <table class="admin-table" id="wishlistTabela">
+      <thead>
+        <tr>
+          <th>ID_WISHLIST</th>
+          <th>ID_KUPAC</th>
+          <th>Kupac</th>
+          <th>Datum kreiranja</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-//     <h2 style="text-align:center;">Stavke u listi želja</h2>
-//     <table class="admin-table" id="stavkeWishlistTabela">
-//       <thead>
-//         <tr>
-//           <th>ID_STAVKA</th>
-//           <th>ID_WISHLIST</th>
-//           <th>ID_PROIZVOD</th>
-//           <th>Naziv proizvoda</th>
-//         </tr>
-//       </thead>
-//       <tbody></tbody>
-//     </table>
-//   `;
+    <h2 style="text-align:center;">Stavke u listi želja</h2>
+    <table class="admin-table" id="stavkeWishlistTabela">
+      <thead>
+        <tr>
+          <th>ID_STAVKA</th>
+          <th>ID_WISHLIST</th>
+          <th>ID_PROIZVOD</th>
+          <th>Naziv proizvoda</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  `;
 
-//   fetch(`${API_BASE_URL}/api/wishlist`)
-//     .then(res => res.json())
-//     .then(data => {
-//       const tbody = document.querySelector('#wishlistTabela tbody');
-//       data.forEach(row => {
-//         const tr = document.createElement('tr');
-//         tr.innerHTML = `
-//           <td>${row[0]}</td> <!-- ID_WISHLIST -->
-//           <td>${row[1]}</td> <!-- ID_KUPAC -->
-//           <td>${row[2]}</td> <!-- Kupac ime -->
-//           <td>${row[3]}</td> <!-- Datum -->
-//         `;
-//         tr.addEventListener('click', () => prikaziStavkeListeZelja(row[0]));
-//         tbody.appendChild(tr);
-//       });
-//     })
-//     .catch(err => {
-//       console.error("❌ Greška u fetch želja:", err);
-//     });
-// }
+  fetch(`${API_BASE_URL}/api/wishlist`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('#wishlistTabela tbody');
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row[0]}</td> <!-- ID_WISHLIST -->
+          <td>${row[1]}</td> <!-- ID_KUPAC -->
+          <td>${row[2]}</td> <!-- Kupac ime -->
+          <td>${row[3]}</td> <!-- Datum -->
+        `;
+        tr.addEventListener('click', () => prikaziStavkeListeZelja(row[0]));
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch želja:", err);
+    });
+}
 
-// function prikaziStavkeListeZelja(idWishlist) {
-//   const tbody = document.querySelector('#stavkeWishlistTabela tbody');
-//   tbody.innerHTML = '';
+function prikaziStavkeListeZelja(idWishlist) {
+  const tbody = document.querySelector('#stavkeWishlistTabela tbody');
+  tbody.innerHTML = '';
 
-//   fetch(`${API_BASE_URL}/api/wishlist/${idWishlist}/stavke`)
-//     .then(res => res.json())
-//     .then(data => {
-//       data.forEach(row => {
-//         const tr = document.createElement('tr');
-//         tr.innerHTML = `
-//           <td>${row[0]}</td> <!-- ID_STAVKA -->
-//           <td>${row[1]}</td> <!-- ID_WISHLIST -->
-//           <td>${row[2]}</td> <!-- ID_PROIZVOD -->
-//           <td>${row[3]}</td> <!-- Naziv proizvoda -->
-//         `;
-//         tbody.appendChild(tr);
-//       });
-//     })
-//     .catch(err => {
-//       console.error("❌ Greška u fetch stavki liste želja:", err);
-//     });
-// }
+  fetch(`${API_BASE_URL}/api/wishlist/${idWishlist}/stavke`)
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row[0]}</td> <!-- ID_STAVKA -->
+          <td>${row[1]}</td> <!-- ID_WISHLIST -->
+          <td>${row[2]}</td> <!-- ID_PROIZVOD -->
+          <td>${row[3]}</td> <!-- Naziv proizvoda -->
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch stavki liste želja:", err);
+    });
+}
 
 // //Dugme za Kategorija i PodKategorije
 function prikaziKatiPKat() {
