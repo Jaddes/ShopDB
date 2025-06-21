@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getConnection } = require('../db/connection');
+const oracledb = require('oracledb'); // ✅ Dodato
 
 // SVE STAVKE svih lista želja
 router.get('/stavke_wishlist', async (req, res) => {
@@ -17,7 +18,7 @@ router.get('/stavke_wishlist', async (req, res) => {
       FROM WISHLIST_STAVKE ws
       JOIN PROIZVODI p ON ws.id_proizvod = p.id_proizvod
       ORDER BY ws.id_wishlist
-    `);
+    `, [], { outFormat: oracledb.OBJECT }); // ✅ Dodato
 
     res.json(result.rows);
   } catch (err) {

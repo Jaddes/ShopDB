@@ -521,10 +521,10 @@ function prikaziListaZelja() {
       data.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${row[0]}</td> <!-- ID_WISHLIST -->
-          <td>${row[1]}</td> <!-- ID_KUPAC -->
-          <td>${row[2]}</td> <!-- Kupac ime -->
-          <td>${row[3]}</td> <!-- Datum -->
+          <td>${row[0]}</td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+          <td>${row[3]}</td>
         `;
         tr.addEventListener('click', () => prikaziStavkeListeZelja(row[0]));
         tbody.appendChild(tr);
@@ -539,16 +539,16 @@ function prikaziStavkeListeZelja(idWishlist) {
   const tbody = document.querySelector('#stavkeWishlistTabela tbody');
   tbody.innerHTML = '';
 
-  fetch(`${API_BASE_URL}/api/wishlist/${idWishlist}/stavke`)
+  fetch(`${API_BASE_URL}/api/stavke_wishlist?id=${idWishlist}`)
     .then(res => res.json())
     .then(data => {
       data.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${row[0]}</td> <!-- ID_STAVKA -->
-          <td>${row[1]}</td> <!-- ID_WISHLIST -->
-          <td>${row[2]}</td> <!-- ID_PROIZVOD -->
-          <td>${row[3]}</td> <!-- Naziv proizvoda -->
+          <td>${row[0]}</td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+          <td>${row[3]}</td>
         `;
         tbody.appendChild(tr);
       });

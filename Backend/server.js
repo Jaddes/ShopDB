@@ -229,58 +229,33 @@ app.get('/api/recenzije', async (req, res) => {
   }
 });
 
-// // Dugme za wishlist
-// app.get('/api/wishlist', async (req, res) => {
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
+// Dugme za wishlist
+app.get('/api/stavke_wishlist', async (req, res) => {
+  const idWishlist = req.query.id; // bitno!
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
 
-//     const result = await connection.execute(`
-//       SELECT 
-//         w.id_wishlist,
-//         w.id_kupac,
-//         u.ime || ' ' || u.prezime AS kupac,
-//         TO_CHAR(w.datum_kreiranja, 'YYYY-MM-DD') AS datum
-//       FROM WISHLIST w
-//       JOIN KUPCI k ON w.id_kupac = k.id_kupac
-//       JOIN KORISNICI u ON k.id_korisnik = u.id_korisnik
-//       ORDER BY w.id_wishlist DESC
-//     `);
+    const result = await connection.execute(`
+      SELECT 
+        ws.id_stavka_wishlist AS ID_STAVKA,
+        ws.id_wishlist AS ID_WISHLIST,
+        ws.id_proizvod AS ID_PROIZVOD,
+        p.naziv AS NAZIV_PROIZVODA
+      FROM WISHLIST_STAVKE ws
+      JOIN PROIZVODI p ON ws.id_proizvod = p.id_proizvod
+      WHERE ws.id_wishlist = :id
+    `, [idWishlist], { outFormat: oracledb.OBJECT });
 
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u /api/wishlist:", err);
-//     res.status(500).json({ error: 'Greška u bazi želja' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/stavke_wishlist:", err);
+    res.status(500).json({ error: 'Greška u bazi stavki želja' });
+  } finally {
+    if (connection) await connection.close();
+  }
+});
 
-// app.get('/api/wishlist/:id/stavke', async (req, res) => {
-//   const idWishlist = req.params.id;
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
-
-//     const result = await connection.execute(`
-//       SELECT 
-//         ws.id_stavka_wishlist,
-//         ws.id_wishlist,
-//         ws.id_proizvod,
-//         p.naziv
-//       FROM WISHLIST_STAVKE ws
-//       JOIN PROIZVODI p ON ws.id_proizvod = p.id_proizvod
-//       WHERE ws.id_wishlist = :id
-//     `, [idWishlist]);
-
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u /api/wishlist/:id/stavke:", err);
-//     res.status(500).json({ error: 'Greška u bazi stavki želja' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
 
 // Dugme za Kategorija i PodKategorije
 app.get('/api/kategorije', async (req, res) => {
