@@ -65,71 +65,88 @@ app.get('/api/korisnici', async (req, res) => {
 });
 
 // //Dugme za Kupce
-app.get('/api/kupci', async (req, res) => {
+function prikaziKupce() {
+  const container = document.querySelector('.content-placeholder');
+  container.innerHTML = `
+    <h2 style="text-align:center;">Kupci</h2>
+    <table class="admin-table" id="kupciTabela">
+      <thead>
+        <tr>
+          <th>ID_KUPAC</th>
+          <th>ID_KORISNIK</th>
+          <th>Korisnik</th>
+          <th>Ulica</th>
+          <th>Broj</th>
+          <th>Grad</th>
+          <th>Poštanski broj</th>
+          <th>Telefon</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  `;
+
+  fetch(`${window.API_BASE_URL}/api/kupci`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('#kupciTabela tbody');
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.id_kupac}</td>
+          <td>${row.id_korisnik}</td>
+          <td>${row.ime} ${row.prezime}</td>
+          <td>${row.ulica}</td>
+          <td>${row.broj}</td>
+          <td>${row.grad}</td>
+          <td>${row.postanski_broj}</td>
+          <td>${row.telefon}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch kupaca:", err);
+    });
+}
+
+
+
+
+// //Dugme za proizvode
+app.get('/api/proizvodi', async (req, res) => {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
 
     const result = await connection.execute(`
       SELECT 
-        k.id_kupac,
-        k.id_korisnik,
-        k.ulica,
-        k.broj,
-        k.grad,
-        k.postanski_broj,
-        k.telefon,
-        u.ime || ' ' || u.prezime AS korisnik
-      FROM KUPCI k
-      JOIN KORISNICI u ON k.id_korisnik = u.id_korisnik
-      ORDER BY k.id_kupac
+        p.id_proizvod,
+        p.naziv,
+        p.opis,
+        pk.naziv AS podkategorija,
+        b.naziv AS boja,
+        o.naziv AS oznaka,
+        p.slika_url,
+        TO_CHAR(p.datum_nabavke, 'YYYY-MM-DD') AS datum_nabavke,
+        p.nabavna_cena,
+        p.prodajna_cena,
+        p.kolicina
+      FROM PROIZVODI p
+      LEFT JOIN PODKATEGORIJE pk ON p.id_podkategorija = pk.id_podkategorija
+      LEFT JOIN BOJE b ON p.id_boja = b.id_boja
+      LEFT JOIN OZNAKE o ON p.id_oznaka = o.id_oznaka
+      ORDER BY p.id_proizvod
     `);
 
     res.json(result.rows);
   } catch (err) {
-    console.error("❌ Greška u /api/kupci:", err);
-    res.status(500).json({ error: 'Greška u bazi kupaca' });
+    console.error("❌ Greška u /api/proizvodi:", err);
+    res.status(500).json({ error: 'Greška u bazi proizvoda' });
   } finally {
     if (connection) await connection.close();
   }
 });
-
-
-
-// //Dugme za proizvode
-// app.get('/api/proizvodi', async (req, res) => {
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
-
-//     const result = await connection.execute(`
-//       SELECT 
-//         p.id_proizvod,
-//         p.naziv,
-//         p.opis,
-//         pk.naziv AS podkategorija,
-//         b.naziv AS boja,
-//         o.naziv AS oznaka,
-//         p.slika_url,
-//         TO_CHAR(p.datum_nabavke, 'YYYY-MM-DD') AS datum_nabavke,
-//         p.nabavna_cena,
-//         p.prodajna_cena,
-//         p.kolicina
-//       FROM PROIZVODI p
-//       LEFT JOIN PODKATEGORIJE pk ON p.id_podkategorija = pk.id_podkategorija
-//       LEFT JOIN BOJE b ON p.id_boja = b.id_boja
-//       LEFT JOIN OZNAKE o ON p.id_oznaka = o.id_oznaka
-//       ORDER BY p.id_proizvod
-//     `);
-
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u /api/proizvodi:", err);
-//     res.status(500).json({ error: 'Greška u bazi proizvoda' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
 
 // //Dugme za Narudzbine
 // app.get('/api/narudzbine', async (req, res) => {
