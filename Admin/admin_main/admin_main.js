@@ -555,6 +555,7 @@ function prikaziListaZelja() {
     });
 }
 
+//Dugme za Kategorije i PodKategorije
 function prikaziKatiPKat() {
   const container = document.querySelector('.content-placeholder');
   container.innerHTML = `
@@ -582,6 +583,7 @@ function prikaziKatiPKat() {
     </table>
   `;
 
+  // Prikaz kategorija
   fetch(`${API_BASE_URL}/api/kategorije`)
     .then(res => res.json())
     .then(data => {
@@ -592,12 +594,30 @@ function prikaziKatiPKat() {
           <td>${row[0]}</td>
           <td>${row[1]}</td>
         `;
-        tr.addEventListener('click', () => prikaziPodkategorije(row[0]));
         tbody.appendChild(tr);
       });
     })
     .catch(err => {
       console.error("❌ Greška u fetch kategorija:", err);
+    });
+
+  // Prikaz podkategorija
+  fetch(`${API_BASE_URL}/api/podkategorije`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('#podkategorijeTabela tbody');
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row[0]}</td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch podkategorija:", err);
     });
 }
 
