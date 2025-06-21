@@ -4,8 +4,7 @@ const { getConnection } = require('../db/connection');
 const oracledb = require('oracledb');
 
 // /api/stavke_narudzbine/:id
-router.get('/stavke_narudzbine/:id', async (req, res) => {
-  const idNarudzbina = req.params.id;
+router.get('/stavke_narudzbine', async (req, res) => {
   let connection;
   try {
     connection = await getConnection();
@@ -21,12 +20,12 @@ router.get('/stavke_narudzbine/:id', async (req, res) => {
         s.kolicina * s.cena_po_komadu AS UKUPNO
       FROM STAVKE_NARUDZBINE s
       JOIN PROIZVODI p ON s.id_proizvod = p.id_proizvod
-      WHERE s.id_narudzbina = :id
-    `, [idNarudzbina], { outFormat: oracledb.OBJECT });
+      ORDER BY s.id_narudzbina
+    `, [], { outFormat: oracledb.OBJECT });
 
     res.json(result.rows);
   } catch (err) {
-    console.error("❌ Greška u stavke_narudzbine.js:", err);
+    console.error("❌ Greška u /stavke_narudzbine:", err);
     res.status(500).json({ error: 'Greška u bazi stavki narudžbine' });
   } finally {
     if (connection) await connection.close();
