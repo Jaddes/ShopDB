@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getConnection } = require('../db/connection');
-
+const oracledb = require('oracledb');
 
 // /api/stavke_narudzbine/:id
 router.get('/stavke_narudzbine/:id', async (req, res) => {

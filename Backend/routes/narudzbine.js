@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getConnection } = require('../db/connection');
-
+const oracledb = require('oracledb');
 
 router.get('/narudzbine', async (req, res) => {
   let connection;
