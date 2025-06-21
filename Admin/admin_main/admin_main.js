@@ -161,13 +161,13 @@ async function prikaziKorisnike() {
     data.forEach(row => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${row[0]}</td>
-        <td>${row[1]}</td>
-        <td>${row[2]}</td>
-        <td>${row[3]}</td>
-        <td>${row[4]}</td>
-        <td>${row[5]}</td>
-        <td>${row[6]}</td>
+        <td>${row.id_korisnik}</td>
+        <td>${row.ime}</td>
+        <td>${row.prezime}</td>
+        <td>${row.email}</td>
+        <td>${row.lozinka}</td>
+        <td>${row.uloga}</td>
+        <td>${row.datum_registracije}</td>
       `;
       tbody.appendChild(tr);
     });
@@ -206,14 +206,14 @@ function prikaziKupce() {
       data.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${row[0]}</td> <!-- ID_KUPAC -->
-          <td>${row[1]}</td> <!-- ID_KORISNIK -->
-          <td>${row[7]}</td> <!-- Korisnik (ime + prezime) -->
-          <td>${row[2]}</td> <!-- Ulica -->
-          <td>${row[3]}</td> <!-- Broj -->
-          <td>${row[4]}</td> <!-- Grad -->
-          <td>${row[5]}</td> <!-- Poštanski broj -->
-          <td>${row[6]}</td> <!-- Telefon -->
+          <td>${row.id_kupac}</td>
+          <td>${row.id_korisnik}</td>
+          <td>${row.ime} ${row.prezime}</td>
+          <td>${row.ulica}</td>
+          <td>${row.broj}</td>
+          <td>${row.grad}</td>
+          <td>${row.postanski_broj}</td>
+          <td>${row.telefon}</td>
         `;
         tbody.appendChild(tr);
       });
