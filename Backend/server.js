@@ -16,6 +16,7 @@ const kupciRoutes = require('./routes/kupci');
 const proizvodiRoutes = require('./routes/proizvodi');
 const narudzbineRoutes = require('./routes/narudzbine');
 const stavkeNarudzbineRoutes = require('./routes/stavke_narudzbine');
+const korpaRoutes = require('./routes/korpa');
 
 
 const app = express();
@@ -29,6 +30,7 @@ app.use('/api', kupciRoutes);
 app.use('/api', proizvodiRoutes);
 app.use('/api', narudzbineRoutes);
 app.use('/api', stavkeNarudzbineRoutes);
+app.use('/api', korpaRoutes);
 
 
 app.get('/', (req, res) => {
@@ -155,113 +157,56 @@ app.get('/api/proizvodi', async (req, res) => {
   }
 });
 
-// //Dugme za Narudzbine
-// app.get('/api/narudzbine', async (req, res) => {
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
-
-//     const result = await connection.execute(`
-//       SELECT 
-//         n.id_narudzbina,
-//         n.id_kupac,
-//         k.ime || ' ' || k.prezime AS kupac,
-//         TO_CHAR(n.datum_narudzbine, 'YYYY-MM-DD') AS datum_narudzbine,
-//         n.status,
-//         n.nacin_dostave,
-//         n.cena_dostave,
-//         n.ukupna_cena
-//       FROM NARUDZBINE n
-//       JOIN KUPCI kup ON n.id_kupac = kup.id_kupac
-//       JOIN KORISNICI k ON kup.id_korisnik = k.id_korisnik
-//       ORDER BY n.id_narudzbina DESC
-//     `);
-
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u /api/narudzbine:", err);
-//     res.status(500).json({ error: 'Greška u bazi narudžbina' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
-
-// app.get('/api/narudzbine/:id/stavke', async (req, res) => {
-//   const idNarudzbina = req.params.id;
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
-
-//     const result = await connection.execute(`
-//       SELECT 
-//         id_stavka_narudzbine,
-//         id_narudzbina,
-//         id_proizvod,
-//         kolicina,
-//         cena_po_komadu,
-//         kolicina * cena_po_komadu AS ukupna_cena
-//       FROM STAVKE_NARUDZBINE
-//       WHERE id_narudzbina = :id
-//     `, [idNarudzbina]);
-
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u stavkama narudžbine:", err);
-//     res.status(500).json({ error: 'Greška u bazi stavki narudžbine' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
 
 // //Dugme za korpe
-// app.get('/api/korpe', async (req, res) => {
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
-//     const result = await connection.execute(`
-//       SELECT 
-//         k.id_korpa,
-//         k.id_kupac,
-//         TO_CHAR(k.datum_kreiranja, 'YYYY-MM-DD') AS datum,
-//         u.ime || ' ' || u.prezime AS kupac
-//       FROM KORPA k
-//       JOIN KUPCI c ON k.id_kupac = c.id_kupac
-//       JOIN KORISNICI u ON c.id_korisnik = u.id_korisnik
-//       ORDER BY k.id_korpa DESC
-//     `);
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u /api/korpe:", err);
-//     res.status(500).json({ error: 'Greška u bazi korpi' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
+app.get('/api/korpe', async (req, res) => {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(`
+      SELECT 
+        k.id_korpa,
+        k.id_kupac,
+        TO_CHAR(k.datum_kreiranja, 'YYYY-MM-DD') AS datum,
+        u.ime || ' ' || u.prezime AS kupac
+      FROM KORPA k
+      JOIN KUPCI c ON k.id_kupac = c.id_kupac
+      JOIN KORISNICI u ON c.id_korisnik = u.id_korisnik
+      ORDER BY k.id_korpa DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/korpe:", err);
+    res.status(500).json({ error: 'Greška u bazi korpi' });
+  } finally {
+    if (connection) await connection.close();
+  }
+});
 
-// app.get('/api/korpe/:id/stavke', async (req, res) => {
-//   const idKorpa = req.params.id;
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
-//     const result = await connection.execute(`
-//       SELECT 
-//         s.id_stavka_korpe,
-//         s.id_korpa,
-//         s.id_proizvod,
-//         p.naziv,
-//         s.kolicina
-//       FROM STAVKE_KORPE s
-//       JOIN PROIZVODI p ON s.id_proizvod = p.id_proizvod
-//       WHERE s.id_korpa = :id
-//     `, [idKorpa]);
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u /api/korpe/:id/stavke:", err);
-//     res.status(500).json({ error: 'Greška u bazi stavki korpe' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
+app.get('/api/korpe/:id/stavke', async (req, res) => {
+  const idKorpa = req.params.id;
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(`
+      SELECT 
+        s.id_stavka_korpe,
+        s.id_korpa,
+        s.id_proizvod,
+        p.naziv,
+        s.kolicina
+      FROM STAVKE_KORPE s
+      JOIN PROIZVODI p ON s.id_proizvod = p.id_proizvod
+      WHERE s.id_korpa = :id
+    `, [idKorpa]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/korpe/:id/stavke:", err);
+    res.status(500).json({ error: 'Greška u bazi stavki korpe' });
+  } finally {
+    if (connection) await connection.close();
+  }
+});
 
 // //Dugme za Recenziju
 // app.get('/api/recenzije', async (req, res) => {
