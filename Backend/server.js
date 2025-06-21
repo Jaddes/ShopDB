@@ -275,20 +275,18 @@ app.get('/api/kategorije', async (req, res) => {
   }
 });
 
-app.get('/api/kategorije/:id/podkategorije', async (req, res) => {
-  const idKat = req.params.id;
+app.get('/api/podkategorije', async (req, res) => {
   let connection;
   try {
     connection = await getConnection();
     const result = await connection.execute(`
       SELECT id_podkategorija, id_kategorija, naziv
       FROM PODKATEGORIJE
-      WHERE id_kategorija = :id
       ORDER BY id_podkategorija
-    `, [idKat]);
+    `);
     res.json(result.rows);
   } catch (err) {
-    console.error("❌ Greška u podkategorijama:", err);
+    console.error("❌ Greška u /api/podkategorije:", err);
     res.status(500).json({ error: 'Greška u bazi podkategorija' });
   } finally {
     if (connection) await connection.close();
