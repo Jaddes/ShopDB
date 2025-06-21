@@ -398,10 +398,10 @@ function prikaziKorpe() {
       data.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${row[0]}</td> <!-- ID_KORPA -->
-          <td>${row[1]}</td> <!-- ID_KUPAC -->
-          <td>${row[3]}</td> <!-- Ime + prezime -->
-          <td>${row[2]}</td> <!-- Datum -->
+          <td>${row.ID_KORPA}</td>
+          <td>${row.ID_KUPAC}</td>
+          <td>${row.KUPAC}</td>
+          <td>${row.DATUM}</td>
         `;
         tr.addEventListener('click', () => prikaziStavkeKorpe(row[0]));
         tbody.appendChild(tr);

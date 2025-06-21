@@ -17,6 +17,7 @@ const proizvodiRoutes = require('./routes/proizvodi');
 const narudzbineRoutes = require('./routes/narudzbine');
 const stavkeNarudzbineRoutes = require('./routes/stavke_narudzbine');
 const korpaRoutes = require('./routes/korpa');
+const stavkeKorpeRoutes = require('./routes/stavke_korpe');
 
 
 const app = express();
@@ -31,6 +32,8 @@ app.use('/api', proizvodiRoutes);
 app.use('/api', narudzbineRoutes);
 app.use('/api', stavkeNarudzbineRoutes);
 app.use('/api', korpaRoutes);
+app.use('/api', stavkeKorpeRoutes);
+
 
 
 app.get('/', (req, res) => {
