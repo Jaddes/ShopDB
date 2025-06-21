@@ -282,6 +282,8 @@ function prikaziProizvode() {
 //Dugme za Narudzbine
 function prikaziNarudzbine() {
   const container = document.querySelector('.content-placeholder');
+
+  prikaziSveStavkeKorpe();
   container.innerHTML = `
     <h2 style="text-align:center;">Narudžbine</h2>
     <table class="admin-table" id="narudzbineTabela">
@@ -376,7 +378,7 @@ function prikaziKorpe() {
       <tbody></tbody>
     </table>
 
-    <h2 style="text-align:center;">Stavke u korpi</h2>
+    <h2 style="text-align:center;">Sve stavke u korpama</h2>
     <table class="admin-table" id="stavkeKorpeTabela">
       <thead>
         <tr>
@@ -391,6 +393,7 @@ function prikaziKorpe() {
     </table>
   `;
 
+  // Učitaj korpe
   fetch(`${API_BASE_URL}/api/korpe`)
     .then(res => res.json())
     .then(data => {
@@ -403,38 +406,35 @@ function prikaziKorpe() {
           <td>${row.KUPAC}</td>
           <td>${row.DATUM}</td>
         `;
-        tr.addEventListener('click', () => prikaziStavkeKorpe(row[0]));
         tbody.appendChild(tr);
       });
     })
     .catch(err => {
       console.error("❌ Greška u fetch korpi:", err);
     });
-}
 
-function prikaziStavkeKorpe(idKorpa) {
-  const tbody = document.querySelector('#stavkeKorpeTabela tbody');
-  tbody.innerHTML = '';
-
-  fetch(`${API_BASE_URL}/api/korpe/${idKorpa}/stavke`)
+  // Učitaj sve stavke svih korpi
+  fetch(`${API_BASE_URL}/api/stavke_korpe`)
     .then(res => res.json())
     .then(data => {
+      const tbody = document.querySelector('#stavkeKorpeTabela tbody');
       data.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${row[0]}</td> <!-- ID_STAVKA -->
-          <td>${row[1]}</td> <!-- ID_KORPA -->
-          <td>${row[2]}</td> <!-- ID_PROIZVOD -->
-          <td>${row[3]}</td> <!-- Naziv -->
-          <td>${row[4]}</td> <!-- Količina -->
+          <td>${row.ID_STAVKA}</td>
+          <td>${row.ID_KORPA}</td>
+          <td>${row.ID_PROIZVOD}</td>
+          <td>${row.NAZIV_PROIZVODA}</td>
+          <td>${row.KOLICINA}</td>
         `;
         tbody.appendChild(tr);
       });
     })
     .catch(err => {
-      console.error("❌ Greška u fetch stavki korpe:", err);
+      console.error("❌ Greška u fetch stavki korpi:", err);
     });
 }
+
 
 
 // //Dugme za Recenziju

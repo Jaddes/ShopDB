@@ -18,6 +18,7 @@ const narudzbineRoutes = require('./routes/narudzbine');
 const stavkeNarudzbineRoutes = require('./routes/stavke_narudzbine');
 const korpaRoutes = require('./routes/korpa');
 const stavkeKorpeRoutes = require('./routes/stavke_korpe');
+const recenzijeRoutes = require('./routes/recenzije');
 
 
 const app = express();
@@ -33,6 +34,7 @@ app.use('/api', narudzbineRoutes);
 app.use('/api', stavkeNarudzbineRoutes);
 app.use('/api', korpaRoutes);
 app.use('/api', stavkeKorpeRoutes);
+app.use('/api', recenzijeRoutes);
 
 
 
@@ -160,88 +162,65 @@ app.get('/api/proizvodi', async (req, res) => {
   }
 });
 
-
-// //Dugme za korpe
-app.get('/api/korpe', async (req, res) => {
+//Dugme za Korpu
+app.get('/api/stavke_korpe', async (req, res) => {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(`
       SELECT 
-        k.id_korpa,
-        k.id_kupac,
-        TO_CHAR(k.datum_kreiranja, 'YYYY-MM-DD') AS datum,
-        u.ime || ' ' || u.prezime AS kupac
-      FROM KORPA k
-      JOIN KUPCI c ON k.id_kupac = c.id_kupac
-      JOIN KORISNICI u ON c.id_korisnik = u.id_korisnik
-      ORDER BY k.id_korpa DESC
-    `);
-    res.json(result.rows);
-  } catch (err) {
-    console.error("❌ Greška u /api/korpe:", err);
-    res.status(500).json({ error: 'Greška u bazi korpi' });
-  } finally {
-    if (connection) await connection.close();
-  }
-});
-
-app.get('/api/korpe/:id/stavke', async (req, res) => {
-  const idKorpa = req.params.id;
-  let connection;
-  try {
-    connection = await oracledb.getConnection(dbConfig);
-    const result = await connection.execute(`
-      SELECT 
-        s.id_stavka_korpe,
-        s.id_korpa,
-        s.id_proizvod,
-        p.naziv,
-        s.kolicina
+        s.id_stavka_korpe AS ID_STAVKA,
+        s.id_korpa AS ID_KORPA,
+        s.id_proizvod AS ID_PROIZVOD,
+        p.naziv AS NAZIV_PROIZVODA,
+        s.kolicina AS KOLICINA
       FROM STAVKE_KORPE s
       JOIN PROIZVODI p ON s.id_proizvod = p.id_proizvod
-      WHERE s.id_korpa = :id
-    `, [idKorpa]);
+      ORDER BY s.id_korpa
+    `, [], { outFormat: oracledb.OBJECT });
+
     res.json(result.rows);
   } catch (err) {
-    console.error("❌ Greška u /api/korpe/:id/stavke:", err);
+    console.error("❌ Greška u /api/stavke_korpe:", err);
     res.status(500).json({ error: 'Greška u bazi stavki korpe' });
   } finally {
     if (connection) await connection.close();
   }
 });
 
-// //Dugme za Recenziju
-// app.get('/api/recenzije', async (req, res) => {
-//   let connection;
-//   try {
-//     connection = await oracledb.getConnection(dbConfig);
 
-//     const result = await connection.execute(`
-//       SELECT 
-//         r.id_recenzija,
-//         r.id_kupac,
-//         u.ime || ' ' || u.prezime AS kupac,
-//         r.id_proizvod,
-//         p.naziv AS proizvod,
-//         r.ocena,
-//         r.komentar,
-//         TO_CHAR(r.datum, 'YYYY-MM-DD') AS datum
-//       FROM RECENZIJE r
-//       JOIN KUPCI k ON r.id_kupac = k.id_kupac
-//       JOIN KORISNICI u ON k.id_korisnik = u.id_korisnik
-//       JOIN PROIZVODI p ON r.id_proizvod = p.id_proizvod
-//       ORDER BY r.id_recenzija DESC
-//     `);
 
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error("❌ Greška u /api/recenzije:", err);
-//     res.status(500).json({ error: 'Greška u bazi recenzija' });
-//   } finally {
-//     if (connection) await connection.close();
-//   }
-// });
+//Dugme za Recenziju
+app.get('/api/recenzije', async (req, res) => {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+
+    const result = await connection.execute(`
+      SELECT 
+        r.id_recenzija,
+        r.id_kupac,
+        u.ime || ' ' || u.prezime AS kupac,
+        r.id_proizvod,
+        p.naziv AS proizvod,
+        r.ocena,
+        r.komentar,
+        TO_CHAR(r.datum, 'YYYY-MM-DD') AS datum
+      FROM RECENZIJE r
+      JOIN KUPCI k ON r.id_kupac = k.id_kupac
+      JOIN KORISNICI u ON k.id_korisnik = u.id_korisnik
+      JOIN PROIZVODI p ON r.id_proizvod = p.id_proizvod
+      ORDER BY r.id_recenzija DESC
+    `);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/recenzije:", err);
+    res.status(500).json({ error: 'Greška u bazi recenzija' });
+  } finally {
+    if (connection) await connection.close();
+  }
+});
 
 // // Dugme za wishlist
 // app.get('/api/wishlist', async (req, res) => {
