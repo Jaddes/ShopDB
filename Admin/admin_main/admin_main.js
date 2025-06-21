@@ -225,146 +225,148 @@ function prikaziKupce() {
 
 
 // //Dugme za proizvode
-// function prikaziProizvode() {
-//   const container = document.querySelector('.content-placeholder');
-//   container.innerHTML = `
-//     <h2 style="text-align:center;">Proizvodi</h2>
-//     <div class="table-container">
-//       <table class="admin-table" id="proizvodiTabela">
-//         <thead>
-//           <tr>
-//             <th>ID_P</th>
-//             <th>Naziv</th>
-//             <th>Opis</th>
-//             <th>Podkategorija</th>
-//             <th>Boja</th>
-//             <th>Oznaka</th>
-//             <th>Slika</th>
-//             <th>Datum nabavke</th>
-//             <th>Nabavna cena</th>
-//             <th>Prodajna cena</th>
-//             <th>Količina</th>
-//           </tr>
-//         </thead>
-//         <tbody></tbody>
-//       </table>
-//     </div>
-//   `;
+function prikaziProizvode() {
+  const container = document.querySelector('.content-placeholder');
+  container.innerHTML = `
+    <h2 style="text-align:center;">Proizvodi</h2>
+    <div class="table-container">
+      <table class="admin-table" id="proizvodiTabela">
+        <thead>
+          <tr>
+            <th>ID_P</th>
+            <th>Naziv</th>
+            <th>Opis</th>
+            <th>Podkategorija</th>
+            <th>Boja</th>
+            <th>Oznaka</th>
+            <th>Slika</th>
+            <th>Datum nabavke</th>
+            <th>Nabavna cena</th>
+            <th>Prodajna cena</th>
+            <th>Količina</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  `;
 
-//   fetch(`${API_BASE_URL}/api/proizvodi`)
-//     .then(res => res.json())
-//     .then(data => {
-//       const tbody = document.querySelector('#proizvodiTabela tbody');
-//       data.forEach(row => {
-//         const tr = document.createElement('tr');
-//         tr.innerHTML = `
-//           <td>${row[0]}</td> <!-- id_proizvod -->
-//           <td>${row[1]}</td> <!-- naziv -->
-//           <td>${row[2]}</td> <!-- opis -->
-//           <td>${row[3]}</td> <!-- podkategorija -->
-//           <td>${row[4] || ''}</td> <!-- boja -->
-//           <td>${row[5] || ''}</td> <!-- oznaka -->
-//           <td><img src="${row[6] || ''}" alt="slika" style="width:40px;height:40px;"></td>
-//           <td>${row[7]}</td> <!-- datum_nabavke -->
-//           <td>${row[8]}</td> <!-- nabavna -->
-//           <td>${row[9]}</td> <!-- prodajna -->
-//           <td>${row[10]}</td> <!-- kolicina -->
-//         `;
-//         tbody.appendChild(tr);
-//       });
-//     })
-//     .catch(err => {
-//       console.error("❌ Greška u fetch proizvoda:", err);
-//     });
-// }
+  fetch(`${API_BASE_URL}/api/proizvodi`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('#proizvodiTabela tbody');
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.ID_PROIZVOD}</td>
+          <td>${row.NAZIV}</td>
+          <td>${row.OPIS}</td>
+          <td>${row.PODKATEGORIJA}</td>
+          <td>${row.BOJA || ''}</td>
+          <td>${row.OZNAKA || ''}</td>
+          <td><img src="${row.SLIKA_URL || ''}" alt="slika" style="width:40px;height:40px;"></td>
+          <td>${row.DATUM_NABAVKE}</td>
+          <td>${row.NABAVNA_CENA}</td>
+          <td>${row.PRODAJNA_CENA}</td>
+          <td>${row.KOLICINA}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch proizvoda:", err);
+    });
+}
 
 
 // //Dugme za Narudzbine
-// function prikaziNarudzbine() {
-//   const container = document.querySelector('.content-placeholder');
-//   container.innerHTML = `
-//     <h2 style="text-align:center;">Narudžbine</h2>
-//     <table class="admin-table" id="narudzbineTabela">
-//       <thead>
-//         <tr>
-//           <th>ID_N</th>
-//           <th>ID_KUPAC</th>
-//           <th>Kupac</th>
-//           <th>Datum naručivanja</th>
-//           <th>Status</th>
-//           <th>Dostava</th>
-//           <th>Cena dostave</th>
-//           <th>Ukupno</th>
-//         </tr>
-//       </thead>
-//       <tbody></tbody>
-//     </table>
+function prikaziNarudzbine() {
+  const container = document.querySelector('.content-placeholder');
+  container.innerHTML = `
+    <h2 style="text-align:center;">Narudžbine</h2>
+    <table class="admin-table" id="narudzbineTabela">
+      <thead>
+        <tr>
+          <th>ID_N</th>
+          <th>ID_KUPAC</th>
+          <th>Kupac</th>
+          <th>Datum naručivanja</th>
+          <th>Status</th>
+          <th>Dostava</th>
+          <th>Cena dostave</th>
+          <th>Ukupno</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-//     <h2 style="text-align:center;">Stavke narudžbine</h2>
-//     <table class="admin-table" id="stavkeTabela">
-//       <thead>
-//         <tr>
-//           <th>ID_STAVKA</th>
-//           <th>ID_NARUDZBINE</th>
-//           <th>ID_PROIZVOD</th>
-//           <th>KOLIČINA</th>
-//           <th>CENA PO KOMADU</th>
-//           <th>UKUPNA CENA</th>
-//         </tr>
-//       </thead>
-//       <tbody></tbody>
-//     </table>
-//   `;
+    <h2 style="text-align:center;">Stavke narudžbine</h2>
+    <table class="admin-table" id="stavkeTabela">
+      <thead>
+        <tr>
+          <th>ID_STAVKA</th>
+          <th>ID_NARUDZBINE</th>
+          <th>ID_PROIZVOD</th>
+          <th>KOLIČINA</th>
+          <th>CENA PO KOMADU</th>
+          <th>UKUPNA CENA</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  `;
 
-//   fetch(`${API_BASE_URL}/api/narudzbine`)
-//     .then(res => res.json())
-//     .then(data => {
-//       const tbody = document.querySelector('#narudzbineTabela tbody');
-//       data.forEach(row => {
-//         const tr = document.createElement('tr');
-//         tr.innerHTML = `
-//           <td>${row[0]}</td>
-//           <td>${row[1]}</td>
-//           <td>${row[2]}</td>
-//           <td>${row[3]}</td>
-//           <td>${row[4]}</td>
-//           <td>${row[5]}</td>
-//           <td>${row[6]}</td>
-//           <td>${row[7]}</td>
-//         `;
-//         tr.addEventListener('click', () => prikaziStavkeZaNarudzbinu(row[0]));
-//         tbody.appendChild(tr);
-//       });
-//     })
-//     .catch(err => {
-//       console.error("❌ Greška u fetch narudžbina:", err);
-//     });
-// }
+  fetch(`${API_BASE_URL}/api/narudzbine`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.querySelector('#narudzbineTabela tbody');
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row[0]}</td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+          <td>${row[3]}</td>
+          <td>${row[4]}</td>
+          <td>${row[5]}</td>
+          <td>${row[6]}</td>
+          <td>${row[7]}</td>
+        `;
+        tr.addEventListener('click', () => prikaziStavkeZaNarudzbinu(row[0]));
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch narudžbina:", err);
+    });
+}
 
-// function prikaziStavkeZaNarudzbinu(idNarudzbina) {
-//   const tbody = document.querySelector('#stavkeTabela tbody');
-//   tbody.innerHTML = ''; // očisti prethodne stavke
+function prikaziStavkeZaNarudzbinu(idNarudzbina) {
+  const tbody = document.querySelector('#stavkeTabela tbody');
+  tbody.innerHTML = ''; // očisti prethodne stavke
 
-//   fetch(`${API_BASE_URL}/api/narudzbine/${idNarudzbina}/stavke`)
-//     .then(res => res.json())
-//     .then(data => {
-//       data.forEach(stavka => {
-//         const tr = document.createElement('tr');
-//         tr.innerHTML = `
-//           <td>${stavka[0]}</td>
-//           <td>${stavka[1]}</td>
-//           <td>${stavka[2]}</td>
-//           <td>${stavka[3]}</td>
-//           <td>${stavka[4]}</td>
-//           <td>${stavka[5]}</td>
-//         `;
-//         tbody.appendChild(tr);
-//       });
-//     })
-//     .catch(err => {
-//       console.error("❌ Greška u fetch stavki:", err);
-//     });
-// }
+  fetch(`${API_BASE_URL}/api/stavke_narudzbine/${idNarudzbina}`)
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(stavka => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${stavka.ID_STAVKA}</td>
+          <td>${stavka.ID_NARUDZBINA}</td>
+          <td>${stavka.ID_PROIZVOD}</td>
+          <td>${stavka.NAZIV_PROIZVODA}</td>
+          <td>${stavka.KOLICINA}</td>
+          <td>${stavka.CENA_PO_KOMADU}</td>
+          <td>${stavka.UKUPNO}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Greška u fetch stavki narudžbine:", err);
+    });
+}
+
 
 // //Dugme za Korpu
 // function prikaziKorpe() {

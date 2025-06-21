@@ -14,6 +14,9 @@ const korisniciRoutes = require('./routes/korisnici');
 const podkategorijeRoutes = require('./routes/podkategorije');
 const kupciRoutes = require('./routes/kupci');
 const proizvodiRoutes = require('./routes/proizvodi');
+const narudzbineRoutes = require('./routes/narudzbine');
+const stavkeNarudzbineRoutes = require('./routes/stavke_narudzbine');
+
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +27,8 @@ app.use('/api', korisniciRoutes);
 app.use('/api', podkategorijeRoutes);
 app.use('/api', kupciRoutes);
 app.use('/api', proizvodiRoutes);
+app.use('/api', narudzbineRoutes);
+app.use('/api', stavkeNarudzbineRoutes);
 
 
 app.get('/', (req, res) => {
