@@ -295,6 +295,7 @@ app.get('/api/podkategorije', async (req, res) => {
 
 // Logicko i Fizicko brisanje
 app.put('/api/korisnici/logicko_brisanje/:id', async (req, res) => {
+  console.log("➡️ Ruta /korisnici/logicko_brisanje/:id pozvana");
   const id = req.params.id;
   let conn;
 
