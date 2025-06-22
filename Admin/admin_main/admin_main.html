@@ -70,6 +70,19 @@
             </div>
         </div>
 
+        <div id="deleteConfirmModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <p>Da li želite da obrišete korisnika?</p>
+                <p><strong>Logičko brisanje:</strong> korisnik se premešta u arhivu.</p>
+                <p><strong>Fizičko brisanje:</strong> korisnik se trajno uklanja.</p>
+                <div class="buttons">
+                <button id="logicalDeleteBtn">Logički izbriši</button>
+                <button id="physicalDeleteBtn">Fizički izbriši</button>
+                <button id="cancelDeleteBtn">Odustani</button>
+                </div>
+            </div>
+        </div>
+
         <div id="admin-panel">
         <div class="admin-tabs">
             <button data-action="korisnici">Korisnici</button>
@@ -111,6 +124,8 @@
     </footer>
 
     <script src="admin_main.js"></script>
+    <script src="logicko_brisanje.js"></script>
+    <script src="fizicko_brisanje.js"></script>
 </body>
 
 </html>

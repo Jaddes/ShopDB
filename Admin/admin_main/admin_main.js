@@ -28,41 +28,6 @@ document.getElementById('searchInput').addEventListener('input', function () {
   });
 });
 
-// fetch('http://localhost:3000/api/kategorije')
-//   .then(res => res.json())
-//   .then(data => {
-//     const dropdown = document.querySelector('.dropdown');
-//     dropdown.innerHTML = ''; // Očisti postojeće
-
-//     for (const kategorija in data) {
-//       const li = document.createElement('li');
-//       li.classList.add('dropdown-submenu');
-
-//       const a = document.createElement('a');
-//       a.href = '#';
-//       a.textContent = `${kategorija} ▾`;
-
-//       const subUl = document.createElement('ul');
-//       subUl.classList.add('dropdown', 'sub-dropdown');
-
-//       data[kategorija].forEach(podkategorija => {
-//         const subLi = document.createElement('li');
-//         const subA = document.createElement('a');
-//         subA.href = `#`; // po potrebi dodaj link npr. `list1.html?filter=${podkategorija}`
-//         subA.textContent = podkategorija;
-//         subLi.appendChild(subA);
-//         subUl.appendChild(subLi);
-//       });
-
-//       li.appendChild(a);
-//       li.appendChild(subUl);
-//       dropdown.appendChild(li);
-//     }
-//   })
-//   .catch(err => {
-//     console.error("Greška prilikom učitavanja kategorija:", err);
-//   });
-
 
  /* account dropdown */
  document.addEventListener('DOMContentLoaded', () => {
@@ -168,6 +133,13 @@ async function prikaziKorisnike() {
         <td>${row.lozinka}</td>
         <td>${row.uloga}</td>
         <td>${row.datum_registracije}</td>
+        <td>
+          <img src="../../accessories/trash-can.svg" 
+              class="icon-trash" 
+              data-id="${row.id_korisnik}" 
+              style="cursor:pointer; width:20px;" 
+              title="Obriši korisnika" />
+        </td>
       `;
       tbody.appendChild(tr);
     });
@@ -621,6 +593,19 @@ function prikaziKatiPKat() {
     });
 }
 
+// Logicko i Fizicko Brisanje
+let selectedUserId = null;
+
+document.addEventListener('click', function (e) {
+  if (e.target.classList.contains('icon-trash')) {
+    selectedUserId = e.target.dataset.id;
+    document.getElementById('deleteConfirmModal').style.display = 'block';
+  }
+});
+
+document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
+  document.getElementById('deleteConfirmModal').style.display = 'none';
+});
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -637,6 +622,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (dugmeKategorije) {
     dugmeKategorije.addEventListener('click', prikaziKatiPKat);
   }
+
+  prikaziKorisnike(); // Automacki prikaz tabele Korisnici
+  inicijalizujLogickoBrisanje();
+  inicijalizujFizickoBrisanje();
 });
 
 
