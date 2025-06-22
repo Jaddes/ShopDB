@@ -40,4 +40,52 @@ router.get('/korisnici', async (req, res) => {
   }
 });
 
+// Logičko brisanje korisnika
+router.put('/korisnici/logicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    // Prebaci podatke u OBRISANI_KORISNICI
+    await conn.execute(`
+      INSERT INTO OBRISANI_KORISNICI (id_korisnik, ime, prezime, email, lozinka, uloga, datum_registracije)
+      SELECT id_korisnik, ime, prezime, email, lozinka, uloga, datum_registracije
+      FROM KORISNICI
+      WHERE id_korisnik = :id
+    `, [id]);
+
+    // Obriši iz KORISNICI
+    await conn.execute(`DELETE FROM KORISNICI WHERE id_korisnik = :id`, [id]);
+
+    await conn.commit();
+    res.json({ message: 'Korisnik logički obrisan.' });
+  } catch (err) {
+    console.error('❌ Logičko brisanje greška:', err);
+    res.status(500).json({ error: 'Greška pri logičkom brisanju.' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+// Fizičko brisanje korisnika
+router.delete('/korisnici/fizicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+    await conn.execute(`DELETE FROM KORISNICI WHERE id_korisnik = :id`, [id]);
+    await conn.commit();
+    res.json({ message: 'Korisnik fizički obrisan.' });
+  } catch (err) {
+    console.error('❌ Fizičko brisanje greška:', err);
+    res.status(500).json({ error: 'Greška pri fizičkom brisanju.' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+
 module.exports = router;
