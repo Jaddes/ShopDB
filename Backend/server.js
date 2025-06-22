@@ -292,3 +292,56 @@ app.get('/api/podkategorije', async (req, res) => {
     if (connection) await connection.close();
   }
 });
+
+// Logicko i Fizicko brisanje
+app.put('/api/korisnici/logicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    // Provera da li postoji korisnik
+    const provera = await conn.execute(`SELECT * FROM KORISNICI WHERE id_korisnik = :id`, [id]);
+    if (provera.rows.length === 0) {
+      return res.status(404).json({ error: 'Korisnik ne postoji' });
+    }
+
+    // Ubacivanje u obrisane korisnike
+    await conn.execute(`
+      INSERT INTO OBRISANI_KORISNICI (id_korisnik, ime, prezime, email, lozinka, uloga, datum_registracije)
+      SELECT id_korisnik, ime, prezime, email, lozinka, uloga, datum_registracije
+      FROM KORISNICI
+      WHERE id_korisnik = :id
+    `, [id]);
+
+    // Brisanje iz originalne tabele
+    await conn.execute(`DELETE FROM KORISNICI WHERE id_korisnik = :id`, [id]);
+
+    await conn.commit();
+    res.json({ msg: 'Logički obrisan' });
+  } catch (err) {
+    console.error('❌ Greška pri logičkom brisanju:', err);
+    res.status(500).json({ error: 'Greška u logičkom brisanju' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+app.delete('/api/korisnici/fizicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+    await conn.execute(`DELETE FROM KORISNICI WHERE id_korisnik = :id`, [id]);
+    await conn.commit();
+    res.json({ msg: 'Fizički obrisan' });
+    console.log("inicijalizacija fizickog brisanja OK");
+  } catch (err) {
+    console.error('❌ Greška pri fizičkom brisanju:', err);
+    res.status(500).json({ error: 'Greška u fizičkom brisanju' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
