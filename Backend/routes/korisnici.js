@@ -41,7 +41,7 @@ router.get('/korisnici', async (req, res) => {
 });
 
 // Logičko brisanje korisnika
-router.put('/korisnici/logicko_brisanje/:id', async (req, res) => {
+router.put('/logicko_brisanje/:id', async (req, res) => {
   const id = req.params.id;
   let conn;
 
@@ -70,7 +70,7 @@ router.put('/korisnici/logicko_brisanje/:id', async (req, res) => {
 });
 
 // Fizičko brisanje korisnika
-router.delete('/korisnici/fizicko_brisanje/:id', async (req, res) => {
+router.delete('/fizicko_brisanje/:id', async (req, res) => {
   const id = req.params.id;
   let conn;
 
