@@ -113,4 +113,66 @@ router.delete('/fizicko_brisanje/:id', async (req, res) => {
   }
 });
 
+// Vraćanje obrisanog proizvoda u originalnu tabelu
+router.put('/vrati_proizvod/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    // Provera da li postoji u OBRISANI_PROIZVODI
+    const provera = await conn.execute(
+      `SELECT 1 FROM OBRISANI_PROIZVODI WHERE id_proizvod = :id`,
+      [id]
+    );
+
+    if (provera.rows.length === 0) {
+      return res.status(404).json({ error: 'Obrisani proizvod ne postoji.' });
+    }
+
+    // Prebacivanje nazad u PROIZVODI
+    await conn.execute(`
+      INSERT INTO PROIZVODI (
+        id_proizvod, naziv, opis, id_podkategorija, id_boja, id_oznaka,
+        slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina
+      )
+      SELECT 
+        id_proizvod, naziv, opis, id_podkategorija, id_boja, id_oznaka,
+        slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina
+      FROM OBRISANI_PROIZVODI
+      WHERE id_proizvod = :id
+    `, [id]);
+
+    // Brisanje iz tabele OBRISANI_PROIZVODI
+    await conn.execute(
+      `DELETE FROM OBRISANI_PROIZVODI WHERE id_proizvod = :id`,
+      [id]
+    );
+
+    await conn.commit();
+    res.json({ message: 'Proizvod je vraćen u aktivnu listu.' });
+  } catch (err) {
+    console.error('❌ Greška pri vraćanju proizvoda:', err);
+    res.status(500).json({ error: 'Greška pri vraćanju proizvoda.' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
