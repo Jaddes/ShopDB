@@ -32,7 +32,7 @@ app.use('/api', kategorijeRoutes);
 app.use('/api', korisniciRoutes);
 app.use('/api', podkategorijeRoutes);
 app.use('/api', kupciRoutes);
-app.use('/api/proizvodi', proizvodiRoutes);
+app.use('/api', proizvodiRoutes);
 app.use('/api', narudzbineRoutes);
 app.use('/api', stavkeNarudzbineRoutes);
 app.use('/api', korpaRoutes);
