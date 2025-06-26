@@ -90,20 +90,16 @@ router.delete('/fizicko_brisanje/:id', async (req, res) => {
   try {
     conn = await getConnection();
 
-    // Provera da li proizvod postoji
-    const provera = await conn.execute(
-      `SELECT 1 FROM PROIZVODI WHERE id_proizvod = :id`,
-      [id]
-    );
-
+    const provera = await conn.execute(`SELECT 1 FROM PROIZVODI WHERE id_proizvod = :id`, [id]);
     if (provera.rows.length === 0) {
+      console.warn(`⚠️ Pokušaj brisanja nepostojećeg proizvoda ID: ${id}`);
       return res.status(404).json({ error: 'Proizvod ne postoji.' });
     }
 
-    // Direktno brisanje
-    await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :id`, [id]);
-
+    const result = await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :id`, [id]);
     await conn.commit();
+
+    console.log(`✅ Fizički obrisan proizvod ID: ${id}, affectedRows: ${result.rowsAffected}`);
     res.json({ message: 'Proizvod fizički obrisan.' });
   } catch (err) {
     console.error('❌ Fizičko brisanje proizvoda greška:', err);

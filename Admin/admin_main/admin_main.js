@@ -243,10 +243,10 @@ function prikaziProizvode() {
           <td>${row.KOLICINA}</td>
           <td>
               <img src="../../accessories/trash-can.svg" 
-              class="icon-trash" 
-              data-id="${row.id_korisnik}" 
+              class="icon-trash-proizvod" 
+              data-id="${row.ID_PROIZVOD}" 
               style="cursor:pointer; width:20px;" 
-              title="Obriši korisnika" />
+              title="Obriši proizvod" />
           </td>
         `;
         tbody.appendChild(tr);
@@ -680,4 +680,33 @@ document.addEventListener('DOMContentLoaded', async () => {
   prikaziKorisnike(); // Automacki prikaz tabele Korisnici
   inicijalizujLogickoBrisanje();
   inicijalizujFizickoBrisanje();
+});
+
+//Event lisiner
+let selectedProductId = null;
+
+document.addEventListener('click', function (e) {
+  if (e.target.classList.contains('icon-trash-proizvod')) {
+    selectedProductId = e.target.dataset.id;
+    document.getElementById('deleteConfirmModal').style.display = 'block';
+
+    // Override dugme za fizičko brisanje proizvoda
+    document.getElementById('physicalDeleteBtn').onclick = async () => {
+      try {
+        const res = await fetch(`${window.API_BASE_URL}/api/proizvodi/fizicko_brisanje/${selectedProductId}`, {
+          method: 'DELETE'
+        });
+
+        if (res.ok) {
+          alert("✅ Proizvod fizički obrisan.");
+          prikaziProizvode(); // automatski refresh
+        } else {
+          alert("❌ Greška pri brisanju proizvoda.");
+        }
+      } catch (err) {
+        console.error("❌ Greška pri fizičkom brisanju proizvoda:", err);
+      }
+      document.getElementById('deleteConfirmModal').style.display = 'none';
+    };
+  }
 });
