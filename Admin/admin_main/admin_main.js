@@ -255,7 +255,6 @@ function prikaziProizvode() {
 function prikaziNarudzbine() {
   const container = document.querySelector('.content-placeholder');
 
-  prikaziSveStavkeKorpe();
   container.innerHTML = `
     <h2 style="text-align:center;">Narudžbine</h2>
     <table class="admin-table" id="narudzbineTabela">
