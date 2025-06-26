@@ -241,6 +241,13 @@ function prikaziProizvode() {
           <td>${row.NABAVNA_CENA}</td>
           <td>${row.PRODAJNA_CENA}</td>
           <td>${row.KOLICINA}</td>
+          <td>
+              <img src="../../accessories/trash-can.svg" 
+              class="icon-trash" 
+              data-id="${row.id_korisnik}" 
+              style="cursor:pointer; width:20px;" 
+              title="Obriši korisnika" />
+          </td>
         `;
         tbody.appendChild(tr);
       });
@@ -564,6 +571,13 @@ function prikaziKatiPKat() {
         tr.innerHTML = `
           <td>${row[0]}</td>
           <td>${row[1]}</td>
+          <td>
+              <img src="../../accessories/trash-can.svg" 
+              class="icon-trash" 
+              data-id="${row.id_korisnik}" 
+              style="cursor:pointer; width:20px;" 
+              title="Obriši korisnika" />
+          </td>
         `;
         tbody.appendChild(tr);
       });
@@ -583,6 +597,13 @@ function prikaziKatiPKat() {
           <td>${row[0]}</td>
           <td>${row[1]}</td>
           <td>${row[2]}</td>
+          <td>
+              <img src="../../accessories/trash-can.svg" 
+              class="icon-trash" 
+              data-id="${row.id_korisnik}" 
+              style="cursor:pointer; width:20px;" 
+              title="Obriši korisnika" />
+          </td>
         `;
         tbody.appendChild(tr);
       });
