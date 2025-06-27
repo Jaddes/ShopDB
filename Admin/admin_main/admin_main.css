@@ -566,3 +566,50 @@ main {
 #deleteConfirmModal .buttons button:hover {
   background-color: #d17f1c;
 }
+
+/* Dodaj dugme */
+.btn-dodaj {
+  padding: 10px 25px;
+  background-color: #17411D;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-left: auto;
+}
+
+.btn-dodaj:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+/* Search Bar */
+.proizvodi-top-bar {
+  display: flex;
+  justify-content: flex-start;  /* space-between: search levo, dugme desno */
+  align-items: center;
+  margin: 20px 5%;
+  gap: 200px;
+  flex-wrap: wrap; /* da bude responsive */
+}
+
+#searchProizvodInput {
+  flex: 1; /* zauzima sav dostupan prostor levo */
+  max-width: 400px; /* maksimalna širina */
+  min-width: 200px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 2px solid #17411D;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  outline: none;
+}
+
+#searchProizvodInput:focus {
+  border-color: #EB9C35;
+}

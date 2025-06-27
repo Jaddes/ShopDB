@@ -201,6 +201,10 @@ function prikaziProizvode() {
   const container = document.querySelector('.content-placeholder');
   container.innerHTML = `
     <h2 style="text-align:center;">Proizvodi</h2>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <input type="text" id="searchProizvodInput" placeholder="Pretraži po nazivu..." />
+      <button id="dodajProizvodBtn" class="btn-dodaj">➕ Dodaj novi proizvod</button>
+    </div>
     <div class="table-container">
       <table class="admin-table" id="proizvodiTabela">
         <thead>
@@ -255,6 +259,24 @@ function prikaziProizvode() {
     .catch(err => {
       console.error("❌ Greška u fetch proizvoda:", err);
     });
+
+  // Dodavanje novog prozivoda
+  document.getElementById('dodajProizvodBtn').addEventListener('click', () => {
+  alert("Otvara se forma za dodavanje proizvoda (uskoro).");
+  // Ovde ćeš ubaciti logiku za prikaz forme
+  });
+
+  // Search Bar
+  document.getElementById('searchProizvodInput').addEventListener('input', function () {
+  const searchTerm = this.value.toLowerCase();
+  const rows = document.querySelectorAll('#proizvodiTabela tbody tr');
+
+  rows.forEach(row => {
+    const naziv = row.children[1].textContent.toLowerCase(); // kolona "Naziv"
+    row.style.display = naziv.includes(searchTerm) ? '' : 'none';
+  });
+  });
+
 }
 
 
