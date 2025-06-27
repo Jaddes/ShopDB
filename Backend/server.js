@@ -346,3 +346,31 @@ app.delete('/api/korisnici/fizicko_brisanje/:id', async (req, res) => {
     if (conn) await conn.close();
   }
 });
+
+//Fizicko brisanje
+app.delete('/api/proizvodi/fizicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    // Prvo obriši sve povezane redove iz vezanih tabela
+    await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
+    await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :id`, [id]);
+    await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :id`, [id]);
+    await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :id`, [id]);
+
+    // Sada možeš obrisati iz PROIZVODI
+    await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :id`, [id]);
+
+    await conn.commit();
+    res.json({ msg: '✅ Proizvod fizički obrisan' });
+  } catch (err) {
+    console.error('❌ Greška pri fizičkom brisanju proizvoda:', err);
+    res.status(500).json({ error: 'Greška u brisanju proizvoda' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
