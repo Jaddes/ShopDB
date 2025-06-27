@@ -301,17 +301,17 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
   try {
     conn = await getConnection();
 
-    // 1. Provera da li postoji proizvod
+    // 1. Provera da li proizvod postoji
     const provera = await conn.execute(
       `SELECT * FROM PROIZVODI WHERE id_proizvod = :id`,
       [id]
     );
+
     if (provera.rows.length === 0) {
       return res.status(404).json({ error: 'Proizvod ne postoji' });
     }
 
-    // 2. Kopiranje podataka u OBRISANE_* tabele (ISTIM REDOSLEDOM kao za fizičko brisanje)
-
+    // 2. Kopiranje povezanih podataka u arhivske tabele (OBRISANE_*)
     await conn.execute(`
       INSERT INTO OBRISANE_STAVKE_KORPE (id_korisnik, id_proizvod, kolicina)
       SELECT id_korisnik, id_proizvod, kolicina
@@ -340,14 +340,20 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
       WHERE id_proizvod = :id
     `, [id]);
 
+    // 3. Kopiranje samog proizvoda u tabelu obrisanih sa datumom brisanja
     await conn.execute(`
-      INSERT INTO OBRISANI_PROIZVODI (id_proizvod, naziv, opis, cena, stanje, kategorija_id, slika_url)
-      SELECT id_proizvod, naziv, opis, cena, stanje, kategorija_id, slika_url
+      INSERT INTO OBRISANI_PROIZVODI (
+        id_proizvod, naziv, opis, id_podkategorija, id_boja, id_oznaka,
+        slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina, datum_brisanja
+      )
+      SELECT
+        id_proizvod, naziv, opis, id_podkategorija, id_boja, id_oznaka,
+        slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina, SYSDATE
       FROM PROIZVODI
       WHERE id_proizvod = :id
     `, [id]);
 
-    // 3. Brisanje originalnih podataka ISTIM REDOSLEDOM
+    // 4. Brisanje podataka iz originalnih tabela (ISTIM REDOSLEDOM)
     await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
     await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :id`, [id]);
     await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :id`, [id]);
@@ -358,7 +364,7 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
     res.json({ msg: '✅ Proizvod logički obrisan' });
 
   } catch (err) {
-    if (conn) await conn.rollback(); // 🔁 Poništi sve izmene u slučaju greške
+    if (conn) await conn.rollback();
     console.error('❌ Greška pri logičkom brisanju proizvoda:', err);
     res.status(500).json({ error: 'Greška u logičkom brisanju proizvoda' });
   } finally {
@@ -366,23 +372,6 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
   }
 });
 
-app.delete('/api/korisnici/fizicko_brisanje/:id', async (req, res) => {
-  const id = req.params.id;
-  let conn;
-
-  try {
-    conn = await getConnection();
-    await conn.execute(`DELETE FROM KORISNICI WHERE id_korisnik = :id`, [id]);
-    await conn.commit();
-    res.json({ msg: 'Fizički obrisan' });
-    console.log("inicijalizacija fizickog brisanja OK");
-  } catch (err) {
-    console.error('❌ Greška pri fizičkom brisanju:', err);
-    res.status(500).json({ error: 'Greška u fizičkom brisanju' });
-  } finally {
-    if (conn) await conn.close();
-  }
-});
 
 //Fizicko brisanje
 app.delete('/api/proizvodi/fizicko_brisanje/:id', async (req, res) => {

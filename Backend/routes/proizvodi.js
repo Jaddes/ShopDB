@@ -74,7 +74,7 @@ router.put('/logicko_brisanje/:id', async (req, res) => {
 
     await conn.commit();
     res.json({ message: 'Proizvod logički obrisan.' });
-  } catch (err) {
+    } catch (err) {
     console.error('❌ Logičko brisanje proizvoda greška:', err);
     res.status(500).json({ error: 'Greška pri logičkom brisanju proizvoda.' });
   } finally {
