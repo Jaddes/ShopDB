@@ -294,36 +294,73 @@ app.get('/api/podkategorije', async (req, res) => {
 });
 
 // Logicko i Fizicko brisanje
-app.put('/api/korisnici/logicko_brisanje/:id', async (req, res) => {
-  console.log("➡️ Ruta /korisnici/logicko_brisanje/:id pozvana");
+app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
   const id = req.params.id;
   let conn;
 
   try {
     conn = await getConnection();
 
-    // Provera da li postoji korisnik
-    const provera = await conn.execute(`SELECT * FROM KORISNICI WHERE id_korisnik = :id`, [id]);
+    // 1. Provera da li postoji proizvod
+    const provera = await conn.execute(
+      `SELECT * FROM PROIZVODI WHERE id_proizvod = :id`,
+      [id]
+    );
     if (provera.rows.length === 0) {
-      return res.status(404).json({ error: 'Korisnik ne postoji' });
+      return res.status(404).json({ error: 'Proizvod ne postoji' });
     }
 
-    // Ubacivanje u obrisane korisnike
+    // 2. Kopiranje podataka u OBRISANE_* tabele (ISTIM REDOSLEDOM kao za fizičko brisanje)
+
     await conn.execute(`
-      INSERT INTO OBRISANI_KORISNICI (id_korisnik, ime, prezime, email, lozinka, uloga, datum_registracije)
-      SELECT id_korisnik, ime, prezime, email, lozinka, uloga, datum_registracije
-      FROM KORISNICI
-      WHERE id_korisnik = :id
+      INSERT INTO OBRISANE_STAVKE_KORPE (id_korisnik, id_proizvod, kolicina)
+      SELECT id_korisnik, id_proizvod, kolicina
+      FROM STAVKE_KORPE
+      WHERE id_proizvod = :id
     `, [id]);
 
-    // Brisanje iz originalne tabele
-    await conn.execute(`DELETE FROM KORISNICI WHERE id_korisnik = :id`, [id]);
+    await conn.execute(`
+      INSERT INTO OBRISANE_WISHLIST_STAVKE (id_wishlist, id_proizvod)
+      SELECT id_wishlist, id_proizvod
+      FROM WISHLIST_STAVKE
+      WHERE id_proizvod = :id
+    `, [id]);
+
+    await conn.execute(`
+      INSERT INTO OBRISANE_RECENZIJE (id_recenzija, id_proizvod, id_korisnik, ocena, komentar, datum)
+      SELECT id_recenzija, id_proizvod, id_korisnik, ocena, komentar, datum
+      FROM RECENZIJE
+      WHERE id_proizvod = :id
+    `, [id]);
+
+    await conn.execute(`
+      INSERT INTO OBRISANE_STAVKE_NARUDZBINE (id_narudzbina, id_proizvod, kolicina, cena)
+      SELECT id_narudzbina, id_proizvod, kolicina, cena
+      FROM STAVKE_NARUDZBINE
+      WHERE id_proizvod = :id
+    `, [id]);
+
+    await conn.execute(`
+      INSERT INTO OBRISANI_PROIZVODI (id_proizvod, naziv, opis, cena, stanje, kategorija_id, slika_url)
+      SELECT id_proizvod, naziv, opis, cena, stanje, kategorija_id, slika_url
+      FROM PROIZVODI
+      WHERE id_proizvod = :id
+    `, [id]);
+
+    // 3. Brisanje originalnih podataka ISTIM REDOSLEDOM
+    await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
+    await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :id`, [id]);
+    await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :id`, [id]);
+    await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :id`, [id]);
+    await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :id`, [id]);
 
     await conn.commit();
-    res.json({ msg: 'Logički obrisan' });
+    res.json({ msg: '✅ Proizvod logički obrisan' });
+
   } catch (err) {
-    console.error('❌ Greška pri logičkom brisanju:', err);
-    res.status(500).json({ error: 'Greška u logičkom brisanju' });
+    if (conn) await conn.rollback(); // 🔁 Poništi sve izmene u slučaju greške
+    console.error('❌ Greška pri logičkom brisanju proizvoda:', err);
+    res.status(500).json({ error: 'Greška u logičkom brisanju proizvoda' });
   } finally {
     if (conn) await conn.close();
   }
