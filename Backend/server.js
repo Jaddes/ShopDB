@@ -366,23 +366,6 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
   }
 });
 
-app.delete('/api/korisnici/fizicko_brisanje/:id', async (req, res) => {
-  const id = req.params.id;
-  let conn;
-
-  try {
-    conn = await getConnection();
-    await conn.execute(`DELETE FROM KORISNICI WHERE id_korisnik = :id`, [id]);
-    await conn.commit();
-    res.json({ msg: 'Fizički obrisan' });
-    console.log("inicijalizacija fizickog brisanja OK");
-  } catch (err) {
-    console.error('❌ Greška pri fizičkom brisanju:', err);
-    res.status(500).json({ error: 'Greška u fizičkom brisanju' });
-  } finally {
-    if (conn) await conn.close();
-  }
-});
 
 //Fizicko brisanje
 app.delete('/api/proizvodi/fizicko_brisanje/:id', async (req, res) => {

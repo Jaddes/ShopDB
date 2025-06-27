@@ -83,19 +83,6 @@ document.getElementById('searchInput').addEventListener('input', function () {
 
 
 
-//Dugme za korisnike
-async function prikaziKorisnike() {
-  try {
-    const res = await fetch(`${window.API_BASE_URL}/api/korisnici`);
-    const podaci = await res.json();
-
-    // Prikaz u tabeli...
-    console.log(podaci); // privremeno
-  } catch (err) {
-    console.error("❌ Greška pri dohvatanju korisnika:", err);
-  }
-}
-
 async function prikaziKorisnike() {
   const container = document.querySelector('.content-placeholder');
 
@@ -112,6 +99,7 @@ async function prikaziKorisnike() {
           <th>Lozinka</th>
           <th>Uloga</th>
           <th>Datum registracije</th>
+          <th>Akcija</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -216,6 +204,7 @@ function prikaziProizvode() {
             <th>Nabavna cena</th>
             <th>Prodajna cena</th>
             <th>Količina</th>
+            <th>Akcija</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -689,6 +678,29 @@ document.addEventListener('click', function (e) {
   if (e.target.classList.contains('icon-trash-proizvod')) {
     selectedProductId = e.target.dataset.id;
     document.getElementById('deleteConfirmModal').style.display = 'block';
+
+      // Logičko brisanje proizvoda
+    document.getElementById('logicalDeleteBtn').onclick = async () => {
+      if (!selectedProductId) return;
+
+      try {
+        const res = await fetch(`${window.API_BASE_URL}/api/proizvodi/logicko_brisanje/${selectedProductId}`, {
+          method: 'PUT'
+        });
+
+        if (res.ok) {
+          alert("✅ Proizvod logički obrisan.");
+          prikaziProizvode(); // osveži tabelu
+        } else {
+          alert("❌ Greška pri logičkom brisanju proizvoda.");
+        }
+      } catch (err) {
+        console.error("❌ Greška pri logičkom brisanju proizvoda:", err);
+      }
+
+      document.getElementById('deleteConfirmModal').style.display = 'none';
+    };
+
 
     // Override dugme za fizičko brisanje proizvoda
     document.getElementById('physicalDeleteBtn').onclick = async () => {
