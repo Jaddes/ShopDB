@@ -319,11 +319,11 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
 
     // 2. Kopiranje povezanih podataka u arhivske tabele (OBRISANE_*)
     await conn.execute(`
-      INSERT INTO OBRISANE_STAVKE_KORPE (id_korisnik, id_proizvod, kolicina)
-      SELECT id_korisnik, id_proizvod, kolicina
+      INSERT INTO OBRISANE_STAVKE_KORPE (id_kupac, id_proizvod, kolicina)
+      SELECT id_kupac, id_proizvod, kolicina
       FROM STAVKE_KORPE
       WHERE id_proizvod = :id
-    `, [id]);
+    `, [id]); 
 
     await conn.execute(`
       INSERT INTO OBRISANE_WISHLIST_STAVKE (id_wishlist, id_proizvod)
@@ -333,8 +333,8 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
     `, [id]);
 
     await conn.execute(`
-      INSERT INTO OBRISANE_RECENZIJE (id_recenzija, id_proizvod, id_korisnik, ocena, komentar, datum)
-      SELECT id_recenzija, id_proizvod, id_korisnik, ocena, komentar, datum
+      INSERT INTO OBRISANE_RECENZIJE (id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum)
+      SELECT id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum
       FROM RECENZIJE
       WHERE id_proizvod = :id
     `, [id]);
@@ -360,7 +360,7 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
     `, [id]);
 
     // 4. Brisanje podataka iz originalnih tabela (ISTIM REDOSLEDOM)
-    await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
+   // await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
     await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :id`, [id]);
     await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :id`, [id]);
     await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :id`, [id]);
@@ -388,7 +388,7 @@ app.delete('/api/proizvodi/fizicko_brisanje/:id', async (req, res) => {
     conn = await getConnection();
 
     // Prvo obriši sve povezane redove iz vezanih tabela
-    await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
+    // await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
     await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :id`, [id]);
     await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :id`, [id]);
     await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :id`, [id]);
