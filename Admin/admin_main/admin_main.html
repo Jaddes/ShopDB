@@ -83,6 +83,41 @@
             </div>
         </div>
 
+        <!-- Modal za dodavanje proizvoda -->
+        <div id="dodajProizvodModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Dodaj novi proizvod</h3>
+
+            <input type="text" id="noviNaziv" placeholder="Naziv proizvoda" required />
+            <textarea id="noviOpis" placeholder="Opis proizvoda"></textarea>
+
+            <select id="noviPodkategorija">
+            <option value="">-- Odaberi podkategoriju --</option>
+            </select>
+
+            <select id="noviBoja">
+            <option value="">-- Odaberi boju --</option>
+            </select>
+
+            <select id="noviOznaka">
+            <option value="">-- Odaberi oznaku --</option>
+            </select>
+
+            <input type="text" id="noviSlikaUrl" placeholder="URL slike" />
+            <input type="date" id="noviDatumNabavke" />
+
+            <input type="number" id="noviNabavnaCena" placeholder="Nabavna cena" />
+            <input type="number" id="noviProdajnaCena" placeholder="Prodajna cena" />
+            <input type="number" id="noviKolicina" placeholder="Količina" />
+
+            <div class="buttons">
+            <button id="potvrdiDodavanjeBtn">➕ Dodaj</button>
+            <button id="zatvoriDodavanjeBtn">Otkaži</button>
+            </div>
+        </div>
+        </div>
+
+
         <div id="admin-panel">
         <div class="admin-tabs">
             <button data-action="korisnici">Korisnici</button>

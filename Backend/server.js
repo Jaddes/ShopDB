@@ -21,6 +21,9 @@ const stavkeKorpeRoutes = require('./routes/stavke_korpe');
 const recenzijeRoutes = require('./routes/recenzije');
 const wishlistRoutes = require('./routes/wishlist');
 const stavkeWishlistRoutes = require('./routes/stavke_wishlist');
+const bojeRoutes = require('./routes/boje');
+const oznakeRoutes = require('./routes/oznake');
+
 
 
 
@@ -40,6 +43,9 @@ app.use('/api', stavkeKorpeRoutes);
 app.use('/api', recenzijeRoutes);
 app.use('/api', wishlistRoutes);
 app.use('/api', stavkeWishlistRoutes);
+app.use('/api', bojeRoutes);
+app.use('/api', oznakeRoutes);
+
 
 
 

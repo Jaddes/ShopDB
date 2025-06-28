@@ -184,15 +184,102 @@ function prikaziKupce() {
 }
 
 
-// //Dugme za proizvode
+// //Dugme za Proizvode
 function prikaziProizvode() {
   const container = document.querySelector('.content-placeholder');
   container.innerHTML = `
     <h2 style="text-align:center;">Proizvodi</h2>
-    <div style="text-align: center; margin-bottom: 20px;">
-      <input type="text" id="searchProizvodInput" placeholder="Pretraži po nazivu..." />
+    <div class="proizvodi-top-bar">
+      <div class="search-wrapper">
+        <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
+        <input type="text" id="searchProizvodInput" placeholder="Pretraži po nazivu..." />
+        <img src="../../accessories/menu-list.svg" class="search-right-icon" alt="Meni" />
+      </div>
       <button id="dodajProizvodBtn" class="btn-dodaj">➕ Dodaj novi proizvod</button>
     </div>
+
+    <div id="filter-panel" class="filter-panel" style="display: none;">
+      <div class="filter-row">
+        <label>Podkategorija:</label>
+        <select id="filterPodkategorija">
+          <option value="">-- Sve --</option>
+        </select>
+      </div>
+
+      <div class="filter-row">
+        <label>Boja:</label>
+        <select id="filterBoja">
+          <option value="">-- Sve --</option>
+        </select>
+      </div>
+
+      <div class="filter-row">
+        <label>Oznaka:</label>
+        <select id="filterOznaka">
+          <option value="">-- Sve --</option>
+        </select>
+      </div>
+
+      <div class="filter-row">
+        <label>Datum nabavke:</label>
+        <input type="date" id="filterDatumOd">
+        <input type="date" id="filterDatumDo">
+      </div>
+
+      <!-- NABAVNA CENA -->
+      <div class="filter-row">
+        <label>Nabavna cena:</label>
+        <div class="dual-slider-container">
+          <input type="range" id="nabavnaCenaMin" min="0" max="10000" value="0" step="100" class="dual-range">
+          <input type="range" id="nabavnaCenaMax" min="0" max="10000" value="10000" step="100" class="dual-range">
+          <div class="slider-track-filled" id="nabavnaTrack"></div>
+        </div>
+        <div class="inputs-container">
+          <input type="number" id="nabavnaCenaMinInput" value="0">
+          <span> - </span>
+          <input type="number" id="nabavnaCenaMaxInput" value="10000">
+          <span> RSD</span>
+        </div>
+      </div>
+
+      <!-- PRODAJNA CENA -->
+      <div class="filter-row">
+        <label>Prodajna cena:</label>
+        <div class="dual-slider-container">
+          <input type="range" id="prodajnaCenaMin" min="0" max="10000" value="0" step="100" class="dual-range">
+          <input type="range" id="prodajnaCenaMax" min="0" max="10000" value="10000" step="100" class="dual-range">
+          <div class="slider-track-filled" id="prodajnaTrack"></div>
+        </div>
+        <div class="inputs-container">
+          <input type="number" id="prodajnaCenaMinInput" value="0">
+          <span> - </span>
+          <input type="number" id="prodajnaCenaMaxInput" value="10000">
+          <span> RSD</span>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <label>Količina:</label>
+        <input type="number" id="filterKolicinaMin" placeholder="Min">
+        <input type="number" id="filterKolicinaMax" placeholder="Max">
+      </div>
+
+      <div class="filter-row">
+        <label><input type="checkbox" id="filterAkcija"> Samo na akciji</label>
+      </div>
+
+      <div class="filter-actions">
+        <button id="primeniFiltereBtn">
+        <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
+        <span>Pretraži</span>
+      </button>
+      <button id="resetujFiltereBtn">
+        <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
+        <span>Restartuj</span>
+      </button>
+      </div>
+    </div>
+
     <div class="table-container">
       <table class="admin-table" id="proizvodiTabela">
         <thead>
@@ -215,6 +302,65 @@ function prikaziProizvode() {
       </table>
     </div>
   `;
+  //FILTER
+
+  // Omogući prikaz/sakrivanje filter panela pri kliku na meni ikonicu
+  const menuIcon = document.querySelector('.search-right-icon');
+  const filterPanel = document.getElementById('filter-panel');
+
+  if (menuIcon && filterPanel) {
+    menuIcon.addEventListener('click', () => {
+      filterPanel.style.display = (filterPanel.style.display === 'none') ? 'block' : 'none';
+    });
+  }
+
+  // Scroll bar za cene
+  function poveziSliderInput(sliderMin, sliderMax, inputMin, inputMax, track) {
+    function update() {
+      inputMin.value = sliderMin.value;
+      inputMax.value = sliderMax.value;
+
+      const min = parseInt(sliderMin.value);
+      const max = parseInt(sliderMax.value);
+      const total = parseInt(sliderMin.max) - parseInt(sliderMin.min);
+      const left = ((min - parseInt(sliderMin.min)) / total) * 100;
+      const right = ((max - parseInt(sliderMin.min)) / total) * 100;
+
+      track.style.left = `${left}%`;
+      track.style.width = `${right - left}%`;
+    }
+
+    sliderMin.addEventListener('input', update);
+    sliderMax.addEventListener('input', update);
+    inputMin.addEventListener('input', () => {
+      sliderMin.value = inputMin.value;
+      update();
+    });
+    inputMax.addEventListener('input', () => {
+      sliderMax.value = inputMax.value;
+      update();
+    });
+
+    update(); // inicijalno
+    }
+
+    // Poziv za NABAVNU
+    poveziSliderInput(
+      document.getElementById('nabavnaCenaMin'),
+      document.getElementById('nabavnaCenaMax'),
+      document.getElementById('nabavnaCenaMinInput'),
+      document.getElementById('nabavnaCenaMaxInput'),
+      document.getElementById('nabavnaTrack')
+    );
+
+    // Poziv za PRODAJNU
+    poveziSliderInput(
+      document.getElementById('prodajnaCenaMin'),
+      document.getElementById('prodajnaCenaMax'),
+      document.getElementById('prodajnaCenaMinInput'),
+      document.getElementById('prodajnaCenaMaxInput'),
+      document.getElementById('prodajnaTrack')
+    );
 
   fetch(`${API_BASE_URL}/api/proizvodi`)
     .then(res => res.json())
@@ -266,6 +412,58 @@ function prikaziProizvode() {
   });
   });
 
+  document.getElementById('dodajProizvodBtn').addEventListener('click', () => {
+  document.getElementById('dodajProizvodModal').style.display = 'flex';
+  popuniDropdownoveZaDodavanje(); // 🔁 učitaj sve opcije
+  });
+
+}
+
+async function popuniDropdownoveZaDodavanje() {
+  // Podkategorije
+  try {
+    const resPK = await fetch(`${API_BASE_URL}/api/podkategorije`);
+    const podkategorije = await resPK.json();
+    const selectPK = document.getElementById('noviPodkategorija');
+    podkategorije.forEach(pk => {
+      const option = document.createElement('option');
+      option.value = pk[0]; // ID
+      option.textContent = pk[2]; // Naziv
+      selectPK.appendChild(option);
+    });
+  } catch (err) {
+    console.error("❌ Greška podkategorije:", err);
+  }
+
+  // Boje
+  try {
+    const resB = await fetch(`${API_BASE_URL}/api/boje`);
+    const boje = await resB.json();
+    const selectB = document.getElementById('noviBoja');
+    boje.forEach(b => {
+      const option = document.createElement('option');
+      option.value = b[0];
+      option.textContent = b[1];
+      selectB.appendChild(option);
+    });
+  } catch (err) {
+    console.error("❌ Greška boje:", err);
+  }
+
+  // Oznake
+  try {
+    const resO = await fetch(`${API_BASE_URL}/api/oznake`);
+    const oznake = await resO.json();
+    const selectO = document.getElementById('noviOznaka');
+    oznake.forEach(o => {
+      const option = document.createElement('option');
+      option.value = o[0];
+      option.textContent = o[1];
+      selectO.appendChild(option);
+    });
+  } catch (err) {
+    console.error("❌ Greška oznake:", err);
+  }
 }
 
 
