@@ -688,10 +688,64 @@ function prikaziNarudzbine() {
     <h2 style="text-align:center;">Sve stavke narudžbina</h2>
 
     <div class="proizvodi-top-bar">
-      <div class="search-wrapper">
-        <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
-        <input type="text" id="searchStavkaNarudzbinaInput" placeholder="Pretraži po Korisniku..." />
-        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniStavkaNarudzbina" alt="Meni" />
+        <div class="search-wrapper">
+          <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
+          <input type="text" id="searchStavkaNarudzbinaInput" placeholder="Pretraži po Korisniku..." />
+          <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniStavkaNarudzbina" alt="Meni" />
+        </div>
+      </div>
+
+    <div id="stavke-filter-panel" class="filter-panel" style="display: none;">
+      <div class="filter-row">
+        <label>Naziv proizvoda:</label>
+        <input type="text" id="filterNazivProizvodaStavka" placeholder="Unesi naziv">
+      </div>
+
+      <div class="filter-row">
+        <label>Količina:</label>
+        <input type="number" id="filterKolicinaMin" placeholder="Min">
+        <input type="number" id="filterKolicinaMax" placeholder="Max">
+      </div>
+
+      <div class="filter-row">
+        <label>Cena po komadu:</label>
+        <div class="dual-slider-container">
+          <input type="range" id="cenaKomadMin" min="0" max="10000" value="0" step="100" class="dual-range">
+          <input type="range" id="cenaKomadMax" min="0" max="10000" value="10000" step="100" class="dual-range">
+          <div class="slider-track-filled" id="komadTrack"></div>
+        </div>
+        <div class="inputs-container">
+          <input type="number" id="cenaKomadMinInput" value="0">
+          <span> - </span>
+          <input type="number" id="cenaKomadMaxInput" value="10000">
+          <span> RSD</span>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <label>Ukupna cena:</label>
+        <div class="dual-slider-container">
+          <input type="range" id="ukupnaCenaStavkaMin" min="0" max="100000" value="0" step="1000" class="dual-range">
+          <input type="range" id="ukupnaCenaStavkaMax" min="0" max="100000" value="100000" step="1000" class="dual-range">
+          <div class="slider-track-filled" id="ukupnaStavkaTrack"></div>
+        </div>
+        <div class="inputs-container">
+          <input type="number" id="ukupnaCenaStavkaMinInput" value="0">
+          <span> - </span>
+          <input type="number" id="ukupnaCenaStavkaMaxInput" value="100000">
+          <span> RSD</span>
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <button id="primeniStavkeFiltereBtn">
+          <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
+          <span>Pretraži</span>
+        </button>
+        <button id="resetujStavkeFiltereBtn">
+          <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
+          <span>Restartuj</span>
+        </button>
       </div>
     </div>
 
@@ -768,6 +822,66 @@ function prikaziNarudzbine() {
     document.getElementById('ukupnoTrack')
   );
 
+  // Stavke Narudzbine filter
+  const meniStavkaNarudzbina = document.getElementById('meniStavkaNarudzbina');
+  const filterStavkePanel = document.getElementById('stavke-filter-panel');
+
+  if (meniStavkaNarudzbina && filterStavkePanel) {
+    meniStavkaNarudzbina.addEventListener('click', () => {
+      filterStavkePanel.style.display =
+        filterStavkePanel.style.display === 'none' ? 'block' : 'none';
+    });
+  }
+
+  function poveziSliderInput(sliderMin, sliderMax, inputMin, inputMax, track) {
+    function update() {
+      inputMin.value = sliderMin.value;
+      inputMax.value = sliderMax.value;
+
+      const min = parseInt(sliderMin.value);
+      const max = parseInt(sliderMax.value);
+      const total = parseInt(sliderMin.max) - parseInt(sliderMin.min);
+      const left = ((min - parseInt(sliderMin.min)) / total) * 100;
+      const right = ((max - parseInt(sliderMin.min)) / total) * 100;
+
+      track.style.left = `${left}%`;
+      track.style.width = `${right - left}%`;
+    }
+
+    sliderMin.addEventListener('input', update);
+    sliderMax.addEventListener('input', update);
+    inputMin.addEventListener('input', () => {
+      sliderMin.value = inputMin.value;
+      update();
+    });
+    inputMax.addEventListener('input', () => {
+      sliderMax.value = inputMax.value;
+      update();
+    });
+
+    update(); // inicijalno pozivanje
+  }
+
+
+  // Slider za cena po komadu
+  poveziSliderInput(
+    document.getElementById('cenaKomadMin'),
+    document.getElementById('cenaKomadMax'),
+    document.getElementById('cenaKomadMinInput'),
+    document.getElementById('cenaKomadMaxInput'),
+    document.getElementById('komadTrack')
+  );
+
+  // Slider za ukupnu cenu
+  poveziSliderInput(
+    document.getElementById('ukupnaCenaStavkaMin'),
+    document.getElementById('ukupnaCenaStavkaMax'),
+    document.getElementById('ukupnaCenaStavkaMinInput'),
+    document.getElementById('ukupnaCenaStavkaMaxInput'),
+    document.getElementById('ukupnaStavkaTrack')
+  );
+
+
   fetch(`${API_BASE_URL}/api/narudzbine`)
     .then(res => res.json())
     .then(data => {
@@ -810,7 +924,7 @@ function prikaziNarudzbine() {
 }
 
 
-// //Dugme za Korpu
+// Dugme za korpu
 function prikaziKorpe() {
   const container = document.querySelector('.content-placeholder');
   container.innerHTML = `
