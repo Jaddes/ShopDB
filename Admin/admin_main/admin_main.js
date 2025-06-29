@@ -211,7 +211,7 @@ function prikaziKupce() {
     <div class="proizvodi-top-bar">
       <div class="search-wrapper">
         <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
-        <input type="text" id="searchKupacInput" placeholder="Pretraži po imenu..." />
+        <input type="text" id="searchKupacInput" placeholder="Pretraži po Korisniku..." />
         <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniKupac" alt="Meni" />
       </div>
     </div>
@@ -269,6 +269,17 @@ function prikaziKupce() {
       <tbody></tbody>
     </table>
   `;
+
+  // Enable prikaz/sakrivanje panela
+  const meniKupac = document.getElementById('meniKupac');
+  const filterKupciPanel = document.getElementById('kupci-filter-panel');
+
+  if (meniKupac && filterKupciPanel) {
+    meniKupac.addEventListener('click', () => {
+      filterKupciPanel.style.display =
+        filterKupciPanel.style.display === 'none' ? 'block' : 'none';
+    });
+  }
 
   fetch(`${API_BASE_URL}/api/kupci`)
     .then(res => res.json())
