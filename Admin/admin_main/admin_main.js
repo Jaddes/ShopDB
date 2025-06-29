@@ -92,36 +92,57 @@ async function prikaziKorisnike() {
     <div class="proizvodi-top-bar">
       <div class="search-wrapper">
         <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
-        <input type="text" id="searchProizvodInput" placeholder="Pretraži po nazivu..." />
-        <img src="../../accessories/menu-list.svg" class="search-right-icon" alt="Meni" />
+        <input type="text" id="searchKorisniciInput" placeholder="Pretraži po imenu..." />
+        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniKorisnici" alt="Meni" />
       </div>
     </div>
 
     <div id="korisnici-filter-panel" class="filter-panel" style="display: none;">
       <div class="filter-row">
-        <label>Sortiraj po:</label>
-        <select id="sortirajKorisnike">
-          <option value="">-- Izaberi --</option>
-          <option value="ime_asc">Ime (A-Z)</option>
-          <option value="ime_desc">Ime (Z-A)</option>
-          <option value="email_asc">Email (A-Z)</option>
-          <option value="uloga_asc">Uloga (A-Z)</option>
-          <option value="datum_desc">Najnoviji korisnici</option>
-          <option value="datum_asc">Najstariji korisnici</option>
-        </select>
+        <label>Pretraga po imenu:</label>
+        <input type="text" id="filterIme" placeholder="Unesi ime">
       </div>
 
-      <div class="filter-actions">
-        <button id="primeniSortiranjeKorisniciBtn">
+    <div class="filter-row">
+      <label>Pretraga po prezimenu:</label>
+      <input type="text" id="filterPrezime" placeholder="Unesi prezime">
+    </div>
+
+    <div class="filter-row">
+      <label>Email adresa:</label>
+      <input type="text" id="filterEmail" placeholder="Unesi email">
+    </div>
+
+    <div class="filter-row">
+      <label>Uloga:</label>
+      <select id="filterUloga">
+        <option value="">-- Sve --</option>
+        <option value="ADMIN">Admin</option>
+        <option value="KUPAC">Kupac</option>
+      </select>
+    </div>
+
+    <div class="filter-row">
+      <label>Datum rođenja:</label>
+      <input type="date" id="filterDatumOd">
+      <input type="date" id="filterDatumDo">
+    </div>
+
+    <div class="filter-row">
+      <label><input type="checkbox" id="filterLogickiObrisani"> Prikaži logički obrisane</label>
+    </div>
+
+    <div class="filter-actions">
+        <button id="primeniKorisnikFiltereBtn">
           <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
           <span>Pretraži</span>
         </button>
-        <button id="resetujSortiranjeKorisniciBtn">
+        <button id="resetujKorisnikFiltereBtn">
           <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
-          <span>Resetuj</span>
+          <span>Restartuj</span>
         </button>
       </div>
-    </div>
+  </div>
 
     <table class="admin-table" id="korisniciTabela">
       <thead>
@@ -139,6 +160,16 @@ async function prikaziKorisnike() {
       <tbody></tbody>
     </table>
   `;
+  // Prikaz Korisnika
+  const menuKorisniciIcon = document.getElementById('meniKorisnici');
+  const filterKorisniciPanel = document.getElementById('korisnici-filter-panel');
+
+  if (menuKorisniciIcon && filterKorisniciPanel) {
+    menuKorisniciIcon.addEventListener('click', () => {
+      filterKorisniciPanel.style.display =
+        filterKorisniciPanel.style.display === 'none' ? 'block' : 'none';
+    });
+  }
 
   try {
     const res = await fetch(`${window.API_BASE_URL}/api/korisnici`);
@@ -176,6 +207,52 @@ function prikaziKupce() {
   const container = document.querySelector('.content-placeholder');
   container.innerHTML = `
     <h2 style="text-align:center;">Kupci</h2>
+
+    <div class="proizvodi-top-bar">
+      <div class="search-wrapper">
+        <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
+        <input type="text" id="searchKupacInput" placeholder="Pretraži po imenu..." />
+        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniKupac" alt="Meni" />
+      </div>
+    </div>
+
+    <div id="kupci-filter-panel" class="filter-panel" style="display: none;">
+      <div class="filter-row">
+        <label>Korisnik (ime/prezime/email):</label>
+        <input type="text" id="filterKorisnikKupac" placeholder="Unesi ime, prezime ili email">
+      </div>
+      <div class="filter-row">
+        <label>Ulica:</label>
+        <input type="text" id="filterUlicaKupac" placeholder="Unesi ulicu">
+      </div>
+      <div class="filter-row">
+        <label>Broj:</label>
+        <input type="text" id="filterBrojKupac" placeholder="Unesi broj">
+      </div>
+      <div class="filter-row">
+        <label>Grad:</label>
+        <input type="text" id="filterGradKupac" placeholder="Unesi grad">
+      </div>
+      <div class="filter-row">
+        <label>Poštanski broj:</label>
+        <input type="text" id="filterPostanskiKupac" placeholder="Unesi poštanski broj">
+      </div>
+      <div class="filter-row">
+        <label>Telefon:</label>
+        <input type="text" id="filterTelefonKupac" placeholder="Unesi broj telefona">
+      </div>
+      <div class="filter-actions">
+        <button id="primeniKupciFiltereBtn">
+          <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
+          <span>Pretraži</span>
+        </button>
+        <button id="resetujKupciFiltereBtn">
+          <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
+          <span>Restartuj</span>
+        </button>
+      </div>
+    </div>
+
     <table class="admin-table" id="kupciTabela">
       <thead>
         <tr>
