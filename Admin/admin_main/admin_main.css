@@ -597,6 +597,15 @@ main {
   flex-wrap: wrap; /* da bude responsive */
 }
 
+.admin-top-bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px 5%;
+  gap: 200px;
+  flex-wrap: wrap;
+}
+
 #searchProizvodInput {
   flex: 1; /* zauzima sav dostupan prostor levo */
   max-width: 400px; /* maksimalna širina */
@@ -628,7 +637,7 @@ main {
   padding: 10px 40px 10px 42px !important; /* prostor za ikone */
   font-size: 16px;
   border: 2px solid #17411D;
-  border-radius: 12px;
+  border-radius: 30px;
   background-color: #f4f8fa;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   outline: none;
