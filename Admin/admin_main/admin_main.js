@@ -929,6 +929,38 @@ function prikaziKorpe() {
   const container = document.querySelector('.content-placeholder');
   container.innerHTML = `
     <h2 style="text-align:center;">Korpe</h2>
+
+    <div class="proizvodi-top-bar">
+      <div class="search-wrapper">
+        <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
+        <input type="text" id="searchKorpaInput" placeholder="Pretraži po kupcu..." />
+        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniKorpa" alt="Meni" />
+      </div>
+    </div>
+
+    <div id="korpe-filter-panel" class="filter-panel" style="display: none;">
+      <div class="filter-row">
+        <label>Kupac (ime/prezime/email):</label>
+        <input type="text" id="filterKupacKorpa" placeholder="Unesi podatke o kupcu">
+      </div>
+
+      <div class="filter-row">
+        <label>Datum kreiranja:</label>
+        <input type="date" id="filterDatumKorpa">
+      </div>
+
+      <div class="filter-actions">
+        <button id="primeniKorpeFiltereBtn">
+          <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
+          <span>Pretraži</span>
+        </button>
+        <button id="resetujKorpeFiltereBtn">
+          <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
+          <span>Restartuj</span>
+        </button>
+      </div>
+    </div>
+
     <table class="admin-table" id="korpaTabela">
       <thead>
         <tr>
@@ -942,6 +974,34 @@ function prikaziKorpe() {
     </table>
 
     <h2 style="text-align:center;">Sve stavke u korpama</h2>
+
+    <div class="proizvodi-top-bar">
+      <div class="search-wrapper">
+        <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
+        <input type="text" id="searchStavkaKorpaInput" placeholder="Pretraži po nazivu proizvoda..." />
+        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniStavkaKorpa" alt="Meni" />
+      </div>
+    </div>
+
+    <div id="stavke-korpe-filter-panel" class="filter-panel" style="display: none;">
+      <div class="filter-row">
+        <label>Količina:</label>
+        <input type="number" id="kolicinaMinInput" placeholder="Min">
+        <input type="number" id="kolicinaMaxInput" placeholder="Max">
+      </div>
+
+      <div class="filter-actions">
+        <button id="primeniStavkeKorpeFiltereBtn">
+          <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
+          <span>Pretraži</span>
+        </button>
+        <button id="resetujStavkeKorpeFiltereBtn">
+          <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
+          <span>Restartuj</span>
+        </button>
+      </div>
+</div>
+
     <table class="admin-table" id="stavkeKorpeTabela">
       <thead>
         <tr>
@@ -955,6 +1015,27 @@ function prikaziKorpe() {
       <tbody></tbody>
     </table>
   `;
+  //Filter Korpa
+  const meniKorpa = document.getElementById('meniKorpa');
+  const filterKorpePanel = document.getElementById('korpe-filter-panel');
+
+  if (meniKorpa && filterKorpePanel) {
+    meniKorpa.addEventListener('click', () => {
+      filterKorpePanel.style.display =
+        filterKorpePanel.style.display === 'none' ? 'block' : 'none';
+    });
+  }
+
+  //Filter Stavke Korpe
+  const meniStavkaKorpa = document.getElementById('meniStavkaKorpa');
+  const filterStavkeKorpePanel = document.getElementById('stavke-korpe-filter-panel');
+
+  if (meniStavkaKorpa && filterStavkeKorpePanel) {
+    meniStavkaKorpa.addEventListener('click', () => {
+      filterStavkeKorpePanel.style.display =
+        filterStavkeKorpePanel.style.display === 'none' ? 'block' : 'none';
+    });
+  }
 
   // Učitaj korpe
   fetch(`${API_BASE_URL}/api/korpe`)
@@ -1005,6 +1086,45 @@ function prikaziRecenzije() {
   const container = document.querySelector('.content-placeholder');
   container.innerHTML = `
     <h2 style="text-align:center;">Recenzije</h2>
+
+    <div class="proizvodi-top-bar">
+      <div class="search-wrapper">
+        <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
+        <input type="text" id="searchRecenzijaInput" placeholder="Pretraži po kupcu...">
+        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniRecenzija" alt="Meni" />
+      </div>
+    </div>
+
+    <div id="recenzije-filter-panel" class="filter-panel" style="display: none;">
+      <div class="filter-row">
+        <label>Pretraga po proizvodu:</label>
+        <input type="text" id="filterProizvodRecenzija" placeholder="Unesi naziv proizvoda">
+      </div>
+
+      <div class="filter-row">
+        <label>Ocena:</label>
+        <input type="number" id="ocenaMinInput" placeholder="Min (1)" min="1" max="5">
+        <input type="number" id="ocenaMaxInput" placeholder="Max (5)" min="1" max="5">
+      </div>
+
+      <div class="filter-row">
+        <label>Datum (od - do):</label>
+        <input type="date" id="datumOdInput">
+        <input type="date" id="datumDoInput">
+      </div>
+
+      <div class="filter-actions">
+        <button id="primeniRecenzijeFiltereBtn">
+          <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
+          <span>Pretraži</span>
+        </button>
+        <button id="resetujRecenzijeFiltereBtn">
+          <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
+          <span>Restartuj</span>
+        </button>
+      </div>
+    </div>
+
     <table class="admin-table" id="recenzijeTabela">
       <thead>
         <tr>
@@ -1022,6 +1142,16 @@ function prikaziRecenzije() {
     </table>
   `;
 
+  // Panel toggle
+  const meni = document.getElementById('meniRecenzija');
+  const panel = document.getElementById('recenzije-filter-panel');
+  if (meni && panel) {
+    meni.addEventListener('click', () => {
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    });
+  }
+
+  // Učitavanje podataka
   fetch(`${API_BASE_URL}/api/recenzije`)
     .then(res => res.json())
     .then(data => {
@@ -1029,14 +1159,14 @@ function prikaziRecenzije() {
       data.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${row[0]}</td> <!-- ID_RECENZIJA -->
-          <td>${row[1]}</td> <!-- ID_KUPAC -->
-          <td>${row[2]}</td> <!-- Kupac ime -->
-          <td>${row[3]}</td> <!-- ID_PROIZVOD -->
-          <td>${row[4]}</td> <!-- Naziv proizvoda -->
-          <td>${row[5]}</td> <!-- Ocena -->
-          <td>${row[6]}</td> <!-- Komentar -->
-          <td>${row[7]}</td> <!-- Datum -->
+          <td>${row[0]}</td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+          <td>${row[3]}</td>
+          <td>${row[4]}</td>
+          <td>${row[5]}</td>
+          <td>${row[6]}</td>
+          <td>${row[7]}</td>
         `;
         tbody.appendChild(tr);
       });
