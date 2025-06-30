@@ -299,7 +299,8 @@ app.get('/api/podkategorije', async (req, res) => {
   }
 });
 
-// Logicko i Fizicko brisanje
+// Logicko brisanje proizvoda
+
 app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
   const id = req.params.id;
   let conn;
@@ -396,7 +397,8 @@ await conn.execute(`
 });
 
 
-//Fizicko brisanje
+//Fizicko brisanje proizvoda
+
 app.delete('/api/proizvodi/fizicko_brisanje/:id', async (req, res) => {
   const id = req.params.id;
   let conn;
@@ -423,3 +425,136 @@ app.delete('/api/proizvodi/fizicko_brisanje/:id', async (req, res) => {
   }
 });
 
+
+
+//logicko brisanje kategorija
+
+app.put('/api/kategorije/logicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    const provera = await conn.execute(
+      `SELECT * FROM KATEGORIJE WHERE id_kategorija = :id`, [id]
+    );
+
+    if (provera.rows.length === 0) {
+      return res.status(404).json({ error: 'Kategorija ne postoji' });
+    }
+
+    await conn.execute(`
+      INSERT INTO OBRISANE_KATEGORIJE (id_kategorija, naziv, datum_brisanja)
+      SELECT id_kategorija, naziv, SYSDATE
+      FROM KATEGORIJE
+      WHERE id_kategorija = :id
+    `, [id]);
+
+    await conn.execute(`
+      DELETE FROM KATEGORIJE WHERE id_kategorija = :id
+    `, [id]);
+
+    await conn.commit();
+    res.json({ msg: '✅ Kategorija logički obrisana' });
+
+  } catch (err) {
+    if (conn) await conn.rollback();
+    console.error('❌ Greška pri logičkom brisanju kategorije:', err);
+    res.status(500).json({ error: 'Greška u logičkom brisanju kategorije' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+//fiyicko  brisanje kategorija
+
+app.delete('/api/kategorije/fizicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    await conn.execute(`
+      DELETE FROM KATEGORIJE WHERE id_kategorija = :id
+    `, [id]);
+
+    await conn.commit();
+    res.json({ msg: '✅ Kategorija fizički obrisana' });
+
+  } catch (err) {
+    console.error('❌ Greška pri fizičkom brisanju kategorije:', err);
+    res.status(500).json({ error: 'Greška u fizičkom brisanju kategorije' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+
+//logicko brisanje podkategorija
+
+app.put('/api/podkategorije/logicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    const provera = await conn.execute(
+      `SELECT * FROM PODKATEGORIJE WHERE id_podkategorija = :id`, [id]
+    );
+
+    if (provera.rows.length === 0) {
+      return res.status(404).json({ error: 'Podkategorija ne postoji' });
+    }
+
+    await conn.execute(`
+      INSERT INTO OBRISANE_PODKATEGORIJE (
+        id_podkategorija, id_kategorija, naziv, datum_brisanja
+      )
+      SELECT id_podkategorija, id_kategorija, naziv, SYSDATE
+      FROM PODKATEGORIJE
+      WHERE id_podkategorija = :id
+    `, [id]);
+
+    await conn.execute(`
+      DELETE FROM PODKATEGORIJE WHERE id_podkategorija = :id
+    `, [id]);
+
+    await conn.commit();
+    res.json({ msg: '✅ Podkategorija logički obrisana' });
+
+  } catch (err) {
+    if (conn) await conn.rollback();
+    console.error('❌ Greška pri logičkom brisanju podkategorije:', err);
+    res.status(500).json({ error: 'Greška u logičkom brisanju podkategorije' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+
+//fizicko brisanje podkategorija
+
+app.delete('/api/podkategorije/fizicko_brisanje/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    await conn.execute(`
+      DELETE FROM PODKATEGORIJE WHERE id_podkategorija = :id
+    `, [id]);
+
+    await conn.commit();
+    res.json({ msg: '✅ Podkategorija fizički obrisana' });
+
+  } catch (err) {
+    console.error('❌ Greška pri fizičkom brisanju podkategorije:', err);
+    res.status(500).json({ error: 'Greška u fizičkom brisanju podkategorije' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
