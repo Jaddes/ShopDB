@@ -317,34 +317,48 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
       return res.status(404).json({ error: 'Proizvod ne postoji' });
     }
 
-    // 2. Kopiranje povezanih podataka u arhivske tabele (OBRISANE_*)
-    await conn.execute(`
-      INSERT INTO OBRISANE_STAVKE_KORPE (id_kupac, id_proizvod, kolicina)
-      SELECT id_kupac, id_proizvod, kolicina
-      FROM STAVKE_KORPE
-      WHERE id_proizvod = :id
-    `, [id]); 
+  // 2. Kopiranje povezanih podataka u arhivske tabele (OBRISANE_*)
+await conn.execute(`
+  INSERT INTO OBRISANE_STAVKE_KORPE (
+    id_stavka_korpe, id_korpa, id_proizvod, kolicina, datum_brisanja
+  )
+  SELECT 
+    id_stavka_korpe, id_korpa, id_proizvod, kolicina, SYSDATE
+  FROM STAVKE_KORPE
+  WHERE id_proizvod = :id
+`, [id]);
 
-    await conn.execute(`
-      INSERT INTO OBRISANE_WISHLIST_STAVKE (id_wishlist, id_proizvod)
-      SELECT id_wishlist, id_proizvod
-      FROM WISHLIST_STAVKE
-      WHERE id_proizvod = :id
-    `, [id]);
+await conn.execute(`
+  INSERT INTO OBRISANE_WISHLIST_STAVKE (
+    id_wishlist, id_proizvod, datum_brisanja
+  )
+  SELECT 
+    id_wishlist, id_proizvod, SYSDATE
+  FROM WISHLIST_STAVKE
+  WHERE id_proizvod = :id
+`, [id]);
 
-    await conn.execute(`
-      INSERT INTO OBRISANE_RECENZIJE (id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum)
-      SELECT id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum
-      FROM RECENZIJE
-      WHERE id_proizvod = :id
-    `, [id]);
+await conn.execute(`
+  INSERT INTO OBRISANE_RECENZIJE (
+    id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum, datum_brisanja
+  )
+  SELECT 
+    id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum, SYSDATE
+  FROM RECENZIJE
+  WHERE id_proizvod = :id
+`, [id]);
 
-    await conn.execute(`
-      INSERT INTO OBRISANE_STAVKE_NARUDZBINE (id_narudzbina, id_proizvod, kolicina, cena)
-      SELECT id_narudzbina, id_proizvod, kolicina, cena
-      FROM STAVKE_NARUDZBINE
-      WHERE id_proizvod = :id
-    `, [id]);
+await conn.execute(`
+  INSERT INTO OBRISANE_STAVKE_NARUDZBINE (
+    id_stavka_narudzbine, id_narudzbina, id_proizvod, kolicina, 
+    cena_po_komadu, ukupna_cena, datum_obrisanja
+  )
+  SELECT 
+    id_stavka_narudzbine, id_narudzbina, id_proizvod, kolicina, 
+    cena_po_komadu, ukupna_cena, SYSDATE
+  FROM STAVKE_NARUDZBINE
+  WHERE id_proizvod = :id
+`, [id]);
 
     // 3. Kopiranje samog proizvoda u tabelu obrisanih sa datumom brisanja
     await conn.execute(`
@@ -358,13 +372,11 @@ app.put('/api/proizvodi/logicko_brisanje/:id', async (req, res) => {
       FROM PROIZVODI
       WHERE id_proizvod = :id
     `, [id]);
-
-    // 4. Brisanje podataka iz originalnih tabela (ISTIM REDOSLEDOM)
-   // await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
-    await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :id`, [id]);
-    await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :id`, [id]);
-    await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :id`, [id]);
-    await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :id`, [id]);
+  // 4. Brisanje podataka iz originalnih tabela (ISTIM REDOSLEDOM)
+  await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :id`, [id]);
+  await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :id`, [id]);
+  await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :id`, [id]);
+  await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :id`, [id]);
 
     await conn.commit();
     res.json({ msg: '✅ Proizvod logički obrisan' });
