@@ -330,13 +330,17 @@ await conn.execute(`
 
 await conn.execute(`
   INSERT INTO OBRISANE_WISHLISTE (
-    id_wishlist, id_proizvod, datum_brisanja
+    id_wishlist, id_kupac, datum_brisanja
   )
   SELECT 
-    id_wishlist, id_proizvod, SYSDATE
-  FROM WISHLIST_STAVKE
-  WHERE id_proizvod = :id
+    w.id_wishlist,
+    w.id_kupac,
+    SYSDATE
+  FROM WISHLIST_STAVKE ws
+  JOIN WISHLIST w ON ws.id_wishlist = w.id_wishlist
+  WHERE ws.id_proizvod = :id
 `, [id]);
+
 
 await conn.execute(`
   INSERT INTO OBRISANE_RECENZIJE (
