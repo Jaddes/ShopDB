@@ -329,7 +329,7 @@ await conn.execute(`
 `, [id]);
 
 await conn.execute(`
-  INSERT INTO OBRISANE_WISHLIST_STAVKE (
+  INSERT INTO OBRISANE_WISHLISTE (
     id_wishlist, id_proizvod, datum_brisanja
   )
   SELECT 
@@ -373,6 +373,7 @@ await conn.execute(`
       WHERE id_proizvod = :id
     `, [id]);
   // 4. Brisanje podataka iz originalnih tabela (ISTIM REDOSLEDOM)
+  await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :id`, [id]);
   await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :id`, [id]);
   await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :id`, [id]);
   await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :id`, [id]);
