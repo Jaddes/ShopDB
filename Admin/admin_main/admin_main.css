@@ -774,3 +774,60 @@ main {
   z-index: 2;
   border-radius: 5px;
 }
+
+/* Dodaj dugme */
+.custom-modal-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background-color: #C1E899;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.custom-modal-form-grid .form-input,
+.custom-modal-form-grid .form-select,
+.custom-modal-form-grid .form-textarea {
+  padding: 12px 16px;
+  font-size: 14px;
+  border: 2px solid #17411D;
+  border-radius: 15px;
+  background-color: #fff;
+  width: 100%;
+}
+
+.custom-modal-form-grid .form-textarea {
+  resize: vertical;
+  min-height: 80px;
+  grid-column: span 2;
+}
+
+.custom-modal-form-grid .form-title {
+  font-size: 22px;
+  color: #17411D;
+  font-family: 'Irish Grover', cursive;
+  text-align: center;
+}
+
+.btn-otkazi {
+  padding: 10px 25px;
+  background-color: #ccc;
+  color: #17411D;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-otkazi:hover {
+  background-color: #aaa;
+  transform: translateY(-1px);
+}

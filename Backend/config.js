@@ -2,7 +2,7 @@ let API_BASE_URL = "http://localhost:3000"; // Početna vrednost (nije konačna)
 
 async function initializeApiBaseUrl() {
   const lokalni = "http://192.168.1.67:3000";      // tvoje LAN okruženje (npr. ako pristupaš sa istog Wi-Fi-ja)
-  const javni = "http://178.223.76.4:3000";      // tvoja javna IP adresa (za pristup preko interneta)
+  const javni = "http://93.86.29.223:3000";      // tvoja javna IP adresa (za pristup preko interneta)
 
   try {
     const response = await fetch(`${lokalni}/api/ping`, { method: 'GET' });

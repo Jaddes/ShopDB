@@ -320,6 +320,8 @@ function prikaziProizvode() {
       <button id="dodajProizvodBtn" class="btn-dodaj">➕ Dodaj novi proizvod</button>
     </div>
 
+    <div id="formaDodajProizvod" style="margin-top: 20px;"></div>
+
     <div id="filter-panel" class="filter-panel" style="display: none;">
       <div class="filter-row">
         <label>Podkategorija:</label>
@@ -519,9 +521,72 @@ function prikaziProizvode() {
 
   // Dodavanje novog prozivoda
   document.getElementById('dodajProizvodBtn').addEventListener('click', () => {
-  alert("Otvara se forma za dodavanje proizvoda (uskoro).");
-  // Ovde ćeš ubaciti logiku za prikaz forme
+    const formaDiv = document.getElementById('formaDodajProizvod');
+
+    if (formaDiv.innerHTML.trim() !== "") return; // Ako forma već postoji, ne dodaj je ponovo
+
+    formaDiv.innerHTML = `
+      <div class="modal-content custom-modal-form-grid">
+        <h3 class="form-title" style="grid-column: span 2;">Dodaj novi proizvod</h3>
+
+        <!-- Levi blok -->
+        <input type="text" id="noviNaziv" placeholder="Naziv proizvoda" class="form-input" />
+        <textarea id="noviOpis" placeholder="Opis proizvoda" class="form-textarea"></textarea>
+
+        <select id="noviPodkategorija" class="form-select">
+          <option value="">-- Odaberi podkategoriju --</option>
+        </select>
+        <input type="text" id="noviSlikaUrl" placeholder="URL slike" class="form-input" />
+
+        <select id="noviBoja" class="form-select">
+          <option value="">-- Odaberi boju --</option>
+        </select>
+        <input type="date" id="noviDatumNabavke" class="form-input" />
+
+        <select id="noviOznaka" class="form-select">
+          <option value="">-- Odaberi oznaku --</option>
+        </select>
+        <input type="number" id="noviNabavnaCena" placeholder="Nabavna cena" class="form-input" />
+
+        <input type="number" id="noviProdajnaCena" placeholder="Prodajna cena" class="form-input" />
+        <input type="number" id="noviKolicina" placeholder="Količina" class="form-input" />
+
+        <!-- Dugmad -->
+        <div class="buttons" style="grid-column: span 2; display: flex; justify-content: center; gap: 20px;">
+          <button id="potvrdiDodavanjeBtn" class="btn-dodaj">➕ Dodaj</button>
+          <button id="zatvoriDodavanjeBtn" class="btn-otkazi">Otkaži</button>
+        </div>
+      </div>
+    `;
+
+    // Napuni <select> elemente (boje, oznake, podkategorije)
+    popuniDropdownoveZaDodavanje();
+
+    // Sakrij formu ako klikneš "Otkaži"
+    document.getElementById('zatvoriDodavanjeBtn').addEventListener('click', () => {
+      formaDiv.innerHTML = "";
+    });
+
+    // Ovde će ići logika za POST ka serveru (kasnije)
   });
+
+
+  // Zatvaranje novog proizvoda
+  document.getElementById('dodajProizvodBtn').addEventListener('click', () => {
+    const modal = document.getElementById('dodajProizvodModal');
+    modal.style.display = 'flex';
+
+    // Ovde smeš da dodaš event listener jer dugme sad postoji
+    const zatvoriBtn = document.getElementById('zatvoriDodavanjeBtn');
+    if (zatvoriBtn) {
+      zatvoriBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+
+    popuniDropdownoveZaDodavanje();
+  });
+
 
   // Search Bar
   document.getElementById('searchProizvodInput').addEventListener('input', function () {
