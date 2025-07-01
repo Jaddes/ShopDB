@@ -436,27 +436,108 @@ app.put('/api/kategorije/logicko_brisanje/:id', async (req, res) => {
   try {
     conn = await getConnection();
 
+    // Provera da li kategorija postoji
     const provera = await conn.execute(
-      `SELECT * FROM KATEGORIJE WHERE id_kategorija = :id`, [id]
+      `SELECT * FROM KATEGORIJE WHERE id_kategorija = :id`,
+      [id]
     );
-
     if (provera.rows.length === 0) {
       return res.status(404).json({ error: 'Kategorija ne postoji' });
     }
 
+    // 1. Kopiranje kategorije u OBRISANE_KATEGORIJE
     await conn.execute(`
       INSERT INTO OBRISANE_KATEGORIJE (id_kategorija, naziv, datum_brisanja)
       SELECT id_kategorija, naziv, SYSDATE
-      FROM KATEGORIJE
-      WHERE id_kategorija = :id
+      FROM KATEGORIJE WHERE id_kategorija = :id
     `, [id]);
 
-    await conn.execute(`
-      DELETE FROM KATEGORIJE WHERE id_kategorija = :id
+    // 2. Dohvati sve podkategorije za tu kategoriju
+    const podkategorije = await conn.execute(`
+      SELECT id_podkategorija FROM PODKATEGORIJE WHERE id_kategorija = :id
     `, [id]);
+
+    // 3. Za svaku podkategoriju pozovi logičko brisanje podkategorije (ili napiši inline)
+    for (const row of podkategorije.rows) {
+      const podkatId = row[0];
+
+      // Kopiranje podkategorije u OBRISANE_PODKATEGORIJE
+      await conn.execute(`
+        INSERT INTO OBRISANE_PODKATEGORIJE (id_podkategorija, id_kategorija, naziv, datum_brisanja)
+        SELECT id_podkategorija, id_kategorija, naziv, SYSDATE
+        FROM PODKATEGORIJE WHERE id_podkategorija = :pid
+      `, [podkatId]);
+
+      // Logičko brisanje proizvoda te podkategorije - kopiranje u OBRISANI_PROIZVODI itd
+      const proizvodi = await conn.execute(`
+        SELECT id_proizvod FROM PROIZVODI WHERE id_podkategorija = :pid
+      `, [podkatId]);
+
+      for (const pRow of proizvodi.rows) {
+        const proizvodId = pRow[0];
+
+        // Logičko brisanje proizvoda (isto kao tvoj postojeći kod)
+        // Kopiranje povezanih podataka u arhivske tabele
+        await conn.execute(`
+          INSERT INTO OBRISANE_STAVKE_KORPE (
+            id_stavka_korpe, id_korpa, id_proizvod, kolicina, datum_brisanja
+          )
+          SELECT id_stavka_korpe, id_korpa, id_proizvod, kolicina, SYSDATE
+          FROM STAVKE_KORPE WHERE id_proizvod = :pid
+        `, [proizvodId]);
+
+        await conn.execute(`
+          INSERT INTO OBRISANE_WISHLISTE (
+            id_wishlist, id_kupac, datum_brisanja
+          )
+          SELECT w.id_wishlist, w.id_kupac, SYSDATE
+          FROM WISHLIST_STAVKE ws JOIN WISHLIST w ON ws.id_wishlist = w.id_wishlist
+          WHERE ws.id_proizvod = :pid
+        `, [proizvodId]);
+
+        await conn.execute(`
+          INSERT INTO OBRISANE_RECENZIJE (
+            id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum, datum_brisanja
+          )
+          SELECT id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum, SYSDATE
+          FROM RECENZIJE WHERE id_proizvod = :pid
+        `, [proizvodId]);
+
+        await conn.execute(`
+          INSERT INTO OBRISANE_STAVKE_NARUDZBINE (
+            id_stavka_narudzbine, id_narudzbina, id_proizvod, kolicina, cena_po_komadu, ukupna_cena, datum_obrisanja
+          )
+          SELECT id_stavka_narudzbine, id_narudzbina, id_proizvod, kolicina, cena_po_komadu, ukupna_cena, SYSDATE
+          FROM STAVKE_NARUDZBINE WHERE id_proizvod = :pid
+        `, [proizvodId]);
+
+        await conn.execute(`
+          INSERT INTO OBRISANI_PROIZVODI (
+            id_proizvod, naziv, opis, id_podkategorija, id_boja, id_oznaka,
+            slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina, datum_brisanja
+          )
+          SELECT id_proizvod, naziv, opis, id_podkategorija, id_boja, id_oznaka,
+            slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina, SYSDATE
+          FROM PROIZVODI WHERE id_proizvod = :pid
+        `, [proizvodId]);
+
+        // Brisanje iz originalnih tabela
+        await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :pid`, [proizvodId]);
+        await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :pid`, [proizvodId]);
+        await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :pid`, [proizvodId]);
+        await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :pid`, [proizvodId]);
+        await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :pid`, [proizvodId]);
+      }
+
+      // Brisanje podkategorije iz originalne tabele
+      await conn.execute(`DELETE FROM PODKATEGORIJE WHERE id_podkategorija = :pid`, [podkatId]);
+    }
+
+    // Brisanje kategorije iz originalne tabele
+    await conn.execute(`DELETE FROM KATEGORIJE WHERE id_kategorija = :id`, [id]);
 
     await conn.commit();
-    res.json({ msg: '✅ Kategorija logički obrisana' });
+    res.json({ msg: '✅ Kategorija i sve povezane podkategorije i proizvodi su logički obrisani' });
 
   } catch (err) {
     if (conn) await conn.rollback();
@@ -467,6 +548,7 @@ app.put('/api/kategorije/logicko_brisanje/:id', async (req, res) => {
   }
 });
 
+
 //fiyicko  brisanje kategorija
 
 app.delete('/api/kategorije/fizicko_brisanje/:id', async (req, res) => {
@@ -476,12 +558,38 @@ app.delete('/api/kategorije/fizicko_brisanje/:id', async (req, res) => {
   try {
     conn = await getConnection();
 
-    await conn.execute(`
-      DELETE FROM KATEGORIJE WHERE id_kategorija = :id
+    // Prvo dohvati podkategorije da obrišeš njihove proizvode
+    const podkategorije = await conn.execute(`
+      SELECT id_podkategorija FROM PODKATEGORIJE WHERE id_kategorija = :id
     `, [id]);
 
+    for (const row of podkategorije.rows) {
+      const podkatId = row[0];
+
+      // Obriši proizvode te podkategorije i povezane podatke
+      const proizvodi = await conn.execute(`
+        SELECT id_proizvod FROM PROIZVODI WHERE id_podkategorija = :pid
+      `, [podkatId]);
+
+      for (const pRow of proizvodi.rows) {
+        const proizvodId = pRow[0];
+
+        await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :pid`, [proizvodId]);
+        await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :pid`, [proizvodId]);
+        await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :pid`, [proizvodId]);
+        await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :pid`, [proizvodId]);
+        await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :pid`, [proizvodId]);
+      }
+
+      // Obriši podkategoriju
+      await conn.execute(`DELETE FROM PODKATEGORIJE WHERE id_podkategorija = :pid`, [podkatId]);
+    }
+
+    // Na kraju obriši kategoriju
+    await conn.execute(`DELETE FROM KATEGORIJE WHERE id_kategorija = :id`, [id]);
+
     await conn.commit();
-    res.json({ msg: '✅ Kategorija fizički obrisana' });
+    res.json({ msg: '✅ Kategorija i sve povezane podkategorije i proizvodi su fizički obrisani' });
 
   } catch (err) {
     console.error('❌ Greška pri fizičkom brisanju kategorije:', err);
@@ -490,6 +598,7 @@ app.delete('/api/kategorije/fizicko_brisanje/:id', async (req, res) => {
     if (conn) await conn.close();
   }
 });
+
 
 
 //logicko brisanje podkategorija
@@ -504,26 +613,81 @@ app.put('/api/podkategorije/logicko_brisanje/:id', async (req, res) => {
     const provera = await conn.execute(
       `SELECT * FROM PODKATEGORIJE WHERE id_podkategorija = :id`, [id]
     );
-
     if (provera.rows.length === 0) {
       return res.status(404).json({ error: 'Podkategorija ne postoji' });
     }
 
+    // Kopiraj podkategoriju u arhivu
     await conn.execute(`
-      INSERT INTO OBRISANE_PODKATEGORIJE (
-        id_podkategorija, id_kategorija, naziv, datum_brisanja
-      )
+      INSERT INTO OBRISANE_PODKATEGORIJE (id_podkategorija, id_kategorija, naziv, datum_brisanja)
       SELECT id_podkategorija, id_kategorija, naziv, SYSDATE
-      FROM PODKATEGORIJE
-      WHERE id_podkategorija = :id
+      FROM PODKATEGORIJE WHERE id_podkategorija = :id
     `, [id]);
 
-    await conn.execute(`
-      DELETE FROM PODKATEGORIJE WHERE id_podkategorija = :id
+    // Logičko brisanje svih proizvoda te podkategorije (isto kao gore)
+    const proizvodi = await conn.execute(`
+      SELECT id_proizvod FROM PROIZVODI WHERE id_podkategorija = :id
     `, [id]);
+
+    for (const row of proizvodi.rows) {
+      const proizvodId = row[0];
+
+      await conn.execute(`
+        INSERT INTO OBRISANE_STAVKE_KORPE (
+          id_stavka_korpe, id_korpa, id_proizvod, kolicina, datum_brisanja
+        )
+        SELECT id_stavka_korpe, id_korpa, id_proizvod, kolicina, SYSDATE
+        FROM STAVKE_KORPE WHERE id_proizvod = :pid
+      `, [proizvodId]);
+
+      await conn.execute(`
+        INSERT INTO OBRISANE_WISHLISTE (
+          id_wishlist, id_kupac, datum_brisanja
+        )
+        SELECT w.id_wishlist, w.id_kupac, SYSDATE
+        FROM WISHLIST_STAVKE ws JOIN WISHLIST w ON ws.id_wishlist = w.id_wishlist
+        WHERE ws.id_proizvod = :pid
+      `, [proizvodId]);
+
+      await conn.execute(`
+        INSERT INTO OBRISANE_RECENZIJE (
+          id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum, datum_brisanja
+        )
+        SELECT id_recenzija, id_proizvod, id_kupac, ocena, komentar, datum, SYSDATE
+        FROM RECENZIJE WHERE id_proizvod = :pid
+      `, [proizvodId]);
+
+      await conn.execute(`
+        INSERT INTO OBRISANE_STAVKE_NARUDZBINE (
+          id_stavka_narudzbine, id_narudzbina, id_proizvod, kolicina, cena_po_komadu, ukupna_cena, datum_obrisanja
+        )
+        SELECT id_stavka_narudzbine, id_narudzbina, id_proizvod, kolicina, cena_po_komadu, ukupna_cena, SYSDATE
+        FROM STAVKE_NARUDZBINE WHERE id_proizvod = :pid
+      `, [proizvodId]);
+
+      await conn.execute(`
+        INSERT INTO OBRISANI_PROIZVODI (
+          id_proizvod, naziv, opis, id_podkategorija, id_boja, id_oznaka,
+          slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina, datum_brisanja
+        )
+        SELECT id_proizvod, naziv, opis, id_podkategorija, id_boja, id_oznaka,
+          slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina, SYSDATE
+        FROM PROIZVODI WHERE id_proizvod = :pid
+      `, [proizvodId]);
+
+      // Brisanje originalnih podataka
+      await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :pid`, [proizvodId]);
+      await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :pid`, [proizvodId]);
+      await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :pid`, [proizvodId]);
+      await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :pid`, [proizvodId]);
+      await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :pid`, [proizvodId]);
+    }
+
+    // Brisanje podkategorije
+    await conn.execute(`DELETE FROM PODKATEGORIJE WHERE id_podkategorija = :id`, [id]);
 
     await conn.commit();
-    res.json({ msg: '✅ Podkategorija logički obrisana' });
+    res.json({ msg: '✅ Podkategorija i njeni proizvodi su logički obrisani' });
 
   } catch (err) {
     if (conn) await conn.rollback();
@@ -544,12 +708,24 @@ app.delete('/api/podkategorije/fizicko_brisanje/:id', async (req, res) => {
   try {
     conn = await getConnection();
 
-    await conn.execute(`
-      DELETE FROM PODKATEGORIJE WHERE id_podkategorija = :id
+    const proizvodi = await conn.execute(`
+      SELECT id_proizvod FROM PROIZVODI WHERE id_podkategorija = :id
     `, [id]);
 
+    for (const row of proizvodi.rows) {
+      const proizvodId = row[0];
+
+      await conn.execute(`DELETE FROM STAVKE_KORPE WHERE id_proizvod = :pid`, [proizvodId]);
+      await conn.execute(`DELETE FROM WISHLIST_STAVKE WHERE id_proizvod = :pid`, [proizvodId]);
+      await conn.execute(`DELETE FROM RECENZIJE WHERE id_proizvod = :pid`, [proizvodId]);
+      await conn.execute(`DELETE FROM STAVKE_NARUDZBINE WHERE id_proizvod = :pid`, [proizvodId]);
+      await conn.execute(`DELETE FROM PROIZVODI WHERE id_proizvod = :pid`, [proizvodId]);
+    }
+
+    await conn.execute(`DELETE FROM PODKATEGORIJE WHERE id_podkategorija = :id`, [id]);
+
     await conn.commit();
-    res.json({ msg: '✅ Podkategorija fizički obrisana' });
+    res.json({ msg: '✅ Podkategorija i njeni proizvodi su fizički obrisani' });
 
   } catch (err) {
     console.error('❌ Greška pri fizičkom brisanju podkategorije:', err);
