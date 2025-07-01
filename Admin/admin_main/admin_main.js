@@ -1419,10 +1419,10 @@ function prikaziKatiPKat() {
           <td>${row[1]}</td>
           <td>
               <img src="../../accessories/trash-can.svg" 
-              class="icon-trash" 
-              data-id="${row.id_korisnik}" 
+              class="icon-trash-kategorija" 
+              data-id="${row[0]}" 
               style="cursor:pointer; width:20px;" 
-              title="Obriši korisnika" />
+              title="Obriši kategoriju" />
           </td>
         `;
         tbody.appendChild(tr);
@@ -1445,10 +1445,10 @@ function prikaziKatiPKat() {
           <td>${row[2]}</td>
           <td>
               <img src="../../accessories/trash-can.svg" 
-              class="icon-trash" 
-              data-id="${row.id_korisnik}" 
-              style="cursor:pointer; width:20px;" 
-              title="Obriši korisnika" />
+                class="icon-trash-podkategorija" 
+                data-id="${row[0]}" 
+                style="cursor:pointer; width:20px;" 
+                title="Obriši podkategoriju" />
           </td>
         `;
         tbody.appendChild(tr);
