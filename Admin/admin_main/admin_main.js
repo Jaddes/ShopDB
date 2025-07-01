@@ -1,3 +1,11 @@
+let selectedCategoryId = null;
+let selectedPodkategorijaId = null;
+let selectedUserId = null;       
+let selectedProductId = null;   
+
+
+
+
 
 document.addEventListener("scroll", function() {
     const footer = document.querySelector("footer");
@@ -1497,14 +1505,46 @@ function prikaziKatiPKat() {
 }
 
 // Logicko i Fizicko Brisanje
-let selectedUserId = null;
+
 
 document.addEventListener('click', function (e) {
+  // Korisnici
   if (e.target.classList.contains('icon-trash')) {
     selectedUserId = e.target.dataset.id;
+    selectedProductId = null;
+    selectedCategoryId = null;
+    selectedPodkategorijaId = null;
+    document.getElementById('deleteConfirmModal').style.display = 'block';
+  }
+
+  // Proizvodi
+  else if (e.target.classList.contains('icon-trash-proizvod')) {
+    selectedProductId = e.target.dataset.id;
+    selectedUserId = null;
+    selectedCategoryId = null;
+    selectedPodkategorijaId = null;
+    document.getElementById('deleteConfirmModal').style.display = 'block';
+  }
+
+  // Kategorije
+  else if (e.target.classList.contains('icon-trash-kategorija')) {
+    selectedCategoryId = e.target.dataset.id;
+    selectedUserId = null;
+    selectedProductId = null;
+    selectedPodkategorijaId = null;
+    document.getElementById('deleteConfirmModal').style.display = 'block';
+  }
+
+  // Podkategorije
+  else if (e.target.classList.contains('icon-trash-podkategorija')) {
+    selectedPodkategorijaId = e.target.dataset.id;
+    selectedUserId = null;
+    selectedProductId = null;
+    selectedCategoryId = null;
     document.getElementById('deleteConfirmModal').style.display = 'block';
   }
 });
+
 
 document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
   document.getElementById('deleteConfirmModal').style.display = 'none';
@@ -1513,12 +1553,30 @@ document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
 function inicijalizujLogickoBrisanje() {
   document.getElementById('logicalDeleteBtn').addEventListener('click', async () => {
     try {
-      const res = await fetch(`${window.API_BASE_URL}/api/korisnici/logicko_brisanje/${selectedUserId}`, {
-        method: 'PUT'
-      });
-      if (res.ok) {
-        alert("✅ Logički obrisan korisnik.");
-        prikaziKorisnike();
+      if (selectedUserId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/korisnici/logicko_brisanje/${selectedUserId}`, { method: 'PUT' });
+        if (res.ok) {
+          alert("✅ Logički obrisan korisnik.");
+          prikaziKorisnike();
+        }
+      } else if (selectedProductId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/proizvodi/logicko_brisanje/${selectedProductId}`, { method: 'PUT' });
+        if (res.ok) {
+          alert("✅ Proizvod logički obrisan.");
+          prikaziProizvode();
+        }
+      } else if (selectedCategoryId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/kategorije/logicko_brisanje/${selectedCategoryId}`, { method: 'PUT' });
+        if (res.ok) {
+          alert("✅ Kategorija logički obrisana.");
+          prikaziKatiPKat();  // ili prikaziKategorije(); - zavisno od tvoje funkcije za refresh
+        }
+      } else if (selectedPodkategorijaId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/podkategorije/logicko_brisanje/${selectedPodkategorijaId}`, { method: 'PUT' });
+        if (res.ok) {
+          alert("✅ Podkategorija logički obrisana.");
+          prikaziKatiPKat();
+        }
       }
     } catch (err) {
       console.error('❌ Greška pri logičkom brisanju:', err);
@@ -1530,12 +1588,30 @@ function inicijalizujLogickoBrisanje() {
 function inicijalizujFizickoBrisanje() {
   document.getElementById('physicalDeleteBtn').addEventListener('click', async () => {
     try {
-      const res = await fetch(`${window.API_BASE_URL}/api/korisnici/fizicko_brisanje/${selectedUserId}`, {
-        method: 'DELETE'
-      });
-      if (res.ok) {
-        alert("✅ Fizički obrisan korisnik.");
-        prikaziKorisnike();
+      if (selectedUserId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/korisnici/fizicko_brisanje/${selectedUserId}`, { method: 'DELETE' });
+        if (res.ok) {
+          alert("✅ Fizički obrisan korisnik.");
+          prikaziKorisnike();
+        }
+      } else if (selectedProductId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/proizvodi/fizicko_brisanje/${selectedProductId}`, { method: 'DELETE' });
+        if (res.ok) {
+          alert("✅ Proizvod fizički obrisan.");
+          prikaziProizvode();
+        }
+      } else if (selectedCategoryId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/kategorije/fizicko_brisanje/${selectedCategoryId}`, { method: 'DELETE' });
+        if (res.ok) {
+          alert("✅ Kategorija fizički obrisana.");
+          prikaziKatiPKat();
+        }
+      } else if (selectedPodkategorijaId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/podkategorije/fizicko_brisanje/${selectedPodkategorijaId}`, { method: 'DELETE' });
+        if (res.ok) {
+          alert("✅ Podkategorija fizički obrisana.");
+          prikaziKatiPKat();
+        }
       }
     } catch (err) {
       console.error('❌ Greška pri fizičkom brisanju:', err);
@@ -1566,7 +1642,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 //Event lisiner
-let selectedProductId = null;
 
 document.addEventListener('click', function (e) {
   if (e.target.classList.contains('icon-trash-proizvod')) {
