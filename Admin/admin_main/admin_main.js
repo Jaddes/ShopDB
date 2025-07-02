@@ -90,8 +90,17 @@ document.getElementById('searchInput').addEventListener('input', function () {
 
 
 document.addEventListener('click', function (e) {
-  
-if (e.target.classList.contains('icon-trash-proizvod')) {
+  // Korisnici
+  if (e.target.classList.contains('icon-trash')) {
+    selectedUserId = e.target.dataset.id;
+    selectedProductId = null;
+    selectedCategoryId = null;
+    selectedPodkategorijaId = null;
+    document.getElementById('deleteConfirmModal').style.display = 'block';
+  }
+
+  // Proizvodi
+  else if (e.target.classList.contains('icon-trash-proizvod')) {
     selectedProductId = e.target.dataset.id;
     selectedUserId = null;
     selectedCategoryId = null;
@@ -126,7 +135,13 @@ document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
 function inicijalizujLogickoBrisanje() {
   document.getElementById('logicalDeleteBtn').addEventListener('click', async () => {
     try {
-      if (selectedProductId) {
+      if (selectedUserId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/korisnici/logicko_brisanje/${selectedUserId}`, { method: 'PUT' });
+        if (res.ok) {
+          alert("✅ Logički obrisan korisnik.");
+          prikaziKorisnike();
+        }
+      } else if (selectedProductId) {
         const res = await fetch(`${window.API_BASE_URL}/api/proizvodi/logicko_brisanje/${selectedProductId}`, { method: 'PUT' });
         if (res.ok) {
           alert("✅ Proizvod logički obrisan.");
@@ -155,7 +170,13 @@ function inicijalizujLogickoBrisanje() {
 function inicijalizujFizickoBrisanje() {
   document.getElementById('physicalDeleteBtn').addEventListener('click', async () => {
     try {
-       if (selectedProductId) {
+      if (selectedUserId) {
+        const res = await fetch(`${window.API_BASE_URL}/api/korisnici/fizicko_brisanje/${selectedUserId}`, { method: 'DELETE' });
+        if (res.ok) {
+          alert("✅ Fizički obrisan korisnik.");
+          prikaziKorisnike();
+        }
+      } else if (selectedProductId) {
         const res = await fetch(`${window.API_BASE_URL}/api/proizvodi/fizicko_brisanje/${selectedProductId}`, { method: 'DELETE' });
         if (res.ok) {
           alert("✅ Proizvod fizički obrisan.");
@@ -252,13 +273,6 @@ document.addEventListener('click', function (e) {
     };
   }
 });
-
-
-
-
-
-
-
 
 
 document.addEventListener('click', function(e) {
@@ -471,4 +485,6 @@ saveProizvodBtn.addEventListener("click", () => {
     })
     .catch((err) => alert(err.message));
 });
+
+
 
