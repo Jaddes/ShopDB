@@ -84,21 +84,19 @@
         </div>
 
 
-        <div id="editCategoryModal" class="modal" style="display:none;">
+        <div id="editModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <h3>Izmeni kategoriju</h3>
-            <label>ID (nepromenljiv):</label>
-            <input type="text" id="editCategoryId" readonly />
-            
-            <label>Naziv:</label>
-            <input type="text" id="editCategoryName" />
-
+            <h3>Izmeni zapis</h3>
+            <form id="editForm">
+            <!-- Polja će se dinamički ubacivati ovde -->
+            </form>
             <div class="buttons">
-            <button id="saveCategoryChangesBtn">Sačuvaj izmene</button>
-            <button id="cancelEditCategoryBtn">Otkaži</button>
+            <button type="submit" form="editForm" id="saveChangesBtn">Sačuvaj izmene</button>
+            <button id="cancelEditBtn" type="button">Otkaži</button>
             </div>
         </div>
         </div>
+
 
 
         <div id="admin-panel">
