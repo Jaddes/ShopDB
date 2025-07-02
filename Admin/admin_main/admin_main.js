@@ -200,6 +200,12 @@ async function prikaziKorisnike() {
               data-id="${row.id_korisnik}" 
               style="cursor:pointer; width:20px;" 
               title="Obriši korisnika" />
+
+           <img src="../../accessories/settings.svg" 
+              class="icon-settings-kategorija" 
+              data-id="${row[0]}" 
+              style="cursor:pointer; width:20px;" 
+              title="Izmeni kategoriju" />
         </td>
       `;
       tbody.appendChild(tr);
@@ -518,6 +524,12 @@ function prikaziProizvode() {
               data-id="${row.ID_PROIZVOD}" 
               style="cursor:pointer; width:20px;" 
               title="Obriši proizvod" />
+
+              <img src="../../accessories/settings.svg" 
+              class="icon-settings-kategorija" 
+              data-id="${row[0]}" 
+              style="cursor:pointer; width:20px;" 
+              title="Izmeni kategoriju" />
           </td>
         `;
         tbody.appendChild(tr);
@@ -1489,6 +1501,12 @@ function prikaziKatiPKat() {
               data-id="${row[0]}" 
               style="cursor:pointer; width:20px;" 
               title="Obriši kategoriju" />
+
+               <img src="../../accessories/settings.svg" 
+              class="icon-settings-kategorija" 
+              data-id="${row[0]}" 
+              style="cursor:pointer; width:20px;" 
+              title="Izmeni kategoriju" />
           </td>
         `;
         tbody.appendChild(tr);
@@ -1515,6 +1533,12 @@ function prikaziKatiPKat() {
                 data-id="${row[0]}" 
                 style="cursor:pointer; width:20px;" 
                 title="Obriši podkategoriju" />
+
+              <img src="../../accessories/settings.svg" 
+                  class="icon-settings-kategorija" 
+                  data-id="${row[0]}" 
+                  style="cursor:pointer; width:20px;" 
+                  title="Izmeni kategoriju" />
           </td>
         `;
         tbody.appendChild(tr);
@@ -1755,5 +1779,54 @@ document.addEventListener('click', function (e) {
       }
       document.getElementById('deleteConfirmModal').style.display = 'none';
     };
+  }
+});
+
+
+
+
+
+
+
+
+
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('icon-edit-kategorija')) {
+    const id = e.target.dataset.id;
+    const naziv = e.target.dataset.naziv;
+
+    document.getElementById('editCategoryId').value = id;
+    document.getElementById('editCategoryName').value = naziv;
+
+    document.getElementById('editCategoryModal').style.display = 'block';
+  }
+});
+
+document.getElementById('cancelEditCategoryBtn').addEventListener('click', () => {
+  document.getElementById('editCategoryModal').style.display = 'none';
+});
+
+document.getElementById('saveCategoryChangesBtn').addEventListener('click', async () => {
+  const id = document.getElementById('editCategoryId').value;
+  const naziv = document.getElementById('editCategoryName').value;
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/kategorije/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ naziv })
+    });
+
+    if (res.ok) {
+      alert("✅ Kategorija uspešno izmenjena.");
+      document.getElementById('editCategoryModal').style.display = 'none';
+      prikaziKatiPKat(); // refreshuj prikaz
+    } else {
+      alert("❌ Greška prilikom izmene kategorije.");
+    }
+  } catch (err) {
+    console.error("❌ Greska:", err);
   }
 });

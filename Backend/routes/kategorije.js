@@ -149,4 +149,41 @@ router.put('/vrati_kategoriju/:id', async (req, res) => {
   }
 });
 
+
+// Izmena kategorije (samo naziv)
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { naziv } = req.body;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    // Provera da li postoji
+    const check = await conn.execute(
+      `SELECT 1 FROM KATEGORIJE WHERE id_kategorija = :id`,
+      [id]
+    );
+    if (check.rows.length === 0) {
+      return res.status(404).json({ error: 'Kategorija ne postoji.' });
+    }
+
+    // Ažuriraj naziv
+    await conn.execute(
+      `UPDATE KATEGORIJE SET naziv = :naziv WHERE id_kategorija = :id`,
+      [naziv, id],
+      { autoCommit: true }
+    );
+
+    res.status(200).json({ message: 'Kategorija uspešno izmenjena.' });
+  } catch (err) {
+    console.error('❌ Greška prilikom izmene kategorije:', err);
+    res.status(500).json({ error: 'Greška na serveru.' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+
+
 module.exports = router;
