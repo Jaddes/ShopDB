@@ -472,211 +472,6 @@ function prikaziListaZelja() {
     });
 }
 
-//Dugme za Kategorije i PodKategorije
-function prikaziKatiPKat() {
-  const container = document.querySelector('.content-placeholder');
-  container.innerHTML = `
-    <h2 style="text-align:center;">Kategorije</h2>
-    <div class="proizvodi-top-bar">
-      <div class="search-wrapper">
-        <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
-        <input type="text" id="searchProizvodInput" placeholder="Pretraži po nazivu..." />
-        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniKategorije" alt="Meni" />
-      </div>
-      <button id="dodajKategorijuBtn" class="btn-dodaj">➕ Dodaj novu Kategoriju</button>
-    </div>
-
-    <div id="kategorije-filter-panel" class="filter-panel" style="display: none;">
-      <div class="filter-row">
-        <label>Sortiraj po:</label>
-        <select id="sortirajKategorije">
-          <option value="">-- Izaberi --</option>
-          <option value="naziv_asc">Naziv (A-Z)</option>
-          <option value="naziv_desc">Naziv (Z-A)</option>
-          <option value="id_asc">ID (rastuce)</option>
-          <option value="id_desc">ID (opadajuće)</option>
-        </select>
-    </div>
-
-  <div class="filter-actions">
-    <button id="primeniSortiranjeKategorijeBtn">
-      <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
-      <span>Primeni</span>
-    </button>
-    <button id="resetujSortiranjeKategorijeBtn">
-      <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
-      <span>Resetuj</span>
-    </button>
-    </div>
-  </div>
-
-    <table class="admin-table" id="kategorijeTabela">
-      <thead>
-        <tr>
-          <th>ID_KATEGORIJA</th>
-          <th>Naziv</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <h2 style="text-align:center;">Podkategorije</h2>
-    <div class="proizvodi-top-bar">
-      <div class="search-wrapper">
-        <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
-        <input type="text" id="searchPodkategorijaInput" placeholder="Pretraži po nazivu..." />
-        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniPodkategorije" alt="Meni" />
-      </div>
-      <button id="dodajPodkategorijuBtn" class="btn-dodaj">➕ Dodaj novu podkategoriju</button>
-    </div>
-
-    <div id="podkategorije-filter-panel" class="filter-panel" style="display: none;">
-      <div class="filter-row">
-        <label>Sortiraj po:</label>
-        <select id="sortirajPodkategorije">
-          <option value="">-- Izaberi --</option>
-          <option value="naziv_asc">Naziv (A-Z)</option>
-          <option value="naziv_desc">Naziv (Z-A)</option>
-          <option value="id_asc">ID (rastuce)</option>
-          <option value="id_desc">ID (opadajuće)</option>
-        </select>
-      </div>
-
-    <div class="filter-actions">
-        <button id="primeniSortiranjePodkategorijeBtn">
-          <img src="../../accessories/magnifying-glass.svg" alt="Pretraga" style="width: 16px; vertical-align: middle;">
-          <span>Primeni</span>
-        </button>
-        <button id="resetujSortiranjePodkategorijeBtn">
-          <img src="../../accessories/restart-arrow.svg" alt="Reset" style="width: 16px; vertical-align: middle;">
-          <span>Resetuj</span>
-        </button>
-      </div>
-    </div>
-
-    <table class="admin-table" id="podkategorijeTabela">
-      <thead>
-        <tr>
-          <th>ID_PODKATEGORIJA</th>
-          <th>ID_KATEGORIJA</th>
-          <th>Naziv</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  `;
-
-  // Prikaz kategorija
-  fetch(`${API_BASE_URL}/api/kategorije`)
-    .then(res => res.json())
-    .then(data => {
-      const tbody = document.querySelector('#kategorijeTabela tbody');
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${row[0]}</td>
-          <td>${row[1]}</td>
-          <td>
-              <img src="../../accessories/trash-can.svg" 
-              class="icon-trash-kategorija" 
-              data-id="${row[0]}" 
-              style="cursor:pointer; width:20px;" 
-              title="Obriši kategoriju" />
-
-               <img src="../../accessories/settings.svg" 
-              class="icon-edit-kategorija" 
-              data-id="${row[0]}" 
-              data-naziv="${row[1]}"
-              style="cursor:pointer; width:20px;" 
-              title="Izmeni kategoriju" />
-
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(err => {
-      console.error("❌ Greška u fetch kategorija:", err);
-    });
-
-  // Prikaz podkategorija
-  fetch(`${API_BASE_URL}/api/podkategorije`)
-    .then(res => res.json())
-    .then(data => {
-      const tbody = document.querySelector('#podkategorijeTabela tbody');
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${row[0]}</td>
-          <td>${row[1]}</td>
-          <td>${row[2]}</td>
-          <td>
-              <img src="../../accessories/trash-can.svg" 
-                class="icon-trash-podkategorija" 
-                data-id="${row[0]}" 
-                style="cursor:pointer; width:20px;" 
-                title="Obriši podkategoriju" />
-
-              <img src="../../accessories/settings.svg" 
-                  class="icon-settings-kategorija" 
-                  data-id="${row[0]}" 
-                  style="cursor:pointer; width:20px;" 
-                  title="Izmeni kategoriju" />
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(err => {
-      console.error("❌ Greška u fetch podkategorija:", err);
-    });
-
-  // Prikaz filtiranja Kategorije
-  // Omogući prikaz/sakrivanje filter panela za kategorije
-  const meniKategorije = document.getElementById('meniKategorije');
-  const filterKategorijePanel = document.getElementById('kategorije-filter-panel');
-
-  if (meniKategorije && filterKategorijePanel) {
-    meniKategorije.addEventListener('click', () => {
-      filterKategorijePanel.style.display =
-        (filterKategorijePanel.style.display === 'none') ? 'block' : 'none';
-    });
-  }
-
-  //Sortiranje kategorija
-  document.getElementById('primeniSortiranjeKategorijeBtn').addEventListener('click', () => {
-    const kriterijum = document.getElementById('sortirajKategorije').value;
-    prikaziKategorije(kriterijum);
-  });
-
-  document.getElementById('resetujSortiranjeKategorijeBtn').addEventListener('click', () => {
-    document.getElementById('sortirajKategorije').value = '';
-    prikaziKategorije();
-  });
-
-  //Prikaz filtiranja PodKategorije
-  const meniPodkategorije = document.getElementById('meniPodkategorije');
-  const filterPodkategorijePanel = document.getElementById('podkategorije-filter-panel');
-
-  if (meniPodkategorije && filterPodkategorijePanel) {
-    meniPodkategorije.addEventListener('click', () => {
-      filterPodkategorijePanel.style.display =
-        (filterPodkategorijePanel.style.display === 'none') ? 'block' : 'none';
-    });
-  }
-  // Sortiranje podkategorija
-  document.getElementById('primeniSortiranjePodkategorijeBtn').addEventListener('click', () => {
-    const kriterijum = document.getElementById('sortirajPodkategorije').value;
-    prikaziPodkategorije(kriterijum);
-  });
-
-  document.getElementById('resetujSortiranjePodkategorijeBtn').addEventListener('click', () => {
-    document.getElementById('sortirajPodkategorije').value = '';
-    prikaziPodkategorije();
-  });
-
-}
-
 // Logicko i Fizicko Brisanje
 
 
@@ -912,4 +707,205 @@ document.getElementById('saveCategoryChangesBtn').addEventListener('click', asyn
   } catch (err) {
     console.error("❌ Greska:", err);
   }
+});
+
+
+
+//EDIT
+
+// Otvaranje i zatvaranje modala za uređivanje kategorije
+const editCategoryModal = document.getElementById("editCategoryModal");
+const editCategoryIdInput = document.getElementById("editCategoryId");
+const editCategoryNameInput = document.getElementById("editCategoryName");
+const saveCategoryBtn = document.getElementById("saveCategoryChangesBtn");
+const cancelEditCategoryBtn = document.getElementById("cancelEditCategoryBtn");
+
+// Otvaranje i zatvaranje modala za uređivanje podkategorije
+const editPodkategorijaModal = document.getElementById("editPodkategorijaModal");
+const editPodkategorijaIdInput = document.getElementById("editPodkategorijaId");
+const editPodkategorijaCategoryIdInput = document.getElementById("editPodkategorijaCategoryId");
+const editPodkategorijaNameInput = document.getElementById("editPodkategorijaName");
+const savePodkategorijaBtn = document.getElementById("savePodkategorijaChangesBtn");
+const cancelEditPodkategorijaBtn = document.getElementById("cancelEditPodkategorijaBtn");
+
+// Otvaranje i zatvaranje modala za uređivanje proizvoda
+const editProizvodModal = document.getElementById("editProizvodModal");
+const editProizvodIdInput = document.getElementById("editProizvodId");
+const editProizvodNazivInput = document.getElementById("editProizvodNaziv");
+const editProizvodCenaInput = document.getElementById("editProizvodCena");
+const editProizvodKategorijaInput = document.getElementById("editProizvodKategorija");
+const editProizvodPodkategorijaInput = document.getElementById("editProizvodPodkategorija");
+const saveProizvodBtn = document.getElementById("saveProizvodChangesBtn");
+const cancelEditProizvodBtn = document.getElementById("cancelEditProizvodBtn");
+
+// Modal za potvrdu brisanja
+const deleteConfirmModal = document.getElementById("deleteConfirmModal");
+const logicalDeleteBtn = document.getElementById("logicalDeleteBtn");
+const physicalDeleteBtn = document.getElementById("physicalDeleteBtn");
+const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+
+
+// Funkcije za otvaranje modala sa podacima
+
+function openEditCategoryModal(category) {
+  editCategoryIdInput.value = category.id;
+  editCategoryNameInput.value = category.naziv;
+  editCategoryModal.style.display = "flex";
+}
+
+function closeEditCategoryModal() {
+  editCategoryModal.style.display = "none";
+}
+
+function openEditPodkategorijaModal(podkategorija) {
+  editPodkategorijaIdInput.value = podkategorija.id;
+  editPodkategorijaCategoryIdInput.value = podkategorija.id_kategorija;
+  editPodkategorijaNameInput.value = podkategorija.naziv;
+  editPodkategorijaModal.style.display = "flex";
+}
+
+function closeEditPodkategorijaModal() {
+  editPodkategorijaModal.style.display = "none";
+}
+
+function openEditProizvodModal(proizvod) {
+  editProizvodIdInput.value = proizvod.id;
+  editProizvodNazivInput.value = proizvod.naziv;
+  editProizvodCenaInput.value = proizvod.cena;
+  editProizvodKategorijaInput.value = proizvod.id_kategorija;
+  editProizvodPodkategorijaInput.value = proizvod.id_podkategorija;
+  editProizvodModal.style.display = "flex";
+}
+
+function closeEditProizvodModal() {
+  editProizvodModal.style.display = "none";
+}
+
+// Otvaranje modala za brisanje
+function openDeleteConfirmModal(id, type) {
+  selectedDeleteId = id;
+  // Možeš podesiti i poruku u modal-u u zavisnosti od tipa (korisnik, proizvod...)
+  deleteConfirmModal.style.display = "flex";
+}
+
+function closeDeleteConfirmModal() {
+  deleteConfirmModal.style.display = "none";
+}
+
+// Event listeneri za zatvaranje modala na dugme Otkaži
+cancelEditCategoryBtn.addEventListener("click", closeEditCategoryModal);
+cancelEditPodkategorijaBtn.addEventListener("click", closeEditPodkategorijaModal);
+cancelEditProizvodBtn.addEventListener("click", closeEditProizvodModal);
+cancelDeleteBtn.addEventListener("click", closeDeleteConfirmModal);
+
+// Ovde ide tvoj kod za potvrdu izmene i potvrdu brisanja - npr. fetch zahtevi na backend
+saveCategoryBtn.addEventListener("click", () => {
+  const id = editCategoryIdInput.value;
+  const naziv = editCategoryNameInput.value.trim();
+  if (!naziv) {
+    alert("Naziv kategorije ne može biti prazan.");
+    return;
+  }
+  // API poziv za čuvanje izmene (primer)
+  fetch(`${API_BASE_URL}/kategorije/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ naziv }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Greška prilikom izmene kategorije");
+      return res.json();
+    })
+    .then((data) => {
+      alert("Kategorija uspešno izmenjena.");
+      closeEditCategoryModal();
+      // Osveži prikaz kategorija, npr. pozovi funkciju koja ih učitava
+      loadCategories();
+    })
+    .catch((err) => alert(err.message));
+});
+
+savePodkategorijaBtn.addEventListener("click", () => {
+  const id = editPodkategorijaIdInput.value;
+  const id_kategorija = editPodkategorijaCategoryIdInput.value;
+  const naziv = editPodkategorijaNameInput.value.trim();
+  if (!naziv || !id_kategorija) {
+    alert("Sva polja su obavezna.");
+    return;
+  }
+  fetch(`${API_BASE_URL}/podkategorije/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id_kategorija, naziv }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Greška prilikom izmene podkategorije");
+      return res.json();
+    })
+    .then(() => {
+      alert("Podkategorija uspešno izmenjena.");
+      closeEditPodkategorijaModal();
+      loadPodkategorije();
+    })
+    .catch((err) => alert(err.message));
+});
+
+saveProizvodBtn.addEventListener("click", () => {
+  const id = editProizvodIdInput.value;
+  const naziv = editProizvodNazivInput.value.trim();
+  const cena = parseFloat(editProizvodCenaInput.value);
+  const id_kategorija = editProizvodKategorijaInput.value;
+  const id_podkategorija = editProizvodPodkategorijaInput.value;
+
+  if (!naziv || isNaN(cena) || !id_kategorija || !id_podkategorija) {
+    alert("Sva polja moraju biti ispravno popunjena.");
+    return;
+  }
+
+  fetch(`${API_BASE_URL}/proizvodi/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ naziv, cena, id_kategorija, id_podkategorija }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Greška prilikom izmene proizvoda");
+      return res.json();
+    })
+    .then(() => {
+      alert("Proizvod uspešno izmenjen.");
+      closeEditProizvodModal();
+      loadProizvodi();
+    })
+    .catch((err) => alert(err.message));
+});
+
+// Logičko brisanje
+logicalDeleteBtn.addEventListener("click", () => {
+  if (!selectedDeleteId) return;
+  fetch(`${API_BASE_URL}/korisnici/logicko_brisanje/${selectedDeleteId}`, {
+    method: "PUT",
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Greška prilikom logičkog brisanja");
+      alert("Uspešno izvršeno logičko brisanje.");
+      closeDeleteConfirmModal();
+      // Refresh liste korisnika
+      loadKorisnici();
+    })
+    .catch((err) => alert(err.message));
+});
+
+// Fizičko brisanje
+physicalDeleteBtn.addEventListener("click", () => {
+  if (!selectedDeleteId) return;
+  fetch(`${API_BASE_URL}/korisnici/fizicko_brisanje/${selectedDeleteId}`, {
+    method: "DELETE",
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Greška prilikom fizičkog brisanja");
+      alert("Uspešno izvršeno fizičko brisanje.");
+      closeDeleteConfirmModal();
+      loadKorisnici();
+    })
+    .catch((err) => alert(err.message));
 });

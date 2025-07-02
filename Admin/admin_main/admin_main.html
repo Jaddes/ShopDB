@@ -84,18 +84,91 @@
         </div>
 
 
-        <div id="editModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <h3>Izmeni zapis</h3>
-            <form id="editForm">
-            <!-- Polja će se dinamički ubacivati ovde -->
-            </form>
-            <div class="buttons">
-            <button type="submit" form="editForm" id="saveChangesBtn">Sačuvaj izmene</button>
-            <button id="cancelEditBtn" type="button">Otkaži</button>
-            </div>
-        </div>
-        </div>
+        <!-- Modal za uređivanje kategorije -->
+<div id="editCategoryModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Izmeni kategoriju</h3>
+    <input type="hidden" id="editCategoryId" />
+    <label for="editCategoryName">Naziv kategorije:</label>
+    <input type="text" id="editCategoryName" />
+    <div class="modal-actions">
+      <button id="saveCategoryChangesBtn">Sačuvaj izmene</button>
+      <button id="cancelEditCategoryBtn">Otkaži</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal za uređivanje podkategorije -->
+<div id="editPodkategorijaModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Izmeni podkategoriju</h3>
+    <input type="hidden" id="editPodkategorijaId" />
+    
+    <label for="editPodkategorijaCategoryId">ID kategorije:</label>
+    <input type="number" id="editPodkategorijaCategoryId" />
+
+    <label for="editPodkategorijaName">Naziv podkategorije:</label>
+    <input type="text" id="editPodkategorijaName" />
+    
+    <div class="modal-actions">
+      <button id="savePodkategorijaChangesBtn">Sačuvaj izmene</button>
+      <button id="cancelEditPodkategorijaBtn">Otkaži</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal za uređivanje proizvoda -->
+<div id="editProizvodModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Izmeni proizvod</h3>
+    <input type="hidden" id="editProizvodId" />
+    
+    <label for="editProizvodNaziv">Naziv proizvoda:</label>
+    <input type="text" id="editProizvodNaziv" />
+
+    <label for="editProizvodCena">Cena:</label>
+    <input type="number" step="0.01" id="editProizvodCena" />
+
+    <label for="editProizvodKategorija">ID kategorije:</label>
+    <input type="number" id="editProizvodKategorija" />
+
+    <label for="editProizvodPodkategorija">ID podkategorije:</label>
+    <input type="number" id="editProizvodPodkategorija" />
+    
+    <div class="modal-actions">
+      <button id="saveProizvodChangesBtn">Sačuvaj izmene</button>
+      <button id="cancelEditProizvodBtn">Otkaži</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Osnovni stilovi za modal */
+  .modal {
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    min-width: 300px;
+    max-width: 400px;
+  }
+  .modal-actions {
+    margin-top: 15px;
+    text-align: right;
+  }
+  .modal-actions button {
+    margin-left: 10px;
+  }
+</style>
+
 
 
 
@@ -141,9 +214,16 @@
 
     <script src="admin_main.js"></script>
     <script src="admin_proizvodi.js"></script>
+<<<<<<< HEAD
     <script src="admin_korisnici.js"></script>
     <script src="admin_kupci.js"></script>
     <script src="admin_narudzbine.js"></script>
+=======
+    <script src="admin_kat_pkat.js"></script>
+    <script src="admin_lista_zelja.js"></script>
+
+
+>>>>>>> af38ba3c805e73f1e68823c4b5f371b820e8a0ff
 </body>
 
 </html>
