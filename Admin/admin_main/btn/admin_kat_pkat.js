@@ -10,6 +10,21 @@ function prikaziKatiPKat() {
         <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniKategorije" alt="Meni" />
       </div>
       <button id="dodajKategorijuBtn" class="btn-dodaj">➕ Dodaj novu Kategoriju</button>
+
+      <!-- Forma za dodavanje kategorije -->
+        <div id="formaNovaKategorija" style="display: none; margin: 20px;">
+          <input type="text" id="unosNazivKategorije" placeholder="Unesi naziv kategorije" />
+          <button id="potvrdiKategorijuBtn">✔️ Dodaj</button>
+        </div>
+
+      <!-- Forma za dodavanje podkategorije -->
+        <div id="formaNovaPodkategorija" style="display: none; margin: 20px;">
+          <input type="text" id="unosNazivPodkategorije" placeholder="Unesi naziv podkategorije" />
+          <select id="odabirKategorijeZaPodkat">
+            <option value="">-- Izaberi kategoriju --</option>
+          </select>
+          <button id="potvrdiPodkategorijuBtn">✔️ Dodaj</button>
+        </div>
     </div>
 
     <div id="kategorije-filter-panel" class="filter-panel" style="display: none;">
@@ -200,5 +215,74 @@ function prikaziKatiPKat() {
     document.getElementById('sortirajPodkategorije').value = '';
     prikaziPodkategorije();
   });
+
+
+  // Logika za dodavanje KategorijeBtn
+  // Prikaži/ sakrij formu za novu kategoriju
+  document.getElementById('dodajKategorijuBtn').addEventListener('click', () => {
+    document.getElementById('formaNovaKategorija').style.display = 'block';
+  });
+
+  // Prikaži/ sakrij formu za novu podkategoriju
+  document.getElementById('dodajPodkategorijuBtn').addEventListener('click', async () => {
+    const forma = document.getElementById('formaNovaPodkategorija');
+    forma.style.display = 'block';
+
+    // Popuni select sa postojećim kategorijama
+    const select = document.getElementById('odabirKategorijeZaPodkat');
+    select.innerHTML = '<option value="">-- Izaberi kategoriju --</option>';
+    const res = await fetch(`${API_BASE_URL}/api/kategorije`);
+    const data = await res.json();
+    data.forEach(k => {
+      const opt = document.createElement('option');
+      opt.value = k[0];
+      opt.textContent = k[1];
+      select.appendChild(opt);
+    });
+  });
+
+  // Dodavanje nove kategorije
+document.getElementById('potvrdiKategorijuBtn').addEventListener('click', async () => {
+  const naziv = document.getElementById('unosNazivKategorije').value.trim();
+  if (!naziv) return alert("Unesi naziv kategorije!");
+
+  const res = await fetch(`${API_BASE_URL}/api/kategorije`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ naziv })
+  });
+
+  if (res.ok) {
+    alert("✅ Kategorija dodata!");
+    prikaziKatiPKat();
+  } else {
+    alert("❌ Greška pri dodavanju.");
+  }
+});
+
+// Dodavanje nove podkategorije
+document.getElementById('potvrdiPodkategorijuBtn').addEventListener('click', async () => {
+  const naziv = document.getElementById('unosNazivPodkategorije').value.trim();
+  const idKategorije = document.getElementById('odabirKategorijeZaPodkat').value;
+
+  if (!naziv || !idKategorije) return alert("Unesi naziv i odaberi kategoriju!");
+
+  const res = await fetch(`${API_BASE_URL}/api/podkategorije`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      naziv,
+      id_kategorija: idKategorije
+    })
+  });
+
+  if (res.ok) {
+    alert("✅ Podkategorija dodata!");
+    prikaziKatiPKat();
+  } else {
+    alert("❌ Greška pri dodavanju.");
+  }
+});
+
 
 }

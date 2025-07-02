@@ -583,7 +583,7 @@ app.put('/api/kategorije/logicko_brisanje/:id', async (req, res) => {
 });
 
 
-//fiyicko  brisanje kategorija
+//fizicko  brisanje kategorija
 
 app.delete('/api/kategorije/fizicko_brisanje/:id', async (req, res) => {
   const id = req.params.id;
@@ -768,3 +768,52 @@ app.delete('/api/podkategorije/fizicko_brisanje/:id', async (req, res) => {
     if (conn) await conn.close();
   }
 });
+
+app.post('/api/kategorije', async (req, res) => {
+  const { naziv } = req.body;
+  let conn;
+
+  if (!naziv || naziv.trim() === "") {
+    return res.status(400).json({ error: 'Naziv je obavezan' });
+  }
+
+  try {
+    conn = await getConnection();
+    await conn.execute(
+      `INSERT INTO KATEGORIJE (NAZIV) VALUES (:naziv)`,
+      [naziv],
+      { autoCommit: true }
+    );
+    res.status(201).json({ msg: '✅ Kategorija dodata' });
+  } catch (err) {
+    console.error("❌ Greška pri dodavanju kategorije:", err);
+    res.status(500).json({ error: 'Greška u dodavanju kategorije' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+app.post('/api/podkategorije', async (req, res) => {
+  const { naziv, id_kategorija } = req.body;
+  let conn;
+
+  if (!naziv || !id_kategorija) {
+    return res.status(400).json({ error: 'Nedostaje naziv ili kategorija' });
+  }
+
+  try {
+    conn = await getConnection();
+    await conn.execute(
+      `INSERT INTO PODKATEGORIJE (ID_KATEGORIJA, NAZIV) VALUES (:id_kategorija, :naziv)`,
+      [id_kategorija, naziv],
+      { autoCommit: true }
+    );
+    res.status(201).json({ msg: '✅ Podkategorija dodata' });
+  } catch (err) {
+    console.error("❌ Greška pri dodavanju podkategorije:", err);
+    res.status(500).json({ error: 'Greška u dodavanju podkategorije' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+

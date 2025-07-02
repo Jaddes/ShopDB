@@ -315,6 +315,7 @@ async function popuniDropdownoveZaDodavanje() {
     const resPK = await fetch(`${API_BASE_URL}/api/podkategorije`);
     const podkategorije = await resPK.json();
     const selectPK = document.getElementById('noviPodkategorija');
+    selectPK.length = 1; // 🧹 zadrži samo placeholder
     podkategorije.forEach(pk => {
       const option = document.createElement('option');
       option.value = pk[0]; // ID
@@ -330,6 +331,7 @@ async function popuniDropdownoveZaDodavanje() {
     const resB = await fetch(`${API_BASE_URL}/api/boje`);
     const boje = await resB.json();
     const selectB = document.getElementById('noviBoja');
+    selectB.length = 1; // 🧹 očisti sve osim placeholder-a
     boje.forEach(b => {
       const option = document.createElement('option');
       option.value = b[0];
@@ -345,6 +347,7 @@ async function popuniDropdownoveZaDodavanje() {
     const resO = await fetch(`${API_BASE_URL}/api/oznake`);
     const oznake = await resO.json();
     const selectO = document.getElementById('noviOznaka');
+    selectO.length = 1; // 🧹 samo placeholder ostaje
     oznake.forEach(o => {
       const option = document.createElement('option');
       option.value = o[0];
@@ -355,6 +358,7 @@ async function popuniDropdownoveZaDodavanje() {
     console.error("❌ Greška oznake:", err);
   }
 }
+
 
 async function posaljiNoviProizvod() {
   const naziv = document.getElementById('noviNaziv').value.trim();
