@@ -97,17 +97,8 @@ document.getElementById('searchInput').addEventListener('input', function () {
 
 
 document.addEventListener('click', function (e) {
-  // Korisnici
-  if (e.target.classList.contains('icon-trash')) {
-    selectedUserId = e.target.dataset.id;
-    selectedProductId = null;
-    selectedCategoryId = null;
-    selectedPodkategorijaId = null;
-    document.getElementById('deleteConfirmModal').style.display = 'block';
-  }
-
-  // Proizvodi
-  else if (e.target.classList.contains('icon-trash-proizvod')) {
+  
+if (e.target.classList.contains('icon-trash-proizvod')) {
     selectedProductId = e.target.dataset.id;
     selectedUserId = null;
     selectedCategoryId = null;
@@ -142,13 +133,7 @@ document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
 function inicijalizujLogickoBrisanje() {
   document.getElementById('logicalDeleteBtn').addEventListener('click', async () => {
     try {
-      if (selectedUserId) {
-        const res = await fetch(`${window.API_BASE_URL}/api/korisnici/logicko_brisanje/${selectedUserId}`, { method: 'PUT' });
-        if (res.ok) {
-          alert("✅ Logički obrisan korisnik.");
-          prikaziKorisnike();
-        }
-      } else if (selectedProductId) {
+      if (selectedProductId) {
         const res = await fetch(`${window.API_BASE_URL}/api/proizvodi/logicko_brisanje/${selectedProductId}`, { method: 'PUT' });
         if (res.ok) {
           alert("✅ Proizvod logički obrisan.");
@@ -177,13 +162,7 @@ function inicijalizujLogickoBrisanje() {
 function inicijalizujFizickoBrisanje() {
   document.getElementById('physicalDeleteBtn').addEventListener('click', async () => {
     try {
-      if (selectedUserId) {
-        const res = await fetch(`${window.API_BASE_URL}/api/korisnici/fizicko_brisanje/${selectedUserId}`, { method: 'DELETE' });
-        if (res.ok) {
-          alert("✅ Fizički obrisan korisnik.");
-          prikaziKorisnike();
-        }
-      } else if (selectedProductId) {
+       if (selectedProductId) {
         const res = await fetch(`${window.API_BASE_URL}/api/proizvodi/fizicko_brisanje/${selectedProductId}`, { method: 'DELETE' });
         if (res.ok) {
           alert("✅ Proizvod fizički obrisan.");
@@ -500,33 +479,3 @@ saveProizvodBtn.addEventListener("click", () => {
     .catch((err) => alert(err.message));
 });
 
-// Logičko brisanje
-logicalDeleteBtn.addEventListener("click", () => {
-  if (!selectedDeleteId) return;
-  fetch(`${API_BASE_URL}/korisnici/logicko_brisanje/${selectedDeleteId}`, {
-    method: "PUT",
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error("Greška prilikom logičkog brisanja");
-      alert("Uspešno izvršeno logičko brisanje.");
-      closeDeleteConfirmModal();
-      // Refresh liste korisnika
-      loadKorisnici();
-    })
-    .catch((err) => alert(err.message));
-});
-
-// Fizičko brisanje
-physicalDeleteBtn.addEventListener("click", () => {
-  if (!selectedDeleteId) return;
-  fetch(`${API_BASE_URL}/korisnici/fizicko_brisanje/${selectedDeleteId}`, {
-    method: "DELETE",
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error("Greška prilikom fizičkog brisanja");
-      alert("Uspešno izvršeno fizičko brisanje.");
-      closeDeleteConfirmModal();
-      loadKorisnici();
-    })
-    .catch((err) => alert(err.message));
-});

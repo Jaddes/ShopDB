@@ -102,21 +102,7 @@ async function prikaziKorisnike() {
         <td>${row.lozinka}</td>
         <td>${row.uloga}</td>
         <td>${row.datum_registracije}</td>
-        <td>
-          <img src="../../accessories/trash-can.svg" 
-              class="icon-trash" 
-              data-id="${row.id_korisnik}" 
-              style="cursor:pointer; width:20px;" 
-              title="Obriši korisnika" />
 
-           <img src="../../accessories/settings.svg" 
-            class="icon-edit-kategorija" 
-            data-id="${row[0]}" 
-            data-naziv="${row[1]}"
-            style="cursor:pointer; width:20px;" 
-            title="Izmeni kategoriju" />
-
-        </td>
       `;
       tbody.appendChild(tr);
     });
