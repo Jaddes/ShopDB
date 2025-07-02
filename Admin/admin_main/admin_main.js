@@ -202,10 +202,12 @@ async function prikaziKorisnike() {
               title="Obriši korisnika" />
 
            <img src="../../accessories/settings.svg" 
-              class="icon-settings-kategorija" 
-              data-id="${row[0]}" 
-              style="cursor:pointer; width:20px;" 
-              title="Izmeni kategoriju" />
+            class="icon-edit-kategorija" 
+            data-id="${row[0]}" 
+            data-naziv="${row[1]}"
+            style="cursor:pointer; width:20px;" 
+            title="Izmeni kategoriju" />
+
         </td>
       `;
       tbody.appendChild(tr);
@@ -526,10 +528,12 @@ function prikaziProizvode() {
               title="Obriši proizvod" />
 
               <img src="../../accessories/settings.svg" 
-              class="icon-settings-kategorija" 
+              class="icon-edit-kategorija" 
               data-id="${row[0]}" 
+              data-naziv="${row[1]}"
               style="cursor:pointer; width:20px;" 
               title="Izmeni kategoriju" />
+
           </td>
         `;
         tbody.appendChild(tr);
@@ -1502,10 +1506,12 @@ function prikaziKatiPKat() {
               title="Obriši kategoriju" />
 
                <img src="../../accessories/settings.svg" 
-              class="icon-settings-kategorija" 
+              class="icon-edit-kategorija" 
               data-id="${row[0]}" 
+              data-naziv="${row[1]}"
               style="cursor:pointer; width:20px;" 
               title="Izmeni kategoriju" />
+
           </td>
         `;
         tbody.appendChild(tr);
