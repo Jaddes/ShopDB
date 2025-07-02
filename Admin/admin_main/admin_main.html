@@ -84,6 +84,23 @@
         </div>
 
 
+        <div id="editCategoryModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>Izmeni kategoriju</h3>
+            <label>ID (nepromenljiv):</label>
+            <input type="text" id="editCategoryId" readonly />
+            
+            <label>Naziv:</label>
+            <input type="text" id="editCategoryName" />
+
+            <div class="buttons">
+            <button id="saveCategoryChangesBtn">Sačuvaj izmene</button>
+            <button id="cancelEditCategoryBtn">Otkaži</button>
+            </div>
+        </div>
+        </div>
+
+
         <div id="admin-panel">
         <div class="admin-tabs">
             <button data-action="korisnici">Korisnici</button>
