@@ -31,6 +31,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(cors());
+app.use(express.json()); 
 app.use('/api', kategorijeRoutes);
 app.use('/api', korisniciRoutes);
 app.use('/api', podkategorijeRoutes);
@@ -140,7 +141,7 @@ function prikaziKupce() {
 
 
 
-// //Dugme za proizvode
+//Dugme za proizvode
 app.get('/api/proizvodi', async (req, res) => {
   let connection;
   try {
@@ -172,6 +173,39 @@ app.get('/api/proizvodi', async (req, res) => {
     res.status(500).json({ error: 'Greška u bazi proizvoda' });
   } finally {
     if (connection) await connection.close();
+  }
+});
+
+app.post('/api/proizvodi', async (req, res) => {
+  const {
+    naziv, opis, id_podkategorija, id_boja, id_oznaka,
+    slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina
+  } = req.body;
+
+  let conn;
+  try {
+    conn = await getConnection();
+    await conn.execute(`
+      INSERT INTO PROIZVODI (
+        naziv, opis, id_podkategorija, id_boja, id_oznaka,
+        slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina
+      ) VALUES (
+        :naziv, :opis, :id_podkategorija, :id_boja, :id_oznaka,
+        :slika_url, TO_DATE(:datum_nabavke, 'YYYY-MM-DD'),
+        :nabavna_cena, :prodajna_cena, :kolicina
+      )
+    `, {
+      naziv, opis, id_podkategorija, id_boja, id_oznaka,
+      slika_url, datum_nabavke, nabavna_cena, prodajna_cena, kolicina
+    });
+
+    await conn.commit();
+    res.status(201).json({ msg: '✅ Proizvod uspešno dodat' });
+  } catch (err) {
+    console.error('❌ Greška pri dodavanju proizvoda:', err);
+    res.status(500).json({ error: 'Greška u dodavanju proizvoda' });
+  } finally {
+    if (conn) await conn.close();
   }
 });
 

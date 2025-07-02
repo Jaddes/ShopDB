@@ -119,7 +119,6 @@ function prikaziProizvode() {
       </table>
     </div>
   `;
-  //FILTER
 
   // Omogući prikaz/sakrivanje filter panela pri kliku na meni ikonicu
   const menuIcon = document.querySelector('.search-right-icon');
@@ -258,6 +257,9 @@ function prikaziProizvode() {
       </div>
     `;
 
+    //Funkcija za dodavanje u sql
+    document.getElementById('potvrdiDodavanjeBtn').addEventListener('click', posaljiNoviProizvod);
+
     // Napuni <select> elemente (boje, oznake, podkategorije)
     popuniDropdownoveZaDodavanje();
 
@@ -272,8 +274,8 @@ function prikaziProizvode() {
 
   // Zatvaranje novog proizvoda
   document.getElementById('dodajProizvodBtn').addEventListener('click', () => {
-    const modal = document.getElementById('dodajProizvodModal');
-    modal.style.display = 'flex';
+  const formaDiv = document.getElementById('formaDodajProizvod');
+  formaDiv.style.display = 'block';
 
     // Ovde smeš da dodaš event listener jer dugme sad postoji
     const zatvoriBtn = document.getElementById('zatvoriDodavanjeBtn');
@@ -300,7 +302,8 @@ function prikaziProizvode() {
   });
 
   document.getElementById('dodajProizvodBtn').addEventListener('click', () => {
-  document.getElementById('dodajProizvodModal').style.display = 'flex';
+  const formaDiv = document.getElementById('formaDodajProizvod');
+  formaDiv.style.display = 'block';
   popuniDropdownoveZaDodavanje(); // 🔁 učitaj sve opcije
   });
 
@@ -353,3 +356,51 @@ async function popuniDropdownoveZaDodavanje() {
   }
 }
 
+async function posaljiNoviProizvod() {
+  const naziv = document.getElementById('noviNaziv').value.trim();
+  const opis = document.getElementById('noviOpis').value.trim();
+  const idPodkategorija = document.getElementById('noviPodkategorija').value;
+  const idBoja = document.getElementById('noviBoja').value;
+  const idOznaka = document.getElementById('noviOznaka').value;
+  const slikaUrl = document.getElementById('noviSlikaUrl').value.trim();
+  const datumNabavke = document.getElementById('noviDatumNabavke').value;
+  const nabavnaCena = parseFloat(document.getElementById('noviNabavnaCena').value);
+  const prodajnaCena = parseFloat(document.getElementById('noviProdajnaCena').value);
+  const kolicina = parseInt(document.getElementById('noviKolicina').value);
+
+  // Validacija
+  if (!naziv || !idPodkategorija || isNaN(nabavnaCena) || isNaN(prodajnaCena) || isNaN(kolicina)) {
+    alert("Popunite obavezna polja ispravno.");
+    return;
+  }
+
+  const noviProizvod = {
+    naziv,
+    opis,
+    id_podkategorija: idPodkategorija,
+    id_boja: idBoja || null,
+    id_oznaka: idOznaka || null,
+    slika_url: slikaUrl,
+    datum_nabavke: datumNabavke,
+    nabavna_cena: nabavnaCena,
+    prodajna_cena: prodajnaCena,
+    kolicina
+  };
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/proizvodi`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(noviProizvod)
+    });
+
+    if (res.ok) {
+      alert("✅ Proizvod uspešno dodat.");
+      prikaziProizvode();
+    } else {
+      alert("❌ Greška pri dodavanju proizvoda.");
+    }
+  } catch (err) {
+    console.error("❌ Greška:", err);
+  }
+}
