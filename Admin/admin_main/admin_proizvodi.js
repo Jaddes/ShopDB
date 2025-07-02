@@ -225,7 +225,7 @@ function prikaziProizvode() {
     if (formaDiv.innerHTML.trim() !== "") return; // Ako forma već postoji, ne dodaj je ponovo
 
     formaDiv.innerHTML = `
-      <div class="modal-content custom-modal-form-grid">
+      <div class="custom-modal-form-grid">
         <h3 class="form-title" style="grid-column: span 2;">Dodaj novi proizvod</h3>
 
         <!-- Levi blok -->
