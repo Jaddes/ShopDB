@@ -611,6 +611,7 @@ function prikaziProizvode() {
     popuniDropdownoveZaDodavanje();
   });
 
+  
 
   // Search Bar
   document.getElementById('searchProizvodInput').addEventListener('input', function () {
