@@ -1,7 +1,7 @@
 let selectedCategoryId = null;
 let selectedPodkategorijaId = null;
 let selectedUserId = null;       
-let selectedProductId = null;   
+let selectedProductId = null; 
 
 
 
@@ -87,6 +87,9 @@ document.getElementById('searchInput').addEventListener('input', function () {
     window.location.href = '../main_site/main_site.html';
   });
 });
+
+document.getElementById("physicalDeleteBtn").addEventListener("click", fizickoBrisanje);
+
 
 
 document.addEventListener('click', function (e) {
