@@ -817,3 +817,42 @@ app.post('/api/podkategorije', async (req, res) => {
   }
 });
 
+
+
+app.put('/api/kategorije/:id', async (req, res) => {
+  const id = req.params.id;
+  const { naziv } = req.body;
+  let conn;
+
+  if (!naziv || naziv.trim() === '') {
+    return res.status(400).json({ error: 'Naziv je obavezan' });
+  }
+
+  try {
+    conn = await getConnection();
+
+    // Proveri da li postoji kategorija
+    const result = await conn.execute(
+      `SELECT * FROM KATEGORIJE WHERE id_kategorija = :id`,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Kategorija ne postoji' });
+    }
+
+    // Ažuriraj naziv
+    await conn.execute(
+      `UPDATE KATEGORIJE SET naziv = :naziv WHERE id_kategorija = :id`,
+      [naziv, id],
+      { autoCommit: true }
+    );
+
+    res.json({ msg: '✅ Kategorija uspešno izmenjena' });
+  } catch (err) {
+    console.error('❌ Greška pri izmeni kategorije:', err);
+    res.status(500).json({ error: 'Greška u izmeni kategorije' });
+  } finally {
+    if (conn) await conn.close();
+  }
+});

@@ -142,7 +142,7 @@ saveCategoryBtn.addEventListener("click", () => {
     return;
   }
   // API poziv za čuvanje izmene (primer)
-  fetch(`${API_BASE_URL}/kategorije/${id}`, {
+  fetch(`${API_BASE_URL}/api/kategorije/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ naziv }),
@@ -168,7 +168,7 @@ savePodkategorijaBtn.addEventListener("click", () => {
     alert("Sva polja su obavezna.");
     return;
   }
-  fetch(`${API_BASE_URL}/podkategorije/${id}`, {
+  fetch(`${API_BASE_URL}/api/podkategorije/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id_kategorija, naziv }),
@@ -197,7 +197,7 @@ saveProizvodBtn.addEventListener("click", () => {
     return;
   }
 
-  fetch(`${API_BASE_URL}/proizvodi/${id}`, {
+  fetch(`${API_BASE_URL}/api/proizvodi/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ naziv, cena, id_kategorija, id_podkategorija }),
