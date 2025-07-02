@@ -36,7 +36,6 @@ document.getElementById('searchInput').addEventListener('input', function () {
   });
 });
 
-
  /* account dropdown */
  document.addEventListener('DOMContentLoaded', () => {
   // ---------- TOGGLE DROPDOWN ZA ACCOUNT IKONU ----------
@@ -88,12 +87,6 @@ document.getElementById('searchInput').addEventListener('input', function () {
     window.location.href = '../main_site/main_site.html';
   });
 });
-
-
-
-
-
-// Logicko i Fizicko Brisanje
 
 
 document.addEventListener('click', function (e) {
