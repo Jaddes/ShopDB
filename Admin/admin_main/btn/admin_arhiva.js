@@ -87,3 +87,39 @@ function ucitajArhiviraneRecenzije() {
       console.error("❌ Greška:", err);
     });
 }
+
+function ucitajArhiviraneStavkeKorpe() {
+  fetch(`${window.API_BASE_URL}/api/arhiva/stavke_korpe`)
+    .then(res => res.json())
+    .then(data => {
+      const tabela = `
+        <h3 style="text-align:center;">🛒 Obrisane Stavke Korpe</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID Stavke</th>
+              <th>ID Korpa</th>
+              <th>ID Proizvod</th>
+              <th>Količina</th>
+              <th>Datum Brisanja</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.map(s => `
+              <tr>
+                <td>${s.ID_STAVKA}</td>
+                <td>${s.ID_KORPA}</td>
+                <td>${s.ID_PROIZVOD}</td>
+                <td>${s.KOLICINA}</td>
+                <td>${s.DATUM_BRISANJA}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+      document.getElementById("arhiva-tabela").innerHTML = tabela;
+    })
+    .catch(err => {
+      console.error("❌ Greška:", err);
+    });
+}

@@ -817,6 +817,8 @@ app.post('/api/podkategorije', async (req, res) => {
   }
 });
 
+
+// Arhiva prikaz
 app.get('/api/arhiva/proizvodi', async (req, res) => {
   let conn;
   try {
@@ -861,6 +863,30 @@ app.get('/api/arhiva/recenzije', async (req, res) => {
   } catch (err) {
     console.error("❌ Greška u /api/arhiva/recenzije:", err);
     res.status(500).json({ error: "Greška prilikom dohvatanja obrisanih recenzija" });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
+app.get('/api/arhiva/stavke_korpe', async (req, res) => {
+  let conn;
+  try {
+    conn = await getConnection();
+    const result = await conn.execute(`
+      SELECT 
+        id_stavka_korpe AS ID_STAVKA,
+        id_korpa AS ID_KORPA,
+        id_proizvod AS ID_PROIZVOD,
+        kolicina AS KOLICINA,
+        TO_CHAR(datum_brisanja, 'YYYY-MM-DD') AS DATUM_BRISANJA
+      FROM OBRISANE_STAVKE_KORPE
+      ORDER BY datum_brisanja DESC
+    `, [], { outFormat: oracledb.OBJECT });
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/arhiva/stavke_korpe:", err);
+    res.status(500).json({ error: "Greška prilikom dohvatanja obrisanih stavki korpe" });
   } finally {
     if (conn) await conn.close();
   }
