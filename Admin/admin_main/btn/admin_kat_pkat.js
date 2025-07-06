@@ -15,6 +15,7 @@ function prikaziKatiPKat() {
         <div id="formaNovaKategorija" style="display: none; margin: 20px;">
           <input type="text" id="unosNazivKategorije" placeholder="Unesi naziv kategorije" />
           <button id="potvrdiKategorijuBtn">✔️ Dodaj</button>
+          <button id="otkaziKategorijuBtn" class="forma-dodavanje" style="margin-left: 10px;">❌ Otkaži</button>
         </div>
 
       <!-- Forma za dodavanje podkategorije -->
@@ -24,6 +25,7 @@ function prikaziKatiPKat() {
             <option value="">-- Izaberi kategoriju --</option>
           </select>
           <button id="potvrdiPodkategorijuBtn">✔️ Dodaj</button>
+          <button id="otkaziPodkategorijuBtn" class="forma-dodavanje" style="margin-left: 10px;">❌ Otkaži</button>
         </div>
     </div>
 
@@ -65,10 +67,10 @@ function prikaziKatiPKat() {
     <div class="proizvodi-top-bar">
       <div class="search-wrapper">
         <img src="../../accessories/magnifying-glass.svg" class="search-left-icon" alt="Search" />
-        <input type="text" id="searchPodkategorijaInput" placeholder="Pretraži po nazivu..." />
-        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniPodkategorije" alt="Meni" />
+        <input type="text" id="searchProizvodInput" placeholder="Pretraži po nazivu..." />
+        <img src="../../accessories/menu-list.svg" class="search-right-icon" id="meniKategorije" alt="Meni" />
       </div>
-      <button id="dodajPodkategorijuBtn" class="btn-dodaj">➕ Dodaj novu podkategoriju</button>
+      <button id="dodajKategorijuBtn" class="btn-dodaj">➕ Dodaj novu Kategoriju</button>
     </div>
 
     <div id="podkategorije-filter-panel" class="filter-panel" style="display: none;">
@@ -284,5 +286,17 @@ document.getElementById('potvrdiPodkategorijuBtn').addEventListener('click', asy
   }
 });
 
+// Otkaži dodavanje kategorije
+document.getElementById('otkaziKategorijuBtn').addEventListener('click', () => {
+  document.getElementById('formaNovaKategorija').style.display = 'none';
+  document.getElementById('unosNazivKategorije').value = '';
+});
+
+// Otkaži dodavanje podkategorije
+document.getElementById('otkaziPodkategorijuBtn').addEventListener('click', () => {
+  document.getElementById('formaNovaPodkategorija').style.display = 'none';
+  document.getElementById('unosNazivPodkategorije').value = '';
+  document.getElementById('odabirKategorijeZaPodkat').selectedIndex = 0;
+});
 
 }

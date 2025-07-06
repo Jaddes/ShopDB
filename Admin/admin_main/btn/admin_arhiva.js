@@ -1,0 +1,49 @@
+function prikaziArhivu() {
+  const container = document.querySelector(".content-placeholder");
+
+  container.innerHTML = `
+    <h2 style="text-align:center; margin-top: 20px;">📂 Arhivirani Podaci</h2>
+    <div class="admin-tabs" style="justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+      <button onclick="ucitajArhiviraneProizvode()">Obrisani Proizvodi</button>
+      <button onclick="ucitajArhiviraneRecenzije()">Obrisane Recenzije</button>
+      <button onclick="ucitajArhiviraneStavkeKorpe()">Obrisane Stavke Korpe</button>
+      <button onclick="ucitajArhiviraneStavkeNarudzbine()">Obrisane Stavke Narudžbine</button>
+      <button onclick="ucitajArhiviraneWishlist()">Obrisane Wishlist Stavke</button>
+    </div>
+    <div id="arhiva-tabela"></div>
+  `;
+}
+
+function ucitajArhiviraneProizvode() {
+  fetch(`${window.API_BASE_URL}/api/arhiva/proizvodi`)
+    .then(res => res.json())
+    .then(data => {
+      const tabela = `
+        <h3 style="text-align:center;">🧺 Obrisani Proizvodi</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Naziv</th>
+              <th>Opis</th>
+              <th>Datum Brisanja</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.map(p => `
+              <tr>
+                <td>${p.ID_PROIZVOD}</td>
+                <td>${p.NAZIV}</td>
+                <td>${p.OPIS}</td>
+                <td>${p.DATUM_BRISANJA}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+      document.getElementById("arhiva-tabela").innerHTML = tabela;
+    })
+    .catch(err => {
+      console.error("❌ Greška:", err);
+    });
+}

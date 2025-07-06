@@ -309,7 +309,7 @@ header {
   gap: 15px;
   position: sticky;
   top: 100px; /* ispod navbar-a */
-  background-color: #C1E899;
+  background-color: transparent;
   z-index: 999;
   padding: 10px 0;
 }
@@ -856,4 +856,15 @@ main {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+}
+
+.forma-dodavanje {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px auto;
+  flex-wrap: wrap;
+  width: 100%;
+  text-align: center;
 }
