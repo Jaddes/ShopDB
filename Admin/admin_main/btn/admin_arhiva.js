@@ -123,3 +123,43 @@ function ucitajArhiviraneStavkeKorpe() {
       console.error("❌ Greška:", err);
     });
 }
+
+function ucitajArhiviraneStavkeNarudzbine() {
+  fetch(`${window.API_BASE_URL}/api/arhiva/stavke_narudzbine`)
+    .then(res => res.json())
+    .then(data => {
+      const tabela = `
+        <h3 style="text-align:center;">📦 Obrisane Stavke Narudžbine</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID Stavke</th>
+              <th>ID Narudžbina</th>
+              <th>ID Proizvod</th>
+              <th>Količina</th>
+              <th>Cena/kom</th>
+              <th>Ukupna Cena</th>
+              <th>Datum Brisanja</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.map(s => `
+              <tr>
+                <td>${s.ID_STAVKA}</td>
+                <td>${s.ID_NARUDZBINA}</td>
+                <td>${s.ID_PROIZVOD}</td>
+                <td>${s.KOLICINA}</td>
+                <td>${s.CENA_PO_KOMADU}</td>
+                <td>${s.UKUPNA_CENA}</td>
+                <td>${s.DATUM_OBRISANJA}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+      document.getElementById("arhiva-tabela").innerHTML = tabela;
+    })
+    .catch(err => {
+      console.error("❌ Greška:", err);
+    });
+}

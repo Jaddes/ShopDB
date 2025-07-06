@@ -891,3 +891,29 @@ app.get('/api/arhiva/stavke_korpe', async (req, res) => {
     if (conn) await conn.close();
   }
 });
+
+app.get('/api/arhiva/stavke_narudzbine', async (req, res) => {
+  let conn;
+  try {
+    conn = await getConnection();
+    const result = await conn.execute(`
+      SELECT 
+        id_stavka_narudzbine AS ID_STAVKA,
+        id_narudzbina AS ID_NARUDZBINA,
+        id_proizvod AS ID_PROIZVOD,
+        kolicina AS KOLICINA,
+        cena_po_komadu AS CENA_PO_KOMADU,
+        ukupna_cena AS UKUPNA_CENA,
+        TO_CHAR(datum_obrisanja, 'YYYY-MM-DD') AS DATUM_OBRISANJA
+      FROM OBRISANE_STAVKE_NARUDZBINE
+      ORDER BY datum_obrisanja DESC
+    `, [], { outFormat: oracledb.OBJECT });
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/arhiva/stavke_narudzbine:", err);
+    res.status(500).json({ error: "Greška prilikom dohvatanja obrisanih stavki narudžbine" });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
