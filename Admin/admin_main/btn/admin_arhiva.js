@@ -163,3 +163,35 @@ function ucitajArhiviraneStavkeNarudzbine() {
       console.error("❌ Greška:", err);
     });
 }
+
+function ucitajArhiviraneWishlist() {
+  fetch(`${window.API_BASE_URL}/api/arhiva/wishlist_stavke`)
+    .then(res => res.json())
+    .then(data => {
+      const tabela = `
+        <h3 style="text-align:center;">❤️ Obrisane Wishlist Stavke</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID Wishlist</th>
+              <th>ID Kupac</th>
+              <th>Datum Brisanja</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.map(w => `
+              <tr>
+                <td>${w.ID_WISHLIST}</td>
+                <td>${w.ID_KUPAC}</td>
+                <td>${w.DATUM_BRISANJA}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+      document.getElementById("arhiva-tabela").innerHTML = tabela;
+    })
+    .catch(err => {
+      console.error("❌ Greška:", err);
+    });
+}

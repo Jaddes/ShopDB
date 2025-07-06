@@ -917,3 +917,25 @@ app.get('/api/arhiva/stavke_narudzbine', async (req, res) => {
     if (conn) await conn.close();
   }
 });
+
+app.get('/api/arhiva/wishlist_stavke', async (req, res) => {
+  let conn;
+  try {
+    conn = await getConnection();
+    const result = await conn.execute(`
+      SELECT 
+        id_wishlist AS ID_WISHLIST,
+        id_kupac AS ID_KUPAC,
+        TO_CHAR(datum_brisanja, 'YYYY-MM-DD') AS DATUM_BRISANJA
+      FROM OBRISANE_WISHLISTE
+      ORDER BY datum_brisanja DESC
+    `, [], { outFormat: oracledb.OBJECT });
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/arhiva/wishlist_stavke:", err);
+    res.status(500).json({ error: "Greška prilikom dohvatanja obrisanih wishlist stavki" });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
