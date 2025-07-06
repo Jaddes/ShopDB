@@ -817,3 +817,25 @@ app.post('/api/podkategorije', async (req, res) => {
   }
 });
 
+app.get('/api/arhiva/proizvodi', async (req, res) => {
+  let conn;
+  try {
+    conn = await getConnection();
+    const result = await conn.execute(`
+      SELECT 
+        id_proizvod AS ID_PROIZVOD,
+        naziv AS NAZIV,
+        opis AS OPIS,
+        TO_CHAR(datum_brisanja, 'YYYY-MM-DD') AS DATUM_BRISANJA
+      FROM OBRISANI_PROIZVODI
+      ORDER BY datum_brisanja DESC
+    `, [], { outFormat: oracledb.OBJECT });
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/arhiva/proizvodi:", err);
+    res.status(500).json({ error: "Greška prilikom dohvatanja obrisanih proizvoda" });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
