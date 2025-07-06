@@ -839,3 +839,29 @@ app.get('/api/arhiva/proizvodi', async (req, res) => {
     if (conn) await conn.close();
   }
 });
+
+app.get('/api/arhiva/recenzije', async (req, res) => {
+  let conn;
+  try {
+    conn = await getConnection();
+    const result = await conn.execute(`
+      SELECT 
+        id_recenzija AS ID_RECENZIJA,
+        id_proizvod AS ID_PROIZVOD,
+        id_kupac AS ID_KUPAC,
+        ocena AS OCENA,
+        komentar AS KOMENTAR,
+        TO_CHAR(datum, 'YYYY-MM-DD') AS DATUM,
+        TO_CHAR(datum_brisanja, 'YYYY-MM-DD') AS DATUM_BRISANJA
+      FROM OBRISANE_RECENZIJE
+      ORDER BY datum_brisanja DESC
+    `, [], { outFormat: oracledb.OBJECT });
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Greška u /api/arhiva/recenzije:", err);
+    res.status(500).json({ error: "Greška prilikom dohvatanja obrisanih recenzija" });
+  } finally {
+    if (conn) await conn.close();
+  }
+});

@@ -47,3 +47,43 @@ function ucitajArhiviraneProizvode() {
       console.error("❌ Greška:", err);
     });
 }
+
+function ucitajArhiviraneRecenzije() {
+  fetch(`${window.API_BASE_URL}/api/arhiva/recenzije`)
+    .then(res => res.json())
+    .then(data => {
+      const tabela = `
+        <h3 style="text-align:center;">✍️ Obrisane Recenzije</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>ID Proizvod</th>
+              <th>ID Kupac</th>
+              <th>Ocena</th>
+              <th>Komentar</th>
+              <th>Datum</th>
+              <th>Datum Brisanja</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.map(r => `
+              <tr>
+                <td>${r.ID_RECENZIJA}</td>
+                <td>${r.ID_PROIZVOD}</td>
+                <td>${r.ID_KUPAC}</td>
+                <td>${r.OCENA}</td>
+                <td>${r.KOMENTAR}</td>
+                <td>${r.DATUM}</td>
+                <td>${r.DATUM_BRISANJA}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+      document.getElementById("arhiva-tabela").innerHTML = tabela;
+    })
+    .catch(err => {
+      console.error("❌ Greška:", err);
+    });
+}
