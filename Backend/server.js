@@ -850,7 +850,6 @@ app.post('/api/arhiva/proizvodi/vrati/:id', async (req, res) => {
   try {
     conn = await getConnection();
 
-    // Ubacivanje nazad u PROIZVODI iz OBRISANI_PROIZVODI
     await conn.execute(`
       INSERT INTO PROIZVODI (
         ID_PROIZVOD, NAZIV, OPIS, ID_PODKATEGORIJA, ID_BOJA, ID_OZNAKA,
@@ -863,7 +862,6 @@ app.post('/api/arhiva/proizvodi/vrati/:id', async (req, res) => {
       WHERE ID_PROIZVOD = :id
     `, [id], { autoCommit: true });
 
-    // Brisanje iz arhive nakon vraćanja
     await conn.execute(`
       DELETE FROM OBRISANI_PROIZVODI WHERE ID_PROIZVOD = :id
     `, [id], { autoCommit: true });
@@ -871,12 +869,13 @@ app.post('/api/arhiva/proizvodi/vrati/:id', async (req, res) => {
     res.status(200).json({ message: "Proizvod vraćen" });
 
   } catch (err) {
-    console.error("❌ Greška pri vraćanju proizvoda:", err);
+    console.error("❌ Greška pri vraćanju proizvoda:", err); // ← OVO DODAJEŠ
     res.status(500).json({ error: "Greška pri vraćanju proizvoda" });
   } finally {
     if (conn) await conn.close();
   }
 });
+
 
 
 app.get('/api/arhiva/recenzije', async (req, res) => {
