@@ -850,17 +850,17 @@ app.post('/api/arhiva/proizvodi/vrati/:id', async (req, res) => {
   try {
     conn = await getConnection();
 
-    await conn.execute(`
-      INSERT INTO PROIZVODI (
-        ID_PROIZVOD, NAZIV, OPIS, ID_PODKATEGORIJA, ID_BOJA, ID_OZNAKA,
-        SLIKA_URL, DATUM_NABAVKE, NABAVNA_CENA, PRODAJNA_CENA, KOLICINA
-      )
-      SELECT
-        ID_PROIZVOD, NAZIV, OPIS, ID_PODKATEGORIJA, ID_BOJA, ID_OZNAKA,
-        SLIKA_URL, DATUM_NABAVKE, NABAVNA_CENA, PRODAJNA_CENA, KOLICINA
-      FROM OBRISANI_PROIZVODI
-      WHERE ID_PROIZVOD = :id
-    `, [id], { autoCommit: true });
+      await conn.execute(`
+        INSERT INTO PROIZVODI (
+          NAZIV, OPIS, ID_PODKATEGORIJA, ID_BOJA, ID_OZNAKA,
+          SLIKA_URL, DATUM_NABAVKE, NABAVNA_CENA, PRODAJNA_CENA, KOLICINA
+        )
+        SELECT
+          NAZIV, OPIS, ID_PODKATEGORIJA, ID_BOJA, ID_OZNAKA,
+          SLIKA_URL, DATUM_NABAVKE, NABAVNA_CENA, PRODAJNA_CENA, KOLICINA
+        FROM OBRISANI_PROIZVODI
+        WHERE ID_PROIZVOD = :id
+      `, [id], { autoCommit: true });
 
     await conn.execute(`
       DELETE FROM OBRISANI_PROIZVODI WHERE ID_PROIZVOD = :id
