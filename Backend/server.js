@@ -819,6 +819,7 @@ app.post('/api/podkategorije', async (req, res) => {
 
 
 // Arhiva prikaz
+// Proizvodi
 app.get('/api/arhiva/proizvodi', async (req, res) => {
   let conn;
   try {
@@ -841,6 +842,42 @@ app.get('/api/arhiva/proizvodi', async (req, res) => {
     if (conn) await conn.close();
   }
 });
+
+app.post('/api/arhiva/proizvodi/vrati/:id', async (req, res) => {
+  const id = req.params.id;
+  let conn;
+
+  try {
+    conn = await getConnection();
+
+    // Ubacivanje nazad u PROIZVODI iz OBRISANI_PROIZVODI
+    await conn.execute(`
+      INSERT INTO PROIZVODI (
+        ID_PROIZVOD, NAZIV, OPIS, ID_PODKATEGORIJA, ID_BOJA, ID_OZNAKA,
+        SLIKA_URL, DATUM_NABAVKE, NABAVNA_CENA, PRODAJNA_CENA, KOLICINA
+      )
+      SELECT
+        ID_PROIZVOD, NAZIV, OPIS, ID_PODKATEGORIJA, ID_BOJA, ID_OZNAKA,
+        SLIKA_URL, DATUM_NABAVKE, NABAVNA_CENA, PRODAJNA_CENA, KOLICINA
+      FROM OBRISANI_PROIZVODI
+      WHERE ID_PROIZVOD = :id
+    `, [id], { autoCommit: true });
+
+    // Brisanje iz arhive nakon vraćanja
+    await conn.execute(`
+      DELETE FROM OBRISANI_PROIZVODI WHERE ID_PROIZVOD = :id
+    `, [id], { autoCommit: true });
+
+    res.status(200).json({ message: "Proizvod vraćen" });
+
+  } catch (err) {
+    console.error("❌ Greška pri vraćanju proizvoda:", err);
+    res.status(500).json({ error: "Greška pri vraćanju proizvoda" });
+  } finally {
+    if (conn) await conn.close();
+  }
+});
+
 
 app.get('/api/arhiva/recenzije', async (req, res) => {
   let conn;
@@ -939,3 +976,5 @@ app.get('/api/arhiva/wishlist_stavke', async (req, res) => {
     if (conn) await conn.close();
   }
 });
+
+

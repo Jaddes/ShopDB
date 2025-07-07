@@ -14,6 +14,8 @@ function prikaziArhivu() {
   `;
 }
 
+// Proizvodi
+
 function ucitajArhiviraneProizvode() {
   fetch(`${window.API_BASE_URL}/api/arhiva/proizvodi`)
     .then(res => res.json())
@@ -36,6 +38,9 @@ function ucitajArhiviraneProizvode() {
                 <td>${p.NAZIV}</td>
                 <td>${p.OPIS}</td>
                 <td>${p.DATUM_BRISANJA}</td>
+                <td>
+                  <img src="../../accessories/return.svg" class="ikonica-vrati" onclick="vratiProizvod(${p.ID_PROIZVOD})" title="Vrati proizvod" />
+                </td>
               </tr>
             `).join("")}
           </tbody>
@@ -47,6 +52,22 @@ function ucitajArhiviraneProizvode() {
       console.error("❌ Greška:", err);
     });
 }
+
+function vratiProizvod(idProizvod) {
+  fetch(`${window.API_BASE_URL}/api/arhiva/proizvodi/vrati/${idProizvod}`, {
+    method: 'POST'
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Greška pri vraćanju");
+    alert("✅ Proizvod je uspešno vraćen!");
+    ucitajArhiviraneProizvode(); // osveži tabelu
+  })
+  .catch(err => {
+    console.error("❌ Greška:", err);
+    alert("Greška pri vraćanju proizvoda.");
+  });
+}
+
 
 function ucitajArhiviraneRecenzije() {
   fetch(`${window.API_BASE_URL}/api/arhiva/recenzije`)

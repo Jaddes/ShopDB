@@ -868,3 +868,16 @@ main {
   width: 100%;
   text-align: center;
 }
+
+/* Return dugme Arhiva */
+.ikonica-vrati {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.ikonica-vrati:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
